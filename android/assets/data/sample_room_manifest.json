@@ -1,0 +1,42 @@
+{
+    "users": [
+        {
+            "uid": "100",
+            "displayName": "David"
+        },
+        {
+            "uid": "200",
+            "displayName": "Shubham"
+        }
+    ],
+    "game_state": {
+        "entities": [
+            {
+                "class": "player",
+                "eid": "1",
+                "uid": "100",
+                "skin": "pig",
+                "x": 60,
+                "y": 60,
+                "state": "idle",
+                "facing": "right",
+                "command":{
+                    "code":"move",
+                    "targetX":250,
+                    "targetY":100
+                }
+            },
+            {
+                "class": "player",
+                "eid": "2",
+                "uid": "200",
+                "skin": "bird",
+                "x": 20,
+                "y": 160,
+                "state": "idle",
+                "facing": "left"
+
+            }
+        ]
+    }
+}

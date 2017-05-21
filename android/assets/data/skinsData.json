@@ -1,0 +1,22 @@
+{
+    "skins": [
+        {
+            "nameKey":"bird_name",
+            "id":"bird",
+            "description":"bird_description",
+            "unlockLevel":"1"
+        },
+        {
+            "nameKey":"pig_name",
+            "id":"pig",
+            "description":"pig_description",
+            "unlockLevel":"1"
+        },
+        {
+            "nameKey":"frog_name",
+            "id":"frog",
+            "description":"frog_description",
+            "unlockLevel":"5"
+        }
+    ]
+}

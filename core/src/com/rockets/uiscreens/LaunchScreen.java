@@ -1,0 +1,65 @@
+package com.rockets.uiscreens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.rockets.assets.GameLoader;
+import com.rockets.common.BaseUIScreen;
+import com.rockets.common.IApp;
+import com.rockets.common.IAppInitializer;
+import com.rockets.gamescreen.GameScreen;
+import com.rockets.utils.GraphicsFactory;
+
+/**
+ * name: LaunchScreen
+ * desc:
+ * date: 2016-12-23
+ * author: david
+ * Copyright (c) 2016 David Han
+ **/
+public class LaunchScreen extends BaseUIScreen{
+    private GameLoader gameLoader;
+    private boolean doneLoadingFromFile;
+    public LaunchScreen(IApp game) {
+        super(game);
+        doneLoadingFromFile = false;
+        gameLoader = new GameLoader();
+        Texture.setAssetManager(gameLoader);
+        initGraphics();
+    }
+
+    @Override
+    public void update(float delta) {
+        if(gameLoader.update() && !doneLoadingFromFile) {
+            // DONE LOADING.
+            finishLoadInBackground();
+            doneLoadingFromFile = true;
+        }
+    }
+
+    private void initGraphics() {
+        Drawable bg = GraphicsFactory.solidDrawable(Color.YELLOW);
+        rootTable.background(bg);
+
+    }
+
+    private void finishLoadInBackground() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                gameLoader.initAssets((IAppInitializer)app);
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoadDone();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void onLoadDone() {
+        app.screenManager().pushScreen(new GameScreen(app));
+    }
+}

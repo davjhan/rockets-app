@@ -1,0 +1,28 @@
+{
+    "entities": {
+        "players": [
+            {
+                "uid": 1,
+                "name": "player1",
+                "skin":"bird",
+                "snapshot": {
+                    "x": 60,
+                    "y": 60,
+                    "state": "idle",
+                    "facing": "right"
+                }
+            },
+            {
+                "uid": 2,
+                "name": "player2",
+                "skin":"bird",
+                "snapshot": {
+                    "x": 20,
+                    "y": 160,
+                    "state": "idle",
+                    "facing": "left"
+                }
+            }
+        ]
+    }
+}

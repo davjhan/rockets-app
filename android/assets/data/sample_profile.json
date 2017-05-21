@@ -1,0 +1,12 @@
+{
+    "profile": {
+        "uid": "random",
+        "displayName": "David",
+        "skin": "pig",
+        "level": 1,
+        "exp": 0,
+        "unlockedSkins": [
+            "bird","pig"
+        ]
+    }
+}
