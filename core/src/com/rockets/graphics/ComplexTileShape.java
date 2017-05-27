@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
+import com.rockets.gamescreen.world.GameEntity;
 
 /**
  * name: ComplexTileGroup
@@ -14,7 +15,7 @@ import com.rockets.gamescreen.IGame;
  * author: david
  * Copyright (c) 2016 David Han
  **/
-public class ComplexTileShape extends com.rockets.gamescreen.world.GameEntity {
+public class ComplexTileShape extends GameEntity {
     public enum TileType {
         TOP_LEFT_CORNER,
         TOP_RIGHT_CORNER,
@@ -119,6 +120,11 @@ public class ComplexTileShape extends com.rockets.gamescreen.world.GameEntity {
         private void dispose(){
             this.game = null;
         }
+    }
+
+    @Override
+    protected void init() {
+
     }
 
     @Override

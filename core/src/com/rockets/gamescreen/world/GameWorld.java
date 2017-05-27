@@ -10,9 +10,11 @@ import com.badlogic.gdx.utils.Disposable;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.CameraShaker;
-import com.rockets.gamescreen.Hud;
 import com.rockets.gamescreen.IGame;
+import com.rockets.gamescreen.hud.Hud;
 import com.rockets.gamescreen.physics.CollisionManager;
+import com.rockets.gamescreen.physics.Side;
+import com.rockets.modal.Modal;
 
 /**
  * name: GameWorld
@@ -25,9 +27,11 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     protected IApp iApp;
     protected IGame game;
     protected Stage stage;
+    private String state;
     protected GameGroup<Actor> background;
     protected GameGroup<Actor> bodies;
     protected GameGroup<Actor> markers;
+    protected GameGroup<Actor> overtop;
     protected GameGroup<Actor> gameContainer;
     protected CollisionManager collisionManager;
 
@@ -59,10 +63,12 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         background = new GameGroup<>();
         bodies = new GameGroup<>();
         markers = new GameGroup<>();
+        overtop = new GameGroup<>();
         gameContainer.addActor(background);
         gameContainer.addActor(bodies);
         gameContainer.addActor(markers);
         stage.addActor(gameContainer);
+        stage.addActor(overtop);
     }
 
     protected void initBG() {
@@ -72,15 +78,10 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     }
 
-    public void update(float delta) {
-
-    }
-
 
     public void dispose() {
         iApp = null;
         game = null;
-
         stage.removeListener(clickListener);
         stage = null;
         collisionManager.dispose();
@@ -107,6 +108,9 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     @Override
+    public GameGroup<Actor> overtop() {return overtop;}
+
+    @Override
     public CollisionManager collisionManager() {
         return collisionManager;
     }
@@ -119,6 +123,25 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         actor.setY(Math.min(Display.BOT_PAD + Display.WORLD_HEIGHT - actor.getHeight(), actor.getY()));
     }
 
+    @Override
+    public void ensureInBounds(PhysicalEntity actor) {
+        if (actor.getX() < Display.LEFT_PAD) {
+            actor.setX(Display.LEFT_PAD);
+            actor.onCollision(Side.LEFT);
+        }
+        if (actor.getX() > Display.LEFT_PAD + Display.WORLD_WIDTH - actor.getWidth()) {
+            actor.setX(Display.LEFT_PAD + Display.WORLD_WIDTH - actor.getWidth());
+            actor.onCollision(Side.RIGHT);
+        }
+//        if(actor.getY()< Display.BOT_PAD){
+//            actor.setY(Display.BOT_PAD);
+//            actor.onCollision(Side.BOTTOM);
+//        }
+        if (actor.getY() > Display.WORLD_HEIGHT - actor.getHeight() - Display.TOP_PAD) {
+            actor.setY(Display.WORLD_HEIGHT - actor.getHeight() - Display.TOP_PAD);
+            actor.onCollision(Side.TOP);
+        }
+    }
 
 
     private ClickListener clickListener = new ClickListener(-1) {
@@ -140,17 +163,43 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         }
     };
 
-
-
-    protected abstract Hud getHud();
+    @Override
+    public abstract Hud getHud();
 
     @Override
     public void shakeScreen(int intensity) {
         Action action = CameraShaker.getShakeAction(intensity);
         gameContainer.addAction(action);
     }
+    public void update(float delta){
+
+    }
+    @Override
+    public void setPaused(boolean paused) {
+        gameContainer.setPaused(paused);
+    }
+
+    @Override
+    public void showModal(Modal modal) {
+        overtop().addActorAt(overtop.getChildren().size-1,modal);
+    }
+
+    @Override
+    public String getState() {
+        return state;
+    }
+
+    @Override
+    public boolean isState(String state) {
+        return false;
+    }
+
+    @Override
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public void showOptionsMenu() {
-        getHud().spawnOptionsModal();
+
     }
 }

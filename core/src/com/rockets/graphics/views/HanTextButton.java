@@ -1,5 +1,6 @@
 package com.rockets.graphics.views;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -65,12 +66,13 @@ public class HanTextButton extends VisTextButton implements Clickable {
     }
 
     private void init() {
-        normalStyle = new TextButtonStyle(getStyle());
+        getLabel().scaleBy(2);
+        normalStyle = getStyle();
         //disabledStyle =  VisUI.getSkin().get(HanSkin.DISABLED,TextButtonStyle.class);
-        getLabelCell().padTop(2);
+        getLabelCell().padTop(4);
         getLabelCell().padBottom(2);
-        getLabelCell().padLeft(4);
-        getLabelCell().padRight(4);
+        getLabelCell().padLeft(8);
+        getLabelCell().padRight(8);
         pack();
     }
 

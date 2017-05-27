@@ -12,6 +12,7 @@ import com.rockets.gamescreen.ActorGroup;
  * Copyright (c) 2016 David Han
  **/
 public class GameGroup<T extends Actor>  extends Group {
+    private boolean paused = false;
     public void spawn(T entity){
         addActor(entity);
     }
@@ -34,5 +35,15 @@ public class GameGroup<T extends Actor>  extends Group {
         for(T a:actorGroup){
             removeActor(a);
         }
+    }
+
+    @Override
+    public void act(float delta) {
+        if(!paused) {
+            super.act(delta);
+        }
+    }
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }

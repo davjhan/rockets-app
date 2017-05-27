@@ -9,4 +9,5 @@ package com.rockets.constants;
  **/
 public class PhysicsConst {
     public static final float GRAVITY = 15f;
+    public static final float ABS_VELOCITY = 6f;
 }

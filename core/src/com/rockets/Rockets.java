@@ -15,6 +15,7 @@ import com.rockets.common.IApp;
 import com.rockets.common.IAppInitializer;
 import com.rockets.common.ScreenManager;
 import com.rockets.constants.Display;
+import com.rockets.data.ContentDB;
 import com.rockets.modal.Modal;
 import com.rockets.modal.ModalStageManager;
 import com.rockets.uiscreens.LaunchScreen;
@@ -26,12 +27,13 @@ public class Rockets extends Game implements IApp, IAppInitializer {
     GameAssets gameAssets;
     ModalStageManager modalStageManager;
     Stage modalStage;
+    ContentDB contentDB;
     public InputMultiplexer inputMultiplexer;
     private boolean modalDebugAll = false;
     private boolean currentScreenDebug = false;
 
     public static boolean DEBUG = false;
-    public static final String SHARED_PREFS_NAME="Tagsave";
+    public static final String SHARED_PREFS_NAME="rockets_save";
 
     @Override
     public void create() {
@@ -105,6 +107,11 @@ public class Rockets extends Game implements IApp, IAppInitializer {
     }
 
     @Override
+    public ContentDB contentDB() {
+        return contentDB;
+    }
+
+    @Override
     public void setMenuAssets(MenuAssets assets) {
         this.menuAssets = assets;
     }
@@ -112,6 +119,11 @@ public class Rockets extends Game implements IApp, IAppInitializer {
     @Override
     public void setGameAssets(GameAssets assets) {
         this.gameAssets = assets;
+    }
+
+    @Override
+    public void setContentDB(ContentDB contentDB) {
+        this.contentDB = contentDB;
     }
 
     @Override

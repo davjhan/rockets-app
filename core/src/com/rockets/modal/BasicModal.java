@@ -1,20 +1,21 @@
 package com.rockets.modal;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.rockets.assets.Catalog;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.constants.Spacing;
+import com.rockets.graphics.views.HanLabel;
 
 /**
  * name: Modal
@@ -46,7 +47,7 @@ public abstract class BasicModal extends Modal{
 
     }
     public BasicModal(IApp app, ModalListener modalListener) {
-        super(app, modalListener, true, true, app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        super(app, modalListener, true, true, app.menuAssets().cardBg.get(Catalog.CardBg.titlebar));
 
     }
     public BasicModal(IApp app, ModalListener modalListener, NinePatch bgNinePatch) {
@@ -64,8 +65,7 @@ public abstract class BasicModal extends Modal{
     @Override
     protected void init() {
         super.init();
-        Gdx.app.log("tttt BasicModal", "init");
-        title = new VisLabel("", Font.h1, Colors.get(Colr.TEXT_LIGHT));
+        title = new HanLabel("", Font.h1, Colors.get(Colr.TEXT_LIGHT));
         title.setAlignment(Align.center);
         contents = new Table();
         initTitle();
@@ -79,6 +79,14 @@ public abstract class BasicModal extends Modal{
         setRootPosition();
 
         root.setTouchable(Touchable.enabled);
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                event.stop();
+                return true;
+            }
+
+        });
     }
 
     protected void setRootPosition() {

@@ -23,6 +23,9 @@ import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
  * Copyright (c) 2016 David Han
  **/
 public class VisUILoader {
+    public static final String PRIMARY = "primary";
+    public static final String PRIMARY_LG = "primaryLarge";
+
     public static void loadVisUI(AssetManager manager, MenuAssets menuAssets) {
         initColors(manager);
         initFonts(manager, menuAssets);
@@ -90,11 +93,17 @@ public class VisUILoader {
         primary.fontColor = Colors.get(Colr.TEXT_DARK);
         primary.unpressedOffsetY = 1;
         primary.checkedOffsetY = 1;
-        VisUI.getSkin().add("primary", primary);
+        VisUI.getSkin().add(PRIMARY, primary);
+
+        VisTextButton.VisTextButtonStyle primaryLarge = new VisTextButton.VisTextButtonStyle(primary);
+        primaryLarge.font = VisUI.getSkin().getFont(Font.h2);
+        VisUI.getSkin().add(PRIMARY_LG,primaryLarge);
     }
 
     private static void initFonts(AssetManager manager, MenuAssets menuAssets) {
         manager.get(Font.p1, BitmapFont.class).getData().setLineHeight(12);
+        manager.get(Font.p2, BitmapFont.class).getData().setScale(1.5f,1.5f);
+        manager.get(Font.h2, BitmapFont.class).getData().setScale(1.5f,1.5f);
         for (Field field : Font.class.getFields()) {
             field.setAccessible(true);
             try {

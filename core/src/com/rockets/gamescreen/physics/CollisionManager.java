@@ -1,6 +1,7 @@
 package com.rockets.gamescreen.physics;
 
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.rockets.gamescreen.world.GameGroup;
@@ -58,6 +59,9 @@ public class CollisionManager {
             }
             tempReciever = (Collidable) receiverActor;
             if (!canCollideWith(entity.getCollisionGroup(), tempReciever.getCollisionGroup())) {
+                if (canTouch(entity.getCollisionGroup(), tempReciever.getCollisionGroup())) {
+                    processTouch(entity, tempReciever);
+                }
                 continue;
             }
             if (!inRange(entity, tempReciever)) {
@@ -79,15 +83,17 @@ public class CollisionManager {
                         negDelta,
                         tempMinLen,
                         tempMinVector);
-                if(entityFirst.len2() <= receiverFirst.len2()){
+                if (entityFirst.len2() <= receiverFirst.len2()) {
                     tempMinVector = entityFirst;
                     tempMinLen = entityFirst.len();
-                }else{
+                } else {
                     tempMinVector = receiverFirst.scl(-1);
                     tempMinLen = receiverFirst.len();
                 }
 
             } catch (IsPressedAgainstSide e) {
+                entity.onHit(tempReciever);
+                tempReciever.onHit(entity);
                 if (e.sideType == Side.TOP || e.sideType == Side.BOTTOM) {
                     delta.y = 0;
                 } else {
@@ -101,18 +107,31 @@ public class CollisionManager {
         return tempMinVector;
     }
 
+    private void processTouch(Collidable mover, Collidable reciever) {
+        if (!inRange(mover, reciever)) {
+            return;
+        }
+        Rectangle.tmp.set(mover.getX(),mover.getY(),mover.getWidth(),mover.getHeight());
+        Rectangle.tmp2.set(reciever.getX(),reciever.getY(),reciever.getWidth(),reciever.getHeight());
+        if(Rectangle.tmp.overlaps(Rectangle.tmp2)){
+            mover.onHit(reciever);
+            reciever.onHit(mover);
+        }
+    }
+
     private class IsPressedAgainstSide extends Exception {
         public int sideType;
-        public IsPressedAgainstSide(int sideType){
+
+        public IsPressedAgainstSide(int sideType) {
             this.sideType = sideType;
         }
     }
 
     private Vector2 testEntityToReceiver(
-                                         RelevantCollisionParts relevantCollisionParts,
-                                         Vector2 delta,
-                                         float minLen,
-                                         Vector2 minVector) throws IsPressedAgainstSide {
+            RelevantCollisionParts relevantCollisionParts,
+            Vector2 delta,
+            float minLen,
+            Vector2 minVector) throws IsPressedAgainstSide {
         for (Side side : relevantCollisionParts.receiverSides) {
             for (Vector2 corner : relevantCollisionParts.entityCorners) {
                 if (Intersector.intersectSegments(corner, temp2.set(corner).add(delta), side.p1, side.p2, tempSegSegIntersection)) {
@@ -215,7 +234,7 @@ public class CollisionManager {
      * @param reciever
      * @return
      */
-    private boolean inRange(PhysicalEntity entity, Collidable reciever) {
+    private boolean inRange(Collidable entity, Collidable reciever) {
         Vector2 centerEntity =
                 new Vector2((entity.getX() + entity.getWidth() / 2),
                         (entity.getY() + entity.getHeight() / 2));
@@ -229,6 +248,15 @@ public class CollisionManager {
     private boolean canCollideWith(CollisionGroup mover, CollisionGroup reciever) {
         if (reciever == CollisionGroup.wall) {
             return true;
+        }
+        return false;
+    }
+
+    private boolean canTouch(CollisionGroup mover, CollisionGroup reciever) {
+        if (mover == CollisionGroup.player || reciever == CollisionGroup.player) {
+            if (mover == CollisionGroup.touchable || reciever == CollisionGroup.touchable) {
+                return true;
+            }
         }
         return false;
     }

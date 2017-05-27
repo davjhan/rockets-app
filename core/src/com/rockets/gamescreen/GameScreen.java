@@ -7,9 +7,12 @@ import com.rockets.assets.GameAssets;
 import com.rockets.assets.MenuAssets;
 import com.rockets.common.BaseScreen;
 import com.rockets.common.IApp;
-import com.rockets.gamescreen.singleplayer.SPGameWorld;
+import com.rockets.gamescreen.singleplayer.ChallengeGameWorld;
 import com.rockets.gamescreen.world.GameWorld;
 import com.rockets.modal.ErrorModal;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * name: LaunchScreen
@@ -23,12 +26,11 @@ public class GameScreen extends BaseScreen implements IGame {
     public GameWorld gameWorld;
     private int debugMode;
     private boolean crashed = false;
-    public GameScreen(IApp app) {
-        super(app);
-        gameWorld = new SPGameWorld(app,this);
-        gameWorld.init();
+    public static final String CHALLENGE_ID = "challengeId";
+    public GameScreen(IApp app, Map<String,Object> extras) {
+        super(app,extras);
+        gameWorld = new ChallengeGameWorld(app,this,(String)extras.get(CHALLENGE_ID));
         init();
-        stage.setDebugAll(true);
     }
 
     private void init() {
@@ -133,7 +135,15 @@ public class GameScreen extends BaseScreen implements IGame {
     }
 
     public boolean onBackPressed() {
-        app.screenManager().popAndPushScreen(new GameScreen(app));
+        app.screenManager().pushScreen(
+                GameScreen.class,GameScreen.getChallengeExtras("coin_1")
+        );
         return true;
+    }
+
+    public static  Map<String,Object>  getChallengeExtras(String challengeId) {
+        Map<String,Object> extras = new HashMap<>();
+        extras.put(CHALLENGE_ID,challengeId);
+        return extras;
     }
 }

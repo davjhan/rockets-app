@@ -29,7 +29,7 @@ public class SingleSpriteActor extends Actor implements Disposable{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(sprite != null){
-            sprite.draw(batch,parentAlpha,getX(),getDrawingY(),getScaleX(),getScaleY());
+            sprite.draw(batch,parentAlpha,getX(),getDrawingY(),getScaleX(),getScaleY(),getRotation());
         }
         super.draw(batch, parentAlpha);
     }
