@@ -20,7 +20,7 @@ public class MenuAssets extends AssetGroup{
     public NinePatch[]  btnPrimary;
     public TextureRegion[] bgTilesHome;
     public TextureRegion textfieldCursor;
-    public NinePatch[][] hudbgs;
+    public NinePatch hudbg;
     public TextureRegion[] icons;
     public TextureRegion[] connectionStrength;
     public ViewAssetGroup cardBg;
@@ -35,9 +35,9 @@ public class MenuAssets extends AssetGroup{
     public MenuAssets(AssetManager manager){
         final TextureAtlas atlas = manager.get(GameLoader.getAtlasFileName());
 
-        NinePatch[][] buttons = cutNinesGroup2d(atlas,"button",31,21,6);
-        btnGeneral = sliceNines(buttons,1,2);
-        btnPrimary = sliceNines(buttons,0,2);
+        NinePatch[][] buttons = cutNinesGroup2d(atlas,"buttons",18,12,3);
+        btnGeneral = sliceNines(buttons,0,2);
+        btnPrimary = sliceNines(buttons,1,2);
 
         TextureRegion[][] bgTiles = cut(atlas,"bgTiles",30,30);
 
@@ -51,7 +51,7 @@ public class MenuAssets extends AssetGroup{
 
         textfieldCursor = cutSingle(atlas,"textfieldCursor");
 
-        cardBg = new ViewAssetGroup(cutNinesGroup2d(atlas,"cardbg",32,32,6,16,6));
+        cardBg = new ViewAssetGroup(cutNinesGroup2d(atlas,"cardbg",64,64,10));
         bgs = new BackgroundViewAssetGroup(cutNinesGroup2d(atlas,"backgrounds",16,16,5));
 
         levelBar = cutNinesGroup(atlas,"levelbar",24,12,3);
@@ -71,7 +71,7 @@ public class MenuAssets extends AssetGroup{
 
     private void cutHud(TextureAtlas atlas) {
 
-        hudbgs = cutNinesGroup2d(atlas,"hudbgs",16,16,6);
+        hudbg = cutNinesGroup(atlas,"hudbg",16,16,5)[0];
     }
 
 

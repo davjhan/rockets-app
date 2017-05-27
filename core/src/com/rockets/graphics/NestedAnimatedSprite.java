@@ -34,13 +34,14 @@ public class NestedAnimatedSprite extends AnimatedSprite implements Nested {
     }
 
     @Override
-    public void draw(Batch batch, float alphaModulation, float parentX, float parentY, float parentScaleX, float parentScaleY) {
+    public void draw(Batch batch, float alphaModulation, float parentX, float parentY, float parentScaleX, float parentScaleY,float rotation) {
         temp.set(parentX-parentPos.x,parentY-parentPos.y);
         translate(temp.x,temp.y);
         temp.set(parentScaleX/parentScale.x,parentScaleY/parentScale.y);
         setScale(getScaleX()*temp.x,getScaleY()*temp.y);
         parentPos.set(parentX,parentY);
         parentScale.set(parentScaleX,parentScaleY);
+        setRotation(rotation);
         super.draw(batch, alphaModulation);
     }
 

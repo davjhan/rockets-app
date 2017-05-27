@@ -3,9 +3,8 @@ package com.rockets.common;
 import com.badlogic.gdx.Gdx;
 import com.rockets.Rockets;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.EmptyStackException;
-import java.util.Iterator;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -24,36 +23,46 @@ public class ScreenManager {
         screenStack = new Stack<BaseScreen>();
 
     }
+    public BaseScreen createScreen(Class c, Map<String,Object> extras){
+        try {
+            return (BaseScreen) c.getDeclaredConstructor(IApp.class, Map.class).newInstance(app,extras);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void popAndPushScreen(Class c, Map<String,Object> extras){
+        screenStack.pop();
+        BaseScreen newScreen = createScreen(c,extras);
+        screenStack.push(newScreen);
+        setScreen(newScreen);
+    }
     public void pushScreen(Class c){
-        Iterator<BaseScreen> iterator = screenStack.iterator();
-        while(iterator.hasNext()){
-            if(c.isInstance(iterator.next())){
-                while(!c.isInstance(screenStack.peek())){
-                    screenStack.pop();
-                }
-                return;
+        pushScreen(c,null);
+    }
+    public void pushScreen(Class c, Map<String,Object> extras){
+        BaseScreen newScreen = createScreen(c,extras);
+        screenStack.push(newScreen);
+        setScreen(newScreen);
+    }
+    public void restoreScreen(Class screenClass,Map<String,Object> extras){
+        BaseScreen restoreScreen = null;
+        int i = 0;
+        for(BaseScreen screen : screenStack){
+            i ++;
+            if(screenClass.isInstance(screen)){
+                restoreScreen = screen;
+                break;
             }
         }
-        try {
-            pushScreen((BaseScreen) c.getConstructor(IApp.class).newInstance(app));
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        if(restoreScreen != null){
+            while( i == 0){
+                screenStack.pop();
+            }
+        }else{
+            restoreScreen = createScreen(screenClass,extras);
         }
-    }
-    public void popAndPushScreen(BaseScreen screen){
-        screenStack.pop();
-        screenStack.push(screen);
-        setScreen(screen);
-    }
-    public void pushScreen(BaseScreen screen){
-        screenStack.push(screen);
-        setScreen(screen);
+        setScreen(restoreScreen);
     }
 
     public void popScreen(){

@@ -2,6 +2,8 @@ package com.rockets.common;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import java.util.Map;
+
 /**
  * name: BaseScreen
  * desc:
@@ -12,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public abstract class BaseUIScreen extends BaseScreen {
     protected Table rootTable;
 
-    public BaseUIScreen(IApp app){
-       super(app);
+    public BaseUIScreen(IApp app, Map<String,Object> extras){
+       super(app,extras);
         rootTable = new Table();
         rootTable.setFillParent(true);
         stage.addActor(rootTable);

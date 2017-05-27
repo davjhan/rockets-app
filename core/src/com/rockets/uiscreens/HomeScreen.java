@@ -13,11 +13,12 @@ import com.rockets.common.BaseUIScreen;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.constants.Spacing;
-import com.rockets.gamescreen.GameScreen;
 import com.rockets.graphics.views.HanIconButton;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.uiscreens.views.ScrollingTileBG;
+
+import java.util.Map;
 
 /**
  * name: LaunchScreen
@@ -32,8 +33,8 @@ public class HomeScreen extends BaseUIScreen {
     private Table leftTable;
     private Table rightTable;
 
-    public HomeScreen(IApp game) {
-        super(game);
+    public HomeScreen(IApp game, Map<String,Object> extras) {
+        super(game,extras);
 
 
         initTables();
@@ -144,7 +145,7 @@ public class HomeScreen extends BaseUIScreen {
     }
 
     private void startSPGame() {
-        app.screenManager().pushScreen(new GameScreen(app));
+        //app.screenManager().pushScreen(new GameScreen(app,"coin_1"));
     }
 
     @Override

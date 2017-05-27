@@ -1,11 +1,11 @@
 package com.rockets.gamescreen.world;
+
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.PhysicsConst;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
 import com.rockets.gamescreen.physics.CollisionGroup;
+import com.rockets.gamescreen.physics.Side;
 
 /**
  * name: PhysicalGameEntity
@@ -16,15 +16,14 @@ import com.rockets.gamescreen.physics.CollisionGroup;
  **/
 public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity,Collidable {
     protected Vector2 vel = new Vector2();
-    protected Actor shadow;
     Vector2 delta = new Vector2();
     protected CollisionGroup collisionGroup = CollisionGroup.none;
     float radiusCache;
-    protected float shadowOffsetY = 12;
+    private float friction = 1;
+    private float bounciness;
 
     public PhysicalEntity(IGame game) {
         super(game);
-        initShadow();
     }
 
 
@@ -34,35 +33,29 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
         radiusCache = 10+(float)Math.sqrt((Math.pow(getHeight(),2)+Math.pow(getWidth(),2)))/2;
     }
 
-    protected void initShadow(){
-
-    }
-
-
     @Override
     public void act(float delta) {
         super.act(delta);
-        tryMoveBy(vel);
+        vel.setLength(vel.len()-friction*delta);
+        vel.limit(PhysicsConst.ABS_VELOCITY);
+        tryMove();
         calcGravity(delta);
-
     }
 
-    public void tryMoveBy(Vector2 d) {
-        d.set(game.world().collisionManager().processMovement(this, d));
-        moveBy(d.x, d.y);
+    public void tryMove() {
 
+        vel.set(game.world().collisionManager().processMovement(this, vel));
+        moveBy(vel.x, vel.y);
     }
 
     @Override
     public boolean remove() {
-        shadow.remove();
-        shadow = null;
         return super.remove();
     }
 
     protected void calcGravity(float delta){
 
-        vel.add(0, PhysicsConst.GRAVITY*delta);
+        vel.add(0, -PhysicsConst.GRAVITY*delta);
     }
     @Override
     public Vector2 getVel() {
@@ -107,17 +100,39 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
     }
 
 
-
     @Override
     public void positionChanged() {
         game.world().ensureInBounds(this);
-        if(shadow != null) {
-            shadow.setPosition(getX() + getOriginX(), getY() + getOriginY() + shadowOffsetY, Align.center);
-        }
     }
 
     @Override
     public float getRadius() {
         return radiusCache;
+    }
+
+    public void onCollision(int side) {
+        if(Side.isHorizontal(side)){
+            vel.x *= -bounciness;
+        }
+        if(Side.isVertical(side)){
+            vel.y *= -bounciness;
+        }
+    }
+    protected void setBounciness(float bounciness){
+        this.bounciness = bounciness;
+    }
+    protected void setFriction(int friction) {
+        this.friction = friction;
+    }
+
+    @Override
+    public GameEntity getGameEntity() {
+        return this;
+    }
+
+    @Override
+    public void fresh() {
+        super.fresh();
+        vel.setZero();
     }
 }

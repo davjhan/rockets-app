@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
  * Copyright (c) 2016 David Han
  **/
 public interface Nested extends Disposable{
-    public void draw(Batch batch, float alphaModulation, float parentX, float parentY,float parentScaleX,float parentscaleY);
+    public void draw(Batch batch, float alphaModulation, float parentX, float parentY,float parentScaleX,float parentscaleY,float rotation);
     public void setPosition(float x, float y);
     public void setOrigin(int align);
 

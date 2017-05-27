@@ -23,4 +23,15 @@ public class Side {
         this.p2 = p2;
         this.type = type;
     }
+
+    public static boolean isHorizontal(int side) {
+        return side == LEFT || side == RIGHT;
+    }
+    public static boolean isVertical(int side) {
+        return side == TOP || side == BOTTOM;
+    }
+
+    public static int opposite(int sideType) {
+        return (sideType+2)%4;
+    }
 }

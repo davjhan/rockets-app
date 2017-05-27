@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.objects.Coin;
+import com.rockets.gamescripts.CollectChallenge;
 
 /**
  * name: CoinChallege
@@ -13,7 +14,7 @@ import com.rockets.gamescreen.objects.Coin;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class CoinChallenge extends Challenge {
+public class CoinChallenge extends CollectChallenge {
     Coin coin;
     public static final int PAD = 60;
     public static final int BOT_PAD = 60;
@@ -27,23 +28,26 @@ public class CoinChallenge extends Challenge {
     };
 
     @Override
-    public void setup() {
-        super.setup();
+    public void fresh() {
+        super.fresh();
         spawnCoin(COIN_SPOTS[0]);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        coin = new Coin(dir.game());
+        coin.setCoinListener(coinListener);
     }
 
     @Override
     protected void initHUD() {
         hud.updateScore(score);
-        hud.updateGoal(goal);
+        hud.updateGoal(challengeModel.goal);
     }
 
     private void spawnCoin(Vector2 loc){
-        if(coin == null){
-            coin = new Coin(dir.game());
-            coin.setCoinListener(coinListener);
-        }
-        coin.reset();
+        coin.fresh();
         dir.gameWorld().bodies().spawn(coin,loc.x,loc.y, Align.center);
     }
 
@@ -61,16 +65,15 @@ public class CoinChallenge extends Challenge {
             dir.gameWorld().shakeScreen(2);
             score++;
             hud.updateScore(score);
+            evaluateProgress();
         }
     };
 
-    @Override
-    public void update(float delta) {
-        super.update(delta);
-    }
+
 
     @Override
     public void dispose() {
+        coin.dispose();
         super.dispose();
     }
 }

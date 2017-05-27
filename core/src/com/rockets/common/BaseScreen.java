@@ -2,11 +2,15 @@ package com.rockets.common;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.rockets.Rockets;
 import com.rockets.constants.Display;
+
+import java.util.Map;
 
 /**
  * name: BaseScreen
@@ -18,10 +22,13 @@ import com.rockets.constants.Display;
 public abstract class BaseScreen implements Screen {
     protected IApp app;
     public Stage stage;
+    private Map<String,Object> extras;
 
-    public BaseScreen(IApp app){
+    public BaseScreen(IApp app,Map<String,Object> extras){
         this.app = app;
-        stage = new Stage(new FitViewport(Display.WIDTH,Display.HEIGHT));
+        this.extras = extras;
+        FitViewport vp = new FitViewport(Display.WIDTH,Display.HEIGHT);
+        stage = new Stage(vp);
 
     }
 

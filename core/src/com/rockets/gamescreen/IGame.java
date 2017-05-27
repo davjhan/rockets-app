@@ -20,7 +20,6 @@ public interface IGame {
     GameAssets gameAssets();
 
     MenuAssets menuAssets();
-
     void crash(Exception e);
 
     void quit();

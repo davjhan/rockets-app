@@ -34,7 +34,7 @@ public class SpriteActor extends Actor implements Disposable{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         for(Nested s:sprites){
-            s.draw(batch,parentAlpha,getX(),getDrawingY(),getScaleX(),getScaleY());
+            s.draw(batch,parentAlpha,getX(),getDrawingY(),getScaleX(),getScaleY(),getRotation());
         }
         super.draw(batch, parentAlpha);
     }
@@ -47,6 +47,13 @@ public class SpriteActor extends Actor implements Disposable{
 
     protected Nested addSprite(Nested sprite) {
         sprites.add(sprite);
+        return sprite;
+    }
+    protected Nested setSprite(TextureRegion textureRegion) {
+        sprites.clear();
+        NestedSprite sprite = new NestedSprite(textureRegion);
+        sprites.add(sprite);
+        setSize(sprite.getWidth(),sprite.getHeight());
         return sprite;
     }
 

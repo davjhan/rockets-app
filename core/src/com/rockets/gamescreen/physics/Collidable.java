@@ -1,5 +1,7 @@
 package com.rockets.gamescreen.physics;
 
+import com.rockets.gamescreen.world.GameEntity;
+
 /**
  * name: Collidable
  * desc:
@@ -9,9 +11,11 @@ package com.rockets.gamescreen.physics;
  **/
 public interface Collidable {
     CollisionGroup getCollisionGroup();
+    void onHit(Collidable gameEntity);
     public float getX();
     public float getY();
     public float getWidth();
     public float getHeight();
     public float getRadius();
+    public GameEntity getGameEntity();
 }

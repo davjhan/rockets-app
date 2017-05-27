@@ -31,7 +31,7 @@ public class NestedActor implements Nested, Pool.Poolable {
     }
 
     @Override
-    public void draw(Batch batch, float alphaModulation, float parentX, float parentY, float parentScaleX, float parentScaleY) {
+    public void draw(Batch batch, float alphaModulation, float parentX, float parentY, float parentScaleX, float parentScaleY,float rotation) {
         if(actor != null){
             temp.set(parentX-parentPos.x,parentY-parentPos.y);
             actor.moveBy(temp.x,temp.y);
@@ -39,6 +39,7 @@ public class NestedActor implements Nested, Pool.Poolable {
             actor.setScale(actor.getScaleX()*temp.x,actor.getScaleY()*temp.y);
             parentPos.set(parentX,parentY);
             parentScale.set(parentScaleX,parentScaleY);
+            actor.setRotation(rotation);
             actor.draw(batch, alphaModulation);
         }
 

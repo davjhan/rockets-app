@@ -8,5 +8,5 @@ package com.rockets.gamescreen.physics;
  * Copyright (c) 2016 David Han
  **/
 public enum CollisionGroup {
-    none,wall
+    none,player, touchable,wall
 }
