@@ -36,6 +36,10 @@ public abstract class BaseChallenge extends BaseSceneScript {
         player.addStateListener(new StateListener(){
             @Override
             public void onStateChanged(String oldState, String newState) {
+                if(newState.equals(Player.STATE_DEAD)){
+                    endGame();
+                    return;
+                }
                 if(oldState.equals(Player.STATE_READY) && !newState.equals(Player.STATE_READY)){
                     setState(STATE_RUNNING);
                 }
@@ -57,7 +61,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void update(float delta) {
         if(!isState(STATE_PAUSED)) {
-            if(player.getTop() < -Display.UNIT){
+            if(player.getTop() < -24){
                 endGame();
             }
         }
@@ -70,7 +74,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
 
                 @Override
                 public void onLeaveGame() {
-
+                    dir.gameWorld().goHome();
                 }
 
                 @Override
@@ -79,7 +83,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
                 }
             });
             dir.gameWorld().showModal(gameOverModal);
-            dir.gameWorld().shakeScreen(10);
+            dir.gameWorld().shakeScreen(5);
         }
 
     }
@@ -87,7 +91,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void setState(String state) {
         super.setState(state);
-        dir.gameWorld().setPaused(isState(STATE_PAUSED));
+        dir.gameWorld().setPaused(isState(STATE_PAUSED) );
     }
 
     @Override
