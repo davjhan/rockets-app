@@ -19,22 +19,22 @@ import java.util.List;
  * Copyright (c) 2016 David Han
  **/
 public class CollisionManager {
-    IGameWorld world;
-    GameGroup<Actor> talls;
-    Vector2 tempMinVector;
-    Vector2[] tempCorners;
-    Vector2[] tempCorners2;
-    Side[] tempSides;
-    Vector2 temp = new Vector2();
-    Vector2 temp2 = new Vector2();
-    Vector2 tempSegSegIntersection = new Vector2();
+    private IGameWorld world;
+    private GameGroup<Actor> talls;
+    private Vector2 tempMinVector;
+    private Vector2[] tempCorners;
+    private Vector2[] tempCorners2;
+    private Side[] tempSides;
+    private Vector2 temp = new Vector2();
+    private Vector2 temp2 = new Vector2();
+    private Vector2 tempSegSegIntersection = new Vector2();
 
     /**
      * Temp var.
      */
-    float tempLen;
-    float tempMinLen;
-    Collidable tempReciever;
+    private float tempLen;
+    private float tempMinLen;
+    Collidable tempReceiver;
     RelevantCollisionParts tempRelevantParts;
 
     public enum Corner {
@@ -57,14 +57,14 @@ public class CollisionManager {
             if (!(receiverActor instanceof Collidable)) {
                 continue;
             }
-            tempReciever = (Collidable) receiverActor;
-            if (!canCollideWith(entity.getCollisionGroup(), tempReciever.getCollisionGroup())) {
-                if (canTouch(entity.getCollisionGroup(), tempReciever.getCollisionGroup())) {
-                    processTouch(entity, tempReciever);
+            tempReceiver = (Collidable) receiverActor;
+            if (!canCollideWith(entity.getCollisionGroup(), tempReceiver.getCollisionGroup())) {
+                if (canTouch(entity.getCollisionGroup(), tempReceiver.getCollisionGroup())) {
+                    processTouch(entity, tempReceiver);
                 }
                 continue;
             }
-            if (!inRange(entity, tempReciever)) {
+            if (!inRange(entity, tempReceiver)) {
                 continue;
             }
             if (tempMinVector.isZero()) {
@@ -92,8 +92,8 @@ public class CollisionManager {
                 }
 
             } catch (IsPressedAgainstSide e) {
-                entity.onHit(tempReciever);
-                tempReciever.onHit(entity);
+                entity.onHit(tempReceiver);
+                tempReceiver.onHit(entity);
                 if (e.sideType == Side.TOP || e.sideType == Side.BOTTOM) {
                     delta.y = 0;
                 } else {
@@ -149,7 +149,7 @@ public class CollisionManager {
         return minVector;
     }
 
-    public class RelevantCollisionParts {
+    private class RelevantCollisionParts {
         List<Vector2> entityCorners;
         List<Side> receiverSides;
     }
@@ -157,7 +157,10 @@ public class CollisionManager {
     /**
      * Returns the corners of the entity and sides of the receiver that is necessary to test.
      *
-     * @param receiver
+     * @param entityCorners all corners of entity
+     * @param delta movement delta
+     * @param receiver the object being tested against.
+     * @return
      */
     private RelevantCollisionParts getRelevantCornersAndSides(Vector2[] entityCorners,
                                                               Vector2 delta, Actor receiver) {
@@ -230,31 +233,28 @@ public class CollisionManager {
     /**
      * A method to see if they are close enough to warrant closer analysis.
      *
-     * @param entity
-     * @param reciever
-     * @return
+     * @param entity Mover
+     * @param receiver The other
+     * @return if they are close enough to warrant closer analysis
      */
-    private boolean inRange(Collidable entity, Collidable reciever) {
+    private boolean inRange(Collidable entity, Collidable receiver) {
         Vector2 centerEntity =
                 new Vector2((entity.getX() + entity.getWidth() / 2),
                         (entity.getY() + entity.getHeight() / 2));
         Vector2 centerReciever =
-                new Vector2((reciever.getX() + reciever.getWidth() / 2),
-                        (reciever.getY() + reciever.getHeight() / 2));
+                new Vector2((receiver.getX() + receiver.getWidth() / 2),
+                        (receiver.getY() + receiver.getHeight() / 2));
 
-        return (centerEntity.dst(centerReciever) <= entity.getRadius() + reciever.getRadius());
+        return (centerEntity.dst(centerReciever) <= entity.getRadius() + receiver.getRadius());
     }
 
-    private boolean canCollideWith(CollisionGroup mover, CollisionGroup reciever) {
-        if (reciever == CollisionGroup.wall) {
-            return true;
-        }
-        return false;
+    private boolean canCollideWith(CollisionGroup mover, CollisionGroup receiver) {
+        return receiver == CollisionGroup.wall;
     }
 
-    private boolean canTouch(CollisionGroup mover, CollisionGroup reciever) {
-        if (mover == CollisionGroup.player || reciever == CollisionGroup.player) {
-            if (mover == CollisionGroup.touchable || reciever == CollisionGroup.touchable) {
+    private boolean canTouch(CollisionGroup mover, CollisionGroup receiver) {
+        if (mover == CollisionGroup.player || receiver == CollisionGroup.player) {
+            if (mover == CollisionGroup.touchable || receiver == CollisionGroup.touchable) {
                 return true;
             }
         }
