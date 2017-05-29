@@ -8,10 +8,10 @@ package com.rockets.uiscreens.views;
  * Copyright (c) 2017 David Han
  **/
 public interface Selectable {
-    public boolean isSelected();
-    public void select();
-    public void deselect();
-    public void refresh();
-    public boolean isSelectable();
+    boolean isSelected();
+    void select();
+    void deselect();
+    void refresh();
+    boolean isSelectable();
 
 }

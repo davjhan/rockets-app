@@ -1,6 +1,7 @@
 package com.rockets.graphics;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
@@ -21,7 +22,9 @@ public class NestedActor implements Nested, Pool.Poolable {
     public static NestedActor newInstance(Actor actor){
         return Pools.get(NestedActor.class).obtain().init(actor);
     }
-
+    public static NestedActor newInstance(TextureRegion region){
+        return Pools.get(NestedActor.class).obtain().init(new SingleSpriteActor(region));
+    }
     private NestedActor init(Actor actor) {
         this.actor = actor;
         return this;

@@ -1,6 +1,7 @@
 package com.rockets.gamescreen.world;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.rockets.gamescreen.IGame;
 import com.rockets.graphics.SpriteActor;
@@ -14,6 +15,7 @@ import com.rockets.graphics.SpriteActor;
  **/
 public abstract class GameEntity extends SpriteActor implements Stateable,Freshable {
     public static final String STATE_READY = "ready";
+    public static final String STATE_DEAD = "dead";
     public IGame game;
     private String state;
     private StateListener stateListener;
@@ -21,6 +23,7 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
     public GameEntity(IGame game) {
         super();
         this.game = game;
+        setTouchable(Touchable.disabled);
     }
     protected abstract void init();
     @Override
@@ -55,6 +58,7 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
         return getRotation()+90;
     }
     public void setState(String state) {
+        if(this.state.equals(state))return;
         String oldstate = this.state;
         this.state = state;
         if(stateListener != null) {
@@ -62,7 +66,9 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
         }
 
     }
-
+    public boolean isAsleep(){
+        return isState(STATE_READY) || isState(STATE_DEAD);
+    }
     @Override
     public void addStateListener(StateListener listener) {
         this.stateListener = listener;
@@ -81,5 +87,6 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
     public void fresh() {
         this.state = STATE_READY;
         setRotation(0);
+        clearActions();
     }
 }

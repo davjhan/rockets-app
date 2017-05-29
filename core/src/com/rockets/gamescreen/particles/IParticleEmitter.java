@@ -10,5 +10,5 @@ import com.badlogic.gdx.utils.Disposable;
  * Copyright (c) 2017 David Han
  **/
 public interface IParticleEmitter extends Disposable{
-    public void act(float delta);
+    void act(float delta);
 }

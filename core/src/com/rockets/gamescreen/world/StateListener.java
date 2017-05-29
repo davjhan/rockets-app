@@ -8,5 +8,5 @@ package com.rockets.gamescreen.world;
  * Copyright (c) 2017 David Han
  **/
 public interface StateListener {
-    public void onStateChanged(String oldState,String newState);
+    void onStateChanged(String oldState, String newState);
 }

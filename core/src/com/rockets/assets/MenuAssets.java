@@ -28,6 +28,8 @@ public class MenuAssets extends AssetGroup{
     public NinePatch[] gameButton;
     public NinePatch[] scrollbar;
     public NinePatch[] levelBar;
+    public NinePatch[] levelButtonsRegular;
+    public NinePatch[] levelButtonsCompleted;
     public NinePatch[] toolbarBG;
     public TextureRegion[] hearts;
     public TextureRegion[] menuIcons;
@@ -38,8 +40,11 @@ public class MenuAssets extends AssetGroup{
         NinePatch[][] buttons = cutNinesGroup2d(atlas,"buttons",18,12,3);
         btnGeneral = sliceNines(buttons,0,2);
         btnPrimary = sliceNines(buttons,1,2);
+        NinePatch[][] levelButtons = cutNinesGroup2d(atlas,"levelButtons",18,18,4);
+        levelButtonsRegular = sliceNines(levelButtons,0,2);
+        levelButtonsCompleted = sliceNines(levelButtons,1,2);
 
-        TextureRegion[][] bgTiles = cut(atlas,"bgTiles",30,30);
+        TextureRegion[][] bgTiles = cut(atlas,"bgTiles",60,60);
 
 
         connectionStrength = cutLinear(atlas,"connectionstrength",7,7);

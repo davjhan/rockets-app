@@ -92,8 +92,8 @@ public class CollisionManager {
                 }
 
             } catch (IsPressedAgainstSide e) {
-                entity.onHit(tempReceiver);
-                tempReceiver.onHit(entity);
+                entity.onHit(tempReceiver,e.sideType);
+                tempReceiver.onHit(entity,Side.opposite(e.sideType));
                 if (e.sideType == Side.TOP || e.sideType == Side.BOTTOM) {
                     delta.y = 0;
                 } else {
@@ -114,8 +114,8 @@ public class CollisionManager {
         Rectangle.tmp.set(mover.getX(),mover.getY(),mover.getWidth(),mover.getHeight());
         Rectangle.tmp2.set(reciever.getX(),reciever.getY(),reciever.getWidth(),reciever.getHeight());
         if(Rectangle.tmp.overlaps(Rectangle.tmp2)){
-            mover.onHit(reciever);
-            reciever.onHit(mover);
+            mover.onHit(reciever, Side.UNDEFINED);
+            reciever.onHit(mover, Side.UNDEFINED);
         }
     }
 

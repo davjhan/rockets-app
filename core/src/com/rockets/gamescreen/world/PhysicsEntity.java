@@ -10,9 +10,9 @@ import com.badlogic.gdx.math.Vector2;
  * Copyright (c) 2016 David Han
  **/
 public interface PhysicsEntity {
-    public Vector2 getVel();
-    public Vector2 getDelta();
-    public void setDelta(Vector2 delta);
-    public void addVelX(float velX);
-    public void addVelY(float velY);
+    Vector2 getVel();
+    Vector2 getDelta();
+    void setDelta(Vector2 delta);
+    void addVelX(float velX);
+    void addVelY(float velY);
 }

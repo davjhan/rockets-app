@@ -12,7 +12,7 @@ import com.rockets.constants.Spacing;
 import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.BasicModal;
-
+import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 
 /**
  * name: GameOverModal
@@ -43,7 +43,7 @@ public class GameOverModal extends BasicModal {
     @Override
     protected void initContents() {
 
-        HanTextButton readyButton = new HanTextButton("Play Again",  Font.h2,Colr.TEXT_DARK,new OnClickListener() {
+        HanTextButton readyButton = new HanTextButton("PLAY AGAIN",  Font.h2,Colr.TEXT_DARK,new OnClickListener() {
             @Override
             public void onClick() {
                 closeModal();

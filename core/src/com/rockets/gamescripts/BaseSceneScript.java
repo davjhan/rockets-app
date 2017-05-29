@@ -1,7 +1,6 @@
 package com.rockets.gamescripts;
 
 import com.rockets.gamescreen.world.StateListener;
-import com.rockets.gamescreen.world.Stateable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public abstract class BaseSceneScript implements SceneScript,Stateable,StateListener {
+public abstract class BaseSceneScript implements SceneScript,StateListener {
     protected SceneDirector dir;
     private String gameState;
 
@@ -22,6 +21,8 @@ public abstract class BaseSceneScript implements SceneScript,Stateable,StateList
     public static final String STATE_RUNNING = "running";
     public static final String STATE_PAUSED = "paused";
     public static final String STATE_END = "end";
+
+    private String cacheGameState;
     private List<StateListener> stateListeners;
 
 
@@ -31,11 +32,12 @@ public abstract class BaseSceneScript implements SceneScript,Stateable,StateList
         init();
     }
 
-    protected abstract void init();
+    protected void init(){
+        stateListeners = new ArrayList<>();
+    }
 
     @Override
     public void fresh() {
-        stateListeners  = new ArrayList<>();
         setState(STATE_READY);
 
         addStateListener(this);
@@ -70,5 +72,24 @@ public abstract class BaseSceneScript implements SceneScript,Stateable,StateList
     @Override
     public void addStateListener(StateListener listener) {
         stateListeners.add(listener);
+    }
+
+    @Override
+    public void setPaused(boolean paused) {
+        if(paused){
+            if(isState(STATE_PAUSED)) return;
+            cacheGameState = gameState;
+            setState(STATE_PAUSED);
+        }else{
+            if(cacheGameState != null) {
+                setState(cacheGameState);
+                cacheGameState = null;
+            }
+        }
+    }
+
+    @Override
+    public boolean isPauseable() {
+        return isState(STATE_RUNNING) || isState(STATE_READY);
     }
 }

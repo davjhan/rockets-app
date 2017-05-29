@@ -62,7 +62,7 @@ public class TextureColorer {
 
     public static Texture getWhiteGameTexture(Texture texture) {
             Pixmap pixmap = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
-          pixmap.setBlending(Pixmap.Blending.None);
+          Pixmap.setBlending(Pixmap.Blending.None);
             for (int y = 2; y < pixmap.getHeight(); y++) {
                 for (int x = 0; x < pixmap.getWidth(); x++) {
                     if (getGamePixmap(texture).getPixel(x, y) != 0) {

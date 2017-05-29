@@ -11,11 +11,11 @@ import com.rockets.gamescreen.world.GameEntity;
  **/
 public interface Collidable {
     CollisionGroup getCollisionGroup();
-    void onHit(Collidable gameEntity);
-    public float getX();
-    public float getY();
-    public float getWidth();
-    public float getHeight();
-    public float getRadius();
-    public GameEntity getGameEntity();
+    void onHit(Collidable gameEntity, int side);
+    float getX();
+    float getY();
+    float getWidth();
+    float getHeight();
+    float getRadius();
+    GameEntity getGameEntity();
 }

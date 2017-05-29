@@ -8,5 +8,5 @@ package com.rockets.uiscreens.views;
  * Copyright (c) 2017 David Han
  **/
 public interface Refreshable {
-    public void refresh();
+    void refresh();
 }

@@ -10,7 +10,6 @@ import com.rockets.common.BaseUIScreen;
 import com.rockets.common.IApp;
 import com.rockets.common.IAppInitializer;
 import com.rockets.data.ContentDB;
-import com.rockets.gamescreen.GameScreen;
 import com.rockets.utils.GraphicsFactory;
 
 /**
@@ -68,6 +67,7 @@ public class LaunchScreen extends BaseUIScreen{
     }
 
     private void onLoadDone() {
-        app.screenManager().pushScreen(GameScreen.class,GameScreen.getChallengeExtras("coin_1"));
+//        app.screenManager().pushScreen(GameScreen.class,GameScreen.getChallengeExtras("coin_1"));
+        app.screenManager().pushScreen(HomeScreen.class);
     }
 }

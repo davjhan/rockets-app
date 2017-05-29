@@ -5,7 +5,7 @@ import com.rockets.constants.Display;
 import com.rockets.data.readonly.Challenges;
 import com.rockets.gamescreen.hud.ChallengeHud;
 import com.rockets.gamescreen.modals.GameOverModal;
-import com.rockets.gamescreen.modals.OptionsModalListener;
+import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 import com.rockets.gamescreen.objects.Player;
 import com.rockets.gamescreen.world.StateListener;
 import com.rockets.modal.Modal;
@@ -32,6 +32,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
 
     @Override
     protected void init() {
+        super.init();
         player = new Player(dir.game());
         player.addStateListener(new StateListener(){
             @Override
@@ -50,6 +51,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void fresh() {
         super.fresh();
+        dir.gameWorld().bodies().clearChildren();
         hud.fresh();
         player.fresh();
         dir.gameWorld().bodies().spawn(
@@ -78,7 +80,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
                 }
 
                 @Override
-                public void onDissmiss(Modal modal) {
+                public void onDismiss(Modal modal) {
                     fresh();
                 }
             });

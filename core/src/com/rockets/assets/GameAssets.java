@@ -22,7 +22,7 @@ import java.util.Map;
 public class GameAssets extends AssetGroup{
     public Map<String,FourFacingFramesGroup> animals;
     public TextureRegion[] coin;
-    public TextureRegion[] spike;
+    public TextureRegion[] specialObjects;
     public Array<TextureRegion> sparkles;
     public Array<TextureRegion> glisten;
 
@@ -35,7 +35,7 @@ public class GameAssets extends AssetGroup{
     public GameAssets(AssetManager manager){
         TextureAtlas atlas = manager.get(GameLoader.getAtlasFileName());
         coin = cutLinear(atlas,"coin",Display.UNIT,Display.UNIT);
-        spike = cutLinear(atlas,"spike",54,54);
+        specialObjects = cutLinear(atlas,"specialObjects",50,50);
         namePlate = cutNinesGroup(atlas,"nameplate",12,8,3)[0];
         clockFrame = cutNinesGroup(atlas,"clockframe",30,16,4)[0];
         crosshair = getKeyFrames(cut(atlas,"crosshair",38,38),0,1,3);

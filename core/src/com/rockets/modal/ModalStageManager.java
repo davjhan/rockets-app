@@ -36,7 +36,7 @@ public class ModalStageManager implements Disposable{
 
     private ModalListener modalListener = new ModalListener() {
         @Override
-        public void onDissmiss(Modal modal) {
+        public void onDismiss(Modal modal) {
             modal.removeModalListener(this);
             modalStack.pop();
         }

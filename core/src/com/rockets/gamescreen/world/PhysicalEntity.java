@@ -43,9 +43,9 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
     }
 
     public void tryMove() {
-
-        vel.set(game.world().collisionManager().processMovement(this, vel));
-        moveBy(vel.x, vel.y);
+        delta.set(vel);
+        delta.set(game.world().collisionManager().processMovement(this, delta));
+        moveBy(delta.x, delta.y);
     }
 
     @Override
@@ -83,12 +83,6 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
         this.delta = delta;
     }
 
-
-    @Override
-    public float getDrawingY() {
-        return getY();
-    }
-
     @Override
     public CollisionGroup getCollisionGroup() {
         return collisionGroup;
@@ -111,13 +105,13 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
     }
 
     public void onCollision(int side) {
-        if(Side.isHorizontal(side)){
-            vel.x *= -bounciness;
-        }
-        if(Side.isVertical(side)){
-            vel.y *= -bounciness;
-        }
+        Side.applyBounce(vel,side,bounciness);
     }
+
+    public float getBounciness() {
+        return bounciness;
+    }
+
     protected void setBounciness(float bounciness){
         this.bounciness = bounciness;
     }

@@ -3,7 +3,6 @@
         "id": "coin_1",
         "name": "Basic Level 1",
         "type": "collect",
-        "goal": 8,
         "difficulty": 0,
         "classname": "CoinChallenge"
     },
@@ -11,16 +10,14 @@
         "id": "coin_2",
         "name": "Coin Collector II",
         "type": "collect",
-        "goal": 10,
         "difficulty": 0,
-        "classname": "CoinChallenge"
+        "classname": "LockboxChallenge"
     },
     {
         "id": "spikes_1",
         "name": "Intro to spikes",
         "type": "collect",
-        "goal": 3,
         "difficulty": 0,
-        "classname": "CoinChallenge"
+        "classname": "EdgeSpikeChallenge"
     },
 ]

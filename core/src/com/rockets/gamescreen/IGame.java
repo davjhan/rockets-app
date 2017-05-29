@@ -5,6 +5,7 @@ import com.rockets.assets.GameAssets;
 import com.rockets.assets.MenuAssets;
 import com.rockets.common.IApp;
 import com.rockets.gamescreen.world.GameWorld;
+import com.rockets.gamescripts.SceneScript;
 
 /**
  * name: IGame

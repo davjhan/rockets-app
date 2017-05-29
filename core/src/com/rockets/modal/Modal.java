@@ -89,13 +89,13 @@ public abstract class Modal extends WidgetGroup implements Disposable {
     }
 
     protected void closeModal() {
-        List<ModalListener> mlSnapshot = new ArrayList<>(modalListeners);
+        if(!modalListeners.isEmpty()){
+            List<ModalListener> mlSnapshot = new ArrayList<>(modalListeners);
 
-        for(ModalListener modalListener: mlSnapshot){
-           modalListener.onDissmiss(this);
+            for(ModalListener modalListener: mlSnapshot){
+                modalListener.onDismiss(this);
+            }
         }
-        modalListeners.clear();
-        modalListeners = null;
         remove();
     }
 
@@ -115,7 +115,8 @@ public abstract class Modal extends WidgetGroup implements Disposable {
     }
     @Override
     public void dispose() {
-
+        modalListeners.clear();
+        modalListeners = null;
         app = null;
     }
 

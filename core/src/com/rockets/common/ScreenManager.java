@@ -45,6 +45,9 @@ public class ScreenManager {
         screenStack.push(newScreen);
         setScreen(newScreen);
     }
+    public void restoreScreen(Class screenClass){
+        restoreScreen(screenClass,null);
+    }
     public void restoreScreen(Class screenClass,Map<String,Object> extras){
         BaseScreen restoreScreen = null;
         int i = 0;

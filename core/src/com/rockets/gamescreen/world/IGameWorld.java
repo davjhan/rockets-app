@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.Hud;
 import com.rockets.gamescreen.physics.CollisionManager;
+import com.rockets.gamescripts.SceneScript;
 import com.rockets.modal.Modal;
 
 /**
@@ -25,13 +26,17 @@ public interface IGameWorld {
 
     void ensureInBounds(Actor actor);
     void ensureInBounds(PhysicalEntity actor);
-    public void showOptionsMenu();
-    public void shakeScreen(int intensity);
+    void showOptionsMenu();
+    void shakeScreen(int intensity);
 
-    public void showModal(Modal modal);
+    void showModal(Modal modal);
 
     String getState();
     boolean isState(String state);
     void setState(String state);
     void newGame();
+
+
+    SceneScript sceneScript();
+    void goHome();
 }

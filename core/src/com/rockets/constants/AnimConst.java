@@ -10,4 +10,5 @@ package com.rockets.constants;
 public class AnimConst {
     public static final float MEDIUM = 0.16f;
     public static final float SHORT = 0.1f;
+    public static final float FAST = 0.05f;
 }

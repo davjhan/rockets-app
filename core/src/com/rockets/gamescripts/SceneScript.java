@@ -2,6 +2,7 @@ package com.rockets.gamescripts;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.gamescreen.world.Freshable;
+import com.rockets.gamescreen.world.Stateable;
 
 /**
  * name: SceneScript
@@ -10,7 +11,10 @@ import com.rockets.gamescreen.world.Freshable;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public interface SceneScript extends Disposable,Freshable {
+public interface SceneScript extends Disposable,Freshable,Stateable {
     void create(SceneDirector director);
     void update(float delta);
+    void setState(String state);
+    void setPaused(boolean paused);
+    boolean isPauseable();
 }

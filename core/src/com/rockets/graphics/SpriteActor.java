@@ -46,14 +46,17 @@ public class SpriteActor extends Actor implements Disposable{
     }
 
     protected Nested addSprite(Nested sprite) {
+        if(sprites.isEmpty()){
+            setSize(sprite.getWidth(),sprite.getHeight());
+        }
         sprites.add(sprite);
+
         return sprite;
     }
     protected Nested setSprite(TextureRegion textureRegion) {
         sprites.clear();
         NestedSprite sprite = new NestedSprite(textureRegion);
-        sprites.add(sprite);
-        setSize(sprite.getWidth(),sprite.getHeight());
+        addSprite(sprite);
         return sprite;
     }
 

@@ -25,7 +25,6 @@ public class HanIconButton extends Table implements Clickable {
     private Drawable bgDown;
     private Drawable iconUp;
     private Drawable iconDown;
-    private float offsetY = 1;
     private float pressedOffsetY = 1;
     private Image image;
 
@@ -51,6 +50,7 @@ public class HanIconButton extends Table implements Clickable {
     public void init() {
         image = new Image(iconUp);
         image.setScaling(Scaling.none);
+        float offsetY = 1;
         add(image).center().grow().padBottom(offsetY);
         setTouchable(Touchable.enabled);
         pad(8);

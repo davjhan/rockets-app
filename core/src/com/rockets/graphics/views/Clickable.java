@@ -8,5 +8,5 @@ package com.rockets.graphics.views;
  * Copyright (c) 2017 David Han
  **/
 public interface Clickable {
-    public void addClickListener(final OnClickListener clickListener);
+    void addClickListener(final OnClickListener clickListener);
 }

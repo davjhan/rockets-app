@@ -8,5 +8,5 @@ package com.rockets.gamescreen.particles;
  * Copyright (c) 2017 David Han
  **/
 public interface ParticleListener {
-    public void onDestroyed(IParticle particle);
+    void onDestroyed(IParticle particle);
 }

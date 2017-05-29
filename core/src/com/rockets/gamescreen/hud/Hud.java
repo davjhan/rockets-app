@@ -10,9 +10,13 @@ import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.ActorGroup;
 import com.rockets.gamescreen.IGame;
-import com.rockets.gamescreen.world.GameGroup;
+import com.rockets.gamescreen.modals.OptionsModal;
+import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 import com.rockets.gamescreen.world.Freshable;
+import com.rockets.gamescreen.world.GameGroup;
 import com.rockets.graphics.views.HanIconButton;
+import com.rockets.graphics.views.OnClickListener;
+import com.rockets.modal.Modal;
 
 import static com.rockets.constants.Display.TOPBAR_HEIGHT;
 
@@ -32,6 +36,7 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     Table centerGroup;
     Table rightGroup;
     Table instructions;
+    OptionsModal optionsModal;
     public Hud(IGame game){
         this.game = game;
         this.app = game.iApp();
@@ -50,12 +55,34 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
 
         instructions = new Table();
         initInstructions();
+
+        optionsModal = new OptionsModal(app, new OptionsModalListener() {
+            @Override
+            public void onLeaveGame() {
+                game.world().goHome();
+            }
+
+            @Override
+            public void onDismiss(Modal modal) {
+                game.world().sceneScript().setPaused(false);
+            }
+        });
+
     }
 
     protected abstract void initInstructions();
 
     private void initCenterLabel() {
         pauseButton = new HanIconButton(app,app.menuAssets().icons[Icons.PAUSE]);
+
+        pauseButton.addClickListener(new OnClickListener() {
+            @Override
+            public void onClick() {
+                if(game.world().sceneScript().isPauseable()){
+                    spawnOptionsModal();
+                }
+            }
+        });
         centerGroup = new Table();
         rightGroup = new Table();
 
@@ -63,6 +90,12 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
         topTable.add(centerGroup).align(Align.center).grow();
         topTable.add(rightGroup).align(Align.center).fill().minWidth(pauseButton.getHeight());
     }
+
+    protected void spawnOptionsModal(){
+        game.world().sceneScript().setPaused(true);
+        game.world().showModal(optionsModal);
+    }
+
     public void setInstructionsVisible(boolean visible){
         instructions.setVisible(visible);
     }
@@ -75,6 +108,7 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     public void dispose() {
         game = null;
         app = null;
+        optionsModal.dispose();
     }
 
     @Override

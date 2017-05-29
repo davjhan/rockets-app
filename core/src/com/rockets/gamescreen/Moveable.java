@@ -10,6 +10,6 @@ import com.badlogic.gdx.math.Vector2;
  * Copyright (c) 2016 David Han
  **/
 public interface Moveable {
-    public void tryMoveBy(float x, float y);
-    public void tryMoveBy(Vector2 delta);
+    void tryMoveBy(float x, float y);
+    void tryMoveBy(Vector2 delta);
 }

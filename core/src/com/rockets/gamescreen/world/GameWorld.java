@@ -9,12 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
-import com.rockets.gamescreen.CameraShaker;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.Hud;
 import com.rockets.gamescreen.physics.CollisionManager;
 import com.rockets.gamescreen.physics.Side;
+import com.rockets.graphics.ActionFactory;
 import com.rockets.modal.Modal;
+import com.rockets.uiscreens.HomeScreen;
 
 /**
  * name: GameWorld
@@ -168,7 +169,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     @Override
     public void shakeScreen(int intensity) {
-        Action action = CameraShaker.getShakeAction(intensity);
+        Action action = ActionFactory.shake(gameContainer,intensity);
         gameContainer.addAction(action);
     }
     public void update(float delta){
@@ -201,5 +202,12 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     public void showOptionsMenu() {
 
+    }
+
+
+
+    @Override
+    public void goHome() {
+        iApp.screenManager().restoreScreen(HomeScreen.class);
     }
 }

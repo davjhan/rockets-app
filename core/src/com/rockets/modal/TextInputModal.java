@@ -38,8 +38,8 @@ public class TextInputModal extends Modal{
         init();
         root.pack();
     }
-    public static interface TextInputListener extends ModalListener{
-        public void onTextReceived(String text);
+    public interface TextInputListener extends ModalListener{
+        void onTextReceived(String text);
     }
 
     @Override

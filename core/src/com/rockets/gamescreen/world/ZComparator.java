@@ -18,8 +18,8 @@ public class ZComparator implements Comparator<Actor> {
     private int e2depth;
     @Override
     public int compare(Actor actor, Actor actor2) {
-        bTemp1 = (Actor) actor;
-        bTemp2 = (Actor) actor2;
+        bTemp1 = actor;
+        bTemp2 = actor2;
         e1depth = (int)(bTemp1.getY()*100);
         e2depth = (int)(bTemp2.getY()*100);
         if( e1depth > e2depth){

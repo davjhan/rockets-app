@@ -24,5 +24,6 @@ public class Display {
 
     public static float WORLD_HEIGHT = HEIGHT;
     public static float WORLD_WIDTH = WIDTH;
+    public static final float WORLD_TOP = WORLD_HEIGHT-TOPBAR_HEIGHT;
 
 }

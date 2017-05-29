@@ -8,5 +8,5 @@ package com.rockets.modal;
  * Copyright (c) 2017 David Han
  **/
 public interface ModalListener {
-    public void onDissmiss(Modal modal);
+    void onDismiss(Modal modal);
 }

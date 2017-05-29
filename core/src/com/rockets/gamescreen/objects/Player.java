@@ -2,6 +2,7 @@ package com.rockets.gamescreen.objects;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,12 +23,13 @@ import com.rockets.graphics.NestedSprite;
  * Copyright (c) 2017 David Han
  **/
 public class Player extends PhysicalEntity implements IPlayer{
-    private static final float STRENGTH = 0.6f;
+    private static final float STRENGTH = 0.5f;
     private static final float ROTATION_STRENGTH = 30;
     private static final int MAX_ROT_VEL = 640;
     private float rotationVel;
     private int rotationDire = 1;
     private boolean fingerDown;
+    Actor touchPad;
 
     public static final String STATE_FALLING = "falling";
     public static final String STATE_THRUSTING = "thrusting";
@@ -36,8 +38,10 @@ public class Player extends PhysicalEntity implements IPlayer{
         super(game);
 
         init();
-
-        game.stage().addListener(clickListener);
+        touchPad = new Actor();
+        touchPad.setSize(Display.WORLD_WIDTH,Display.WORLD_HEIGHT);
+        game.world().background().addActorAt(0,touchPad);
+        touchPad.addListener(clickListener);
     }
     @Override
     protected void init(){
@@ -45,7 +49,7 @@ public class Player extends PhysicalEntity implements IPlayer{
         sprite = new NestedSprite(game.gameAssets().animals.get("bird").down.first());
         addSprite(sprite);
         setSizeTo(sprite);
-        setFriction(11);
+        setFriction(10);
         setBounciness(0.5f);
         setOrigin(Align.center);
     }
@@ -82,7 +86,7 @@ public class Player extends PhysicalEntity implements IPlayer{
 
     @Override
     public void act(float delta) {
-        if(isState(STATE_READY)){
+        if(isAsleep()){
             return;
         }
         if(fingerDown){
@@ -110,7 +114,16 @@ public class Player extends PhysicalEntity implements IPlayer{
     }
 
     @Override
-    public void onHit(Collidable gameEntity) {
+    public boolean remove() {
+        touchPad.remove();
+        return super.remove();
+    }
 
+    @Override
+    public void onHit(Collidable gameEntity, int side) {
+
+    }
+    public void getKilled(){
+        setState(STATE_DEAD);
     }
 }

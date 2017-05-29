@@ -6,12 +6,13 @@ import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.ChallengeHud;
 import com.rockets.gamescreen.hud.Hud;
 import com.rockets.gamescreen.modals.ChallengeIntroModal;
-import com.rockets.gamescreen.modals.OptionsModalListener;
+import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 import com.rockets.gamescreen.world.GameWorld;
 import com.rockets.gamescreen.world.IGameWorld;
+import com.rockets.gamescripts.BaseChallenge;
 import com.rockets.gamescripts.BaseSceneScript;
 import com.rockets.gamescripts.SceneDirector;
-import com.rockets.gamescripts.BaseChallenge;
+import com.rockets.gamescripts.SceneScript;
 import com.rockets.modal.Modal;
 
 /**
@@ -44,17 +45,18 @@ public class ChallengeGameWorld extends GameWorld implements SceneDirector {
             e.printStackTrace();
         }
         challenge.create(this,challengeModel,hud);
+        hud.attachChallenge(challenge);
         newGame();
         challenge.setState(BaseSceneScript.STATE_BACKGROUND);
         ChallengeIntroModal introModal = new ChallengeIntroModal(app(),challengeModel,
                 new OptionsModalListener() {
             @Override
             public void onLeaveGame() {
-
+                goHome();
             }
 
             @Override
-            public void onDissmiss(Modal modal) {
+            public void onDismiss(Modal modal) {
                 challenge.setState(BaseSceneScript.STATE_READY);
             }
         });
@@ -99,6 +101,10 @@ public class ChallengeGameWorld extends GameWorld implements SceneDirector {
         super.dispose();
     }
 
+    @Override
+    public SceneScript sceneScript() {
+        return challenge;
+    }
     @Override
     public IGameWorld gameWorld() {
         return this;

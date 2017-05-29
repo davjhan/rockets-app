@@ -5,7 +5,9 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,17 +18,35 @@ import java.util.Map;
  * Copyright (c) 2017 David Han
  **/
 public class Challenges {
+    public static final int EASY = 0;
     private Map<String,ChallengeModel> challenges;
+    private List<String> challengeIds;
+    public static int NUM_DIFFICULTIES = 1;
+
     public Challenges(String challengesJson) {
-        challenges = new HashMap<>();
+        challenges = new LinkedHashMap<>();
+        challengeIds = new ArrayList<>();
         JsonValue root = new JsonReader().parse(challengesJson);
         Json json = new Json();
         for(JsonValue c:root){
             ChallengeModel model = json.fromJson(ChallengeModel.class,c.toString());
             challenges.put(c.getString("id"),model);
+            challengeIds.add(c.getString("id"));
         }
     }
-
+    public String getNextChallengeId(String prevChallenge){
+        return challengeIds.get((challengeIds.indexOf(prevChallenge)+1)%challengeIds.size());
+    }
+    public List<List<ChallengeModel>> getAllByDifficulty(int difficulty){
+        List<List<ChallengeModel>> ret = new ArrayList<>();
+        for(int i = 0; i < NUM_DIFFICULTIES; i ++) {
+            ret.add(new ArrayList<ChallengeModel>());
+        }
+        for(ChallengeModel challenge:challenges.values()){
+            ret.get(challenge.difficulty).add(challenge);
+        }
+        return ret;
+    }
     public ChallengeModel getById(String challengeId) {
         return challenges.get(challengeId);
     }

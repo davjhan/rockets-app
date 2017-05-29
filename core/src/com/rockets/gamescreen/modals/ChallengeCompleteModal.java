@@ -10,6 +10,7 @@ import com.rockets.data.readonly.Challenges;
 import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.BasicModal;
+import com.rockets.modal.ModalListener;
 
 
 /**
@@ -21,9 +22,9 @@ import com.rockets.modal.BasicModal;
  **/
 public class ChallengeCompleteModal extends BasicModal {
     Table rightTable;
-    OptionsModalListener modalListener;
+    ChallengeCompleteModalListener modalListener;
     Challenges.ChallengeModel challenge;
-    public ChallengeCompleteModal(IApp app, Challenges.ChallengeModel challenge, OptionsModalListener modalListener) {
+    public ChallengeCompleteModal(IApp app, Challenges.ChallengeModel challenge, ChallengeCompleteModalListener modalListener) {
         super(app, modalListener,true,false);
         this.challenge = challenge;
         this.modalListener = modalListener;
@@ -46,22 +47,38 @@ public class ChallengeCompleteModal extends BasicModal {
         HanTextButton readyButton = new HanTextButton("NEXT CHALLENGE", new OnClickListener() {
             @Override
             public void onClick() {
+                modalListener.playAgain();
                 closeModal();
             }
         });
         readyButton.setStyle(VisUI.getSkin().get("primary", VisTextButton.VisTextButtonStyle.class));
 
-        HanTextButton leaveButton = new HanTextButton("EXIT", new OnClickListener() {
+        HanTextButton playAgainButton = new HanTextButton("PLAY AGAIN", new OnClickListener() {
             @Override
             public void onClick() {
-                modalListener.onLeaveGame();
+                modalListener.playAgain();
+                closeModal();
+            }
+        });
+        HanTextButton leaveButton = new HanTextButton("QUIT TO HOME", new OnClickListener() {
+            @Override
+            public void onClick() {
+                modalListener.goHome();
                 closeModal();
             }
         });
         contents.align(Align.bottom);
         contents.add(readyButton).spaceBottom(Spacing.REG);
         contents.row();
+        contents.add(playAgainButton).fill();
+        contents.row();
         contents.add(leaveButton).fill();
+
+    }
+    public static interface ChallengeCompleteModalListener extends ModalListener{
+        void goHome();
+        void playAgain();
+        void nextChallenge();
     }
 
 }

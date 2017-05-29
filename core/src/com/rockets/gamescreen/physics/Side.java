@@ -14,6 +14,7 @@ public class Side {
     public static final int RIGHT = 1;
     public static final int BOTTOM = 2;
     public static final int LEFT = 3;
+    public static final int UNDEFINED = -1;
     public Vector2 p1;
     public Vector2 p2;
     public int type;
@@ -33,5 +34,23 @@ public class Side {
 
     public static int opposite(int sideType) {
         return (sideType+2)%4;
+    }
+
+    /**
+     * Transforms the given vector to calculate the bounce.
+     */
+    public static void applyBounce(Vector2 vec, int side, float bounciness,float baseBounce) {
+        if(isHorizontal(side)){
+            vec.x *= -bounciness;
+        }
+        if(isVertical(side)){
+            vec.y *= -bounciness;
+        }
+        vec.setLength(vec.len()+baseBounce);
+
+    }
+    public static void applyBounce(Vector2 vec, int side, float bounciness) {
+        applyBounce(vec,side,bounciness,0);
+
     }
 }

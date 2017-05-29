@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Pool;
  * Copyright (c) 2017 David Han
  **/
 public interface IParticle extends Pool.Poolable, Disposable {
-    public void setParticleListener(ParticleListener listener);
+    void setParticleListener(ParticleListener listener);
 
     boolean remove();
 }

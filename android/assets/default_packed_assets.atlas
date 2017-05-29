@@ -20,7 +20,7 @@ bgTiles
   index: -1
 bgTiles2
   rotate: false
-  xy: 764, 202
+  xy: 850, 202
   size: 36, 48
   orig: 36, 48
   offset: 0, 0
@@ -48,7 +48,7 @@ button
   index: -1
 buttons
   rotate: false
-  xy: 802, 202
+  xy: 100, 38
   size: 36, 48
   orig: 36, 48
   offset: 0, 0
@@ -62,7 +62,7 @@ cardbg
   index: -1
 clockframe
   rotate: false
-  xy: 992, 340
+  xy: 68, 18
   size: 30, 16
   orig: 30, 16
   offset: 0, 0
@@ -76,7 +76,7 @@ coin
   index: -1
 connectionstrength
   rotate: false
-  xy: 68, 27
+  xy: 222, 93
   size: 28, 7
   orig: 28, 7
   offset: 0, 0
@@ -97,14 +97,14 @@ gamebutton
   index: -1
 hearts
   rotate: false
-  xy: 840, 233
+  xy: 954, 339
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
   index: -1
 hudbg
   rotate: false
-  xy: 100, 70
+  xy: 294, 142
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -123,6 +123,13 @@ icons
   orig: 96, 24
   offset: 0, 0
   index: -1
+levelButtons
+  rotate: false
+  xy: 138, 52
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
 levelbar
   rotate: false
   xy: 222, 102
@@ -139,28 +146,28 @@ menuicons
   index: -1
 nameplate
   rotate: false
-  xy: 404, 186
+  xy: 176, 80
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
   index: -1
 nametag
   rotate: false
-  xy: 404, 186
+  xy: 176, 80
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
   index: -1
 scrollbar
   rotate: false
-  xy: 294, 150
+  xy: 998, 348
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 318, 166
+  xy: 708, 208
   size: 84, 42
   orig: 84, 42
   offset: 0, 0
@@ -172,9 +179,16 @@ sparkles
   orig: 128, 32
   offset: 0, 0
   index: -1
+specialObjects
+  rotate: false
+  xy: 318, 108
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 spike
   rotate: false
-  xy: 708, 196
+  xy: 794, 196
   size: 54, 54
   orig: 54, 54
   offset: 0, 0
@@ -188,7 +202,7 @@ textfieldCursor
   index: -1
 toolbarbg
   rotate: false
-  xy: 954, 344
+  xy: 138, 38
   size: 36, 12
   orig: 36, 12
   offset: 0, 0
@@ -209,7 +223,7 @@ wall
   index: -1
 youtag
   rotate: false
-  xy: 404, 196
+  xy: 100, 24
   size: 14, 12
   orig: 14, 12
   offset: 0, 0

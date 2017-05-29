@@ -1,6 +1,5 @@
 package com.rockets.graphics.views;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -18,6 +17,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 public class HanTextButton extends VisTextButton implements Clickable {
     TextButtonStyle normalStyle;
     TextButtonStyle disabledStyle;
+    boolean enabled = true;
 
     public HanTextButton(String text, String styleName) {
         super(text, styleName);
@@ -37,17 +37,19 @@ public class HanTextButton extends VisTextButton implements Clickable {
 
     public HanTextButton(String text, String fontname, OnClickListener listener) {
         super(text);
-        getLabel().setStyle(new Label.LabelStyle(VisUI.getSkin().getFont(fontname),getLabel().getColor()));
+        getLabel().setStyle(new Label.LabelStyle(VisUI.getSkin().getFont(fontname), getLabel().getColor()));
         addClickListener(listener);
         init();
     }
+
     public HanTextButton(String text, String fontname, Color fontColor, OnClickListener listener) {
         super(text);
         getLabel().setStyle(new Label.LabelStyle(VisUI.getSkin().getFont(fontname), fontColor));
         addClickListener(listener);
         init();
     }
-    public HanTextButton(String text, String fontname,String fontColor, OnClickListener listener) {
+
+    public HanTextButton(String text, String fontname, String fontColor, OnClickListener listener) {
         super(text);
         getLabel().setStyle(new Label.LabelStyle(VisUI.getSkin().getFont(fontname), Colors.get(fontColor)));
         addClickListener(listener);
@@ -66,13 +68,13 @@ public class HanTextButton extends VisTextButton implements Clickable {
     }
 
     private void init() {
-        getLabel().scaleBy(2);
-        normalStyle = getStyle();
+        setNormalStyle(new TextButtonStyle(getStyle()));
         //disabledStyle =  VisUI.getSkin().get(HanSkin.DISABLED,TextButtonStyle.class);
         getLabelCell().padTop(4);
         getLabelCell().padBottom(2);
         getLabelCell().padLeft(8);
         getLabelCell().padRight(8);
+        setChecked(false);
         pack();
     }
 
@@ -81,14 +83,13 @@ public class HanTextButton extends VisTextButton implements Clickable {
         super.setDisabled(isDisabled);
     }
 
-    public void setClickEnabled(boolean clickable){
-        if(!clickable){
-            setTouchable(Touchable.disabled);
-            setStyle(disabledStyle);
-        }else{
-            setTouchable(Touchable.enabled);
-            setStyle(normalStyle);
-        }
+    public void setClickEnabled(boolean clickable) {
+        this.enabled = clickable;
+        updateStyle();
+    }
+
+    public TextButtonStyle getNormalStyle() {
+        return normalStyle;
     }
 
     @Override
@@ -99,5 +100,20 @@ public class HanTextButton extends VisTextButton implements Clickable {
     @Override
     public void addClickListener(OnClickListener clickListener) {
         addListener(clickListener);
+    }
+
+    public void setNormalStyle(TextButtonStyle style) {
+        this.normalStyle = style;
+        updateStyle();
+    }
+
+    private void updateStyle() {
+        if (!enabled) {
+            setTouchable(Touchable.disabled);
+            setStyle(disabledStyle);
+        } else {
+            setTouchable(Touchable.enabled);
+            setStyle(normalStyle);
+        }
     }
 }

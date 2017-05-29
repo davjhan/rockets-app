@@ -2,6 +2,7 @@ package com.rockets.gamescreen.world;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Disposable;
 import com.rockets.gamescreen.ActorGroup;
 
 /**
@@ -11,7 +12,7 @@ import com.rockets.gamescreen.ActorGroup;
  * author: david
  * Copyright (c) 2016 David Han
  **/
-public class GameGroup<T extends Actor>  extends Group {
+public class GameGroup<T extends Actor>  extends Group implements Disposable {
     private boolean paused = false;
     public void spawn(T entity){
         addActor(entity);
@@ -45,5 +46,14 @@ public class GameGroup<T extends Actor>  extends Group {
     }
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    @Override
+    public void dispose() {
+        for(Actor t:getChildren()){
+            if(t instanceof Disposable){
+                ((Disposable) t).dispose();
+            }
+        }
     }
 }
