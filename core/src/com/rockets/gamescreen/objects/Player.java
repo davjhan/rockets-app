@@ -11,6 +11,7 @@ import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
 import com.rockets.gamescreen.physics.CollisionGroup;
+import com.rockets.gamescreen.physics.Side;
 import com.rockets.gamescreen.world.PhysicalEntity;
 import com.rockets.graphics.Nested;
 import com.rockets.graphics.NestedSprite;
@@ -23,7 +24,7 @@ import com.rockets.graphics.NestedSprite;
  * Copyright (c) 2017 David Han
  **/
 public class Player extends PhysicalEntity implements IPlayer{
-    private static final float STRENGTH = 0.5f;
+    private static final float STRENGTH = 0.6f;
     private static final float ROTATION_STRENGTH = 30;
     private static final int MAX_ROT_VEL = 640;
     private float rotationVel;
@@ -49,7 +50,7 @@ public class Player extends PhysicalEntity implements IPlayer{
         sprite = new NestedSprite(game.gameAssets().animals.get("bird").down.first());
         addSprite(sprite);
         setSizeTo(sprite);
-        setFriction(10);
+        setFriction(10.5f);
         setBounciness(0.5f);
         setOrigin(Align.center);
     }
@@ -78,7 +79,7 @@ public class Player extends PhysicalEntity implements IPlayer{
 
     @Override
     public void onCollision(int side) {
-        super.onCollision(side);
+        Side.applyBounce(vel,side,getBounciness(),3);
         if(vel.len() >7){
             game.world().shakeScreen(3);
         }
