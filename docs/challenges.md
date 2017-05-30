@@ -43,11 +43,19 @@ Vanilla coin collection but super long.
 ###### TAP ROCK 100 times.
 Coin is stuck inside Rock and you have to click on the rock 100 times. player can't fall down or touch block
 
-Hard
+### Flying Bird:
+Flappy bird style pipes coming in from right. Pushes player to left.
 ============
+
 
 ### Falling Blocks:
 Spikes start and fall. 1,2,3,4. Then coin spawns.
 
 ### Caged:
 Player is stuck in a small bordered cage in bottom of screen, Coin on track starts at middle top and slowly fall, taking about 15 seconds to land in side the cage.
+
+
+
+Game Names
+===
+Chicken challenge
