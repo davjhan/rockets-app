@@ -1,6 +1,7 @@
 package com.rockets.assets;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 /**
@@ -10,13 +11,43 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class BackgroundViewAssetGroup extends ViewAssetGroup{
-
-    public BackgroundViewAssetGroup(NinePatch[][] patches) {
-        super(patches);
+public class BackgroundViewAssetGroup{
+    NinePatch[][] reg;
+    NinePatch[][] special;
+    public BackgroundViewAssetGroup(NinePatch[][] reg, NinePatch[][] special) {
+        super();
+        this.reg = reg;
+        this.special = special;
+        getFrameBg().setBottomHeight(10);
     }
 
-    public NinePatchDrawable misc(int type) {
-       return new NinePatchDrawable(patches[Catalog.Backgrounds.misc][type]);
+    public NinePatchDrawable getModalBg() {
+        return getSpecial(0,0);
+    }
+    public NinePatchDrawable getInlay() {
+        return getReg(0,0);
+    }
+
+    private NinePatchDrawable getReg(int type,int state){
+        return new NinePatchDrawable(reg[type][state]);
+    }
+    private NinePatchDrawable getReg(int type){
+
+        return new NinePatchDrawable(reg[type][Catalog.normal]);
+    }
+    private NinePatchDrawable getSpecial(int type,int state){
+        return new NinePatchDrawable(special[type][state]);
+    }
+    private NinePatchDrawable getSpecial(int type){
+
+        return new NinePatchDrawable(special[type][Catalog.normal]);
+    }
+
+    public Drawable getFrameBg() {
+        return getSpecial(0,0);
+    }
+
+    public NinePatchDrawable getWhiteNametag() {
+        return getReg(0,1);
     }
 }

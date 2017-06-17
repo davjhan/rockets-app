@@ -8,6 +8,7 @@ import com.rockets.gamescreen.physics.Side;
 import com.rockets.gamescreen.world.GameEntity;
 import com.rockets.graphics.ActionFactory;
 import com.rockets.graphics.NestedSingleSpriteActor;
+import com.rockets.utils.WhiteBlinkUtils;
 
 /**
  * name: Coin
@@ -88,5 +89,11 @@ public class WoodenBox extends GameEntity implements Collidable {
 
     public static interface OnBrokenListener{
         void onBroken();
+    }
+
+    @Override
+    protected void onShow() {
+        super.onShow();
+        graphic.addAction(WhiteBlinkUtils.getWhiteShortBlinkAction(game.gameAssets(),graphic.getSprite()));
     }
 }

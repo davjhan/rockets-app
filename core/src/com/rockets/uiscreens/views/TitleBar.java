@@ -34,7 +34,10 @@ public class TitleBar extends Table implements Disposable {
                 new TextureRegionDrawable(app.menuAssets().icons[0]),
                 new NinePatchDrawable(app.menuAssets().toolbarBG[1]),
                 new NinePatchDrawable(app.menuAssets().toolbarBG[2]));
-        title = new HanLabel(titleText, Font.h1, Colr.TEXT_LIGHT);
+        title =  HanLabel.text(titleText)
+                .font(Font.h1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
 
         Actor settingsButton = getSettingsButton(app);
         pad(2);
@@ -44,7 +47,7 @@ public class TitleBar extends Table implements Disposable {
         add(settingsButton).height(28).width(28);
 
         pack();
-        setWidth(Display.WIDTH);
+        setWidth(Display.SCREEN_WIDTH);
     }
 
     public HanIconButton getBackButton() {

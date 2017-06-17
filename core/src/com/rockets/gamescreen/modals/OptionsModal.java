@@ -2,7 +2,6 @@ package com.rockets.gamescreen.modals;
 
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import com.rockets.assets.Catalog;
 import com.rockets.assets.Font;
 import com.rockets.assets.VisUILoader;
 import com.rockets.common.IApp;
@@ -23,7 +22,7 @@ public class OptionsModal extends BasicModal {
     OptionsModalListener modalListener;
 
     public OptionsModal(IApp app, OptionsModalListener modalListener){
-        super(app, modalListener, app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        super(app, modalListener, app.menuAssets().bgs.getModalBg());
         this.modalListener = modalListener;
 
         init();
@@ -37,17 +36,18 @@ public class OptionsModal extends BasicModal {
 
     @Override
     protected void initTitle() {
+        super.initTitle();
         setTitle(app.getString("options"));
     }
 
     @Override
     protected void initContents() {
-        HanTextButton leaveButton = new HanTextButton(app.getString("resume"), Font.p1,new OnClickListener(){
+        HanTextButton leaveButton = new HanTextButton(app.getString("leave_game"), Font.p1,new OnClickListener(){
 
             @Override
             public void onClick() {
-                modalListener.onLeaveGame();
                 closeModal();
+                modalListener.onLeaveGame();
             }
         });
         HanTextButton resumeButton = new HanTextButton(app.getString("resume"),new OnClickListener(){

@@ -22,16 +22,16 @@ public class ScrollingTileBG extends Actor{
     private int totalHeight;
     public ScrollingTileBG( float speed, TextureRegion[] graphics) {
         tileSize = graphics[0].getRegionWidth();
-        int numRows = 3 + Display.HEIGHT / tileSize;
-        int numCols = 2 + Display.WIDTH / tileSize;
+        int numRows = (int) (3 + Display.SCREEN_HEIGHT / tileSize);
+        int numCols = (int) (2 + Display.SCREEN_WIDTH / tileSize);
+        numRows += numRows%2;
+        numCols += numCols%2;
         int graphicNum = 0;
-        int lastRowGraphicNum = 0;
         start = -tileSize;
         this.speed = speed;
         tiles = new Sprite[numRows][numCols];
         for (int r = 0; r < numRows; r++) {
-            graphicNum = lastRowGraphicNum+1;
-            graphicNum %= 2;
+            graphicNum = r%2;
             for (int c = 0; c < numCols; c++) {
                 Sprite sprite = new Sprite(graphics[graphicNum]);
                 sprite.setPosition(start+c*tileSize,start+r*tileSize);
@@ -39,7 +39,6 @@ public class ScrollingTileBG extends Actor{
                 graphicNum ++;
                 graphicNum %= 2;
             }
-            lastRowGraphicNum = graphicNum;
         }
         totalWidth = numCols*tileSize;
         totalHeight = numRows*tileSize;
@@ -54,10 +53,10 @@ public class ScrollingTileBG extends Actor{
                 tile.setPosition(tile.getX()+speed,tile.getY()+speed);
 
 
-                if(tile.getX()> Display.WIDTH){
+                if(tile.getX()> Display.SCREEN_WIDTH){
                     tile.setX(tile.getX()-totalWidth);
                 }
-                if(tile.getY()> Display.HEIGHT){
+                if(tile.getY()> Display.SCREEN_HEIGHT){
                     tile.setY(tile.getY()-totalHeight);
                 }
             }

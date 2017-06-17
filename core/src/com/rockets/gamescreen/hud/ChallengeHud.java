@@ -25,6 +25,7 @@ public class ChallengeHud extends Hud {
     Label scoreLabel;
     Label goalLabel;
     Label instructionsLabel;
+
     public ChallengeHud(IGame game) {
         super(game);
     }
@@ -38,9 +39,15 @@ public class ChallengeHud extends Hud {
 
     private void initCenterGroup() {
         centerGroup.align(Align.center);
-        scoreLabel = new HanLabel("11", Font.h1, Colr.TEXT_LIGHT);
+        scoreLabel = HanLabel.text("")
+                .font(Font.h1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         scoreLabel.setAlignment(Align.center);
-        goalLabel = new HanLabel("", Font.c1, Colr.TEXT_LIGHT);
+        goalLabel = HanLabel.text("")
+                .font(Font.c1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         goalLabel.setAlignment(Align.center);
         updateGoal(10);
         centerGroup.add(scoreLabel).align(Align.center).spaceBottom(Spacing.XSMALL);
@@ -50,30 +57,34 @@ public class ChallengeHud extends Hud {
 
     @Override
     protected void initInstructions() {
-        instructions.setPosition(Display.HALF_WIDTH,80,Align.center);
-        instructions.setTouchable(Touchable.enabled);
+        instructions.setPosition(Display.HALF_WIDTH, 80, Align.center);
+        instructions.setTouchable(Touchable.disabled);
         addActor(instructions);
-        instructionsLabel  = new HanLabel("TAP TO THRUST", Font.p1, Colr.TEXT_LIGHT);
+        instructionsLabel = HanLabel.text("tap to thrust")
+                .font(Font.h1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         instructionsLabel.setAlignment(Align.center);
         instructions.add(instructionsLabel);
     }
 
-    private void initRightGroup(){
+    private void initRightGroup() {
     }
 
-    public void updateScore(int score){
+    public void updateScore(int score) {
         scoreLabel.setText(String.valueOf(score));
     }
-    public void updateGoal(int goal){
-        goalLabel.setText("GOAL : "+String.valueOf(goal));
+
+    public void updateGoal(int goal) {
+        goalLabel.setText("GOAL : " + String.valueOf(goal));
     }
 
     public void attachChallenge(BaseChallenge challenge) {
         challenge.addStateListener(new StateListener() {
             @Override
             public void onStateChanged(String oldState, String newState) {
-                Gdx.app.log("tttt ChallengeHud", "pauseable: " +game.world().sceneScript().isPauseable());
-                pauseButton.setTouchable(game.world().sceneScript().isPauseable()? Touchable.enabled:Touchable.disabled);
+                Gdx.app.log("tttt ChallengeHud", "pauseable: " + game.world().sceneScript().isPauseable());
+                pauseButton.setTouchable(game.world().sceneScript().isPauseable() ? Touchable.enabled : Touchable.disabled);
             }
         });
     }

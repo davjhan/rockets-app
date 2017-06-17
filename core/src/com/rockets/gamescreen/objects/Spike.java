@@ -14,7 +14,7 @@ import com.rockets.gamescreen.world.GameEntity;
  * Copyright (c) 2017 David Han
  **/
 public class Spike extends GameEntity implements Collidable {
-    public static final int SIZE = 50;
+    public static final int SIZE = 42;
     public Spike(IGame game) {
         super(game);
         init();
@@ -23,6 +23,8 @@ public class Spike extends GameEntity implements Collidable {
     @Override
     protected void init() {
         setSprite(game.gameAssets().specialObjects[0]);
+        sprites.get(0).setPosition(-4,-4);
+        setSize(42,42);
         setOrigin(Align.center);
     }
 

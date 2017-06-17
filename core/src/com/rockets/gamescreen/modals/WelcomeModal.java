@@ -1,7 +1,6 @@
 package com.rockets.gamescreen.modals;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.rockets.assets.Catalog;
 import com.rockets.common.IApp;
 import com.rockets.constants.Spacing;
 import com.rockets.graphics.views.HanTextButton;
@@ -17,7 +16,7 @@ import com.rockets.modal.ModalListener;
  **/
 public class WelcomeModal extends Modal {
     public WelcomeModal(IApp app, ModalListener modalListener) {
-        super(app, modalListener, false, false, app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        super(app, modalListener, false, false, app.menuAssets().bgs.getModalBg());
     }
 
     protected void init() {
@@ -32,7 +31,7 @@ public class WelcomeModal extends Modal {
 //            }
 //        });
         Table imageTable = new Table();
-        imageTable.setBackground(app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        imageTable.setBackground(app.menuAssets().bgs.getModalBg());
 
         root.add(imageTable).height(100).width(160).spaceBottom(Spacing.SMALL);
         root.row();

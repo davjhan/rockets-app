@@ -10,15 +10,10 @@ import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.ActorGroup;
 import com.rockets.gamescreen.IGame;
-import com.rockets.gamescreen.modals.OptionsModal;
-import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 import com.rockets.gamescreen.world.Freshable;
 import com.rockets.gamescreen.world.GameGroup;
 import com.rockets.graphics.views.HanIconButton;
 import com.rockets.graphics.views.OnClickListener;
-import com.rockets.modal.Modal;
-
-import static com.rockets.constants.Display.TOPBAR_HEIGHT;
 
 /**
  * name: Hud
@@ -36,7 +31,6 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     Table centerGroup;
     Table rightGroup;
     Table instructions;
-    OptionsModal optionsModal;
     public Hud(IGame game){
         this.game = game;
         this.app = game.iApp();
@@ -45,28 +39,16 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
 
     public void init(){
         bg = new Image(game.menuAssets().hudbg);
-        bg.setSize(Display.WIDTH,TOPBAR_HEIGHT);
-        spawn(bg,0,Display.HEIGHT, Align.topLeft);
+        bg.setSize(Display.CONTENT_WIDTH,Display.TOPBAR_HEIGHT);
+        spawn(bg,0,Display.CONTENT_HEIGHT, Align.topLeft);
 
         topTable = new Table();
-        topTable.setSize(Display.WIDTH,TOPBAR_HEIGHT);
-        spawn(topTable,0,Display.HEIGHT,Align.topLeft);
+        topTable.setSize(Display.CONTENT_WIDTH,Display.TOPBAR_HEIGHT);
+        spawn(topTable,0,Display.CONTENT_HEIGHT,Align.topLeft);
         initCenterLabel();
 
         instructions = new Table();
         initInstructions();
-
-        optionsModal = new OptionsModal(app, new OptionsModalListener() {
-            @Override
-            public void onLeaveGame() {
-                game.world().goHome();
-            }
-
-            @Override
-            public void onDismiss(Modal modal) {
-                game.world().sceneScript().setPaused(false);
-            }
-        });
 
     }
 
@@ -92,8 +74,7 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     }
 
     protected void spawnOptionsModal(){
-        game.world().sceneScript().setPaused(true);
-        game.world().showModal(optionsModal);
+      game.world().showOptionsMenu();
     }
 
     public void setInstructionsVisible(boolean visible){
@@ -108,7 +89,6 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     public void dispose() {
         game = null;
         app = null;
-        optionsModal.dispose();
     }
 
     @Override

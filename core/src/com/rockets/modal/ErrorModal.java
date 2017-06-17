@@ -17,8 +17,9 @@ import com.rockets.graphics.views.OnClickListener;
  **/
 public class ErrorModal extends BasicModal {
     String message;
+
     public ErrorModal(IApp app, String message) {
-        super(app, null,true,false);
+        super(app, null, true, false);
         this.message = message;
         init();
     }
@@ -30,7 +31,10 @@ public class ErrorModal extends BasicModal {
 
     @Override
     protected void initContents() {
-        HanLabel msg = new HanLabel(message, Font.p1, Colr.TEXT_LIGHT);
+        HanLabel msg = HanLabel.text(message)
+                .font(Font.p1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         HanTextButton okay = new HanTextButton("okay");
         okay.addClickListener(new OnClickListener() {
             @Override

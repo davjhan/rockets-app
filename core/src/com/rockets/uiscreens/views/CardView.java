@@ -24,7 +24,7 @@ public class CardView extends Table {
     private HanLabel titleBarLabel;
     public CardView(IApp app){
         super();
-        backgrounds = app.menuAssets().cardBg.getGroup(Catalog.CardBg.titlebar);
+        //backgrounds = app.menuAssets().bgs.getGroup(Catalog.Backgrounds.solid);
         setBackground(backgrounds[Catalog.normal]);
         initTitlebarLabel();
     }
@@ -34,7 +34,10 @@ public class CardView extends Table {
     private void initTitlebarLabel() {
         pad(Spacing.SMALL);
         padTop(0);
-        titleBarLabel = new HanLabel("", Font.c1, Colr.TEXT_DARK);
+        titleBarLabel =  HanLabel.text("")
+                .font(Font.c1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         titleBarLabel.setAlignment(Align.bottom);
         add(titleBarLabel).height(11).colspan(2).growX().spaceBottom(3);
         row();

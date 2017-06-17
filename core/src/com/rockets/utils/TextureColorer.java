@@ -63,10 +63,10 @@ public class TextureColorer {
     public static Texture getWhiteGameTexture(Texture texture) {
             Pixmap pixmap = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
           Pixmap.setBlending(Pixmap.Blending.None);
-            for (int y = 2; y < pixmap.getHeight(); y++) {
+            for (int y = 0; y < pixmap.getHeight(); y++) {
                 for (int x = 0; x < pixmap.getWidth(); x++) {
                     if (getGamePixmap(texture).getPixel(x, y) != 0) {
-                        pixmap.drawPixel(x, y-2, Color.rgba8888(1,1,1,1));
+                        pixmap.drawPixel(x, y, Color.rgba8888(1,1,1,1));
                     }
 
                 }
@@ -74,5 +74,18 @@ public class TextureColorer {
 
         return new Texture(pixmap);
     }
+    public static Pixmap getWhitePixmap(Texture texture) {
+        Pixmap pixmap = new Pixmap(texture.getWidth(), texture.getHeight(), Pixmap.Format.RGBA8888);
+        Pixmap.setBlending(Pixmap.Blending.None);
+        for (int y = 2; y < pixmap.getHeight(); y++) {
+            for (int x = 0; x < pixmap.getWidth(); x++) {
+                if (getGamePixmap(texture).getPixel(x, y) != 0) {
+                    pixmap.drawPixel(x, y-2, Color.rgba8888(1,1,1,1));
+                }
 
+            }
+        }
+
+        return pixmap;
+    }
 }

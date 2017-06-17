@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import static com.badlogic.gdx.utils.Align.bottom;
@@ -21,27 +20,23 @@ import static com.badlogic.gdx.utils.Align.top;
  * Copyright (c) 2016 David Han
  **/
 public class NestedAnimatedSprite extends AnimatedSprite implements Nested {
-    Vector2 parentPos = new Vector2();
-    Vector2 temp = new Vector2();
-    Vector2 parentScale = new Vector2(1,1);
 
     public NestedAnimatedSprite(Animation<TextureRegion> animation) {
         super(animation);
+        init();
     }
 
-    public NestedAnimatedSprite(float dur, Array<TextureRegion> sparkles, Animation.PlayMode playmode) {
-        super(new Animation<>(dur,sparkles,playmode));
+    private void init() {
+        setAutoUpdate(true);
+    }
+
+    public NestedAnimatedSprite(float dur, Array<TextureRegion> textures, Animation.PlayMode playmode) {
+        super(new Animation<>(dur,textures,playmode));
+        init();
     }
 
     @Override
     public void draw(Batch batch, float alphaModulation, float parentX, float parentY, float parentScaleX, float parentScaleY,float rotation) {
-        temp.set(parentX-parentPos.x,parentY-parentPos.y);
-        translate(temp.x,temp.y);
-        temp.set(parentScaleX/parentScale.x,parentScaleY/parentScale.y);
-        setScale(getScaleX()*temp.x,getScaleY()*temp.y);
-        parentPos.set(parentX,parentY);
-        parentScale.set(parentScaleX,parentScaleY);
-        setRotation(rotation);
         super.draw(batch, alphaModulation);
     }
 

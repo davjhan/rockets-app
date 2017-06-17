@@ -40,7 +40,6 @@ public class SquishyButtonListener extends InputListener {
         event.getListenerActor().addAction(upAction);
         super.touchUp(event, x, y, pointer, button);
     }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

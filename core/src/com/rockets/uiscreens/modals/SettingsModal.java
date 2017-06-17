@@ -2,7 +2,6 @@ package com.rockets.uiscreens.modals;
 
 import com.badlogic.gdx.Gdx;
 import com.rockets.Rockets;
-import com.rockets.assets.Catalog;
 import com.rockets.common.IApp;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.BasicModal;
@@ -43,7 +42,7 @@ public class SettingsModal extends BasicModal {
                 closeModal();
             }
         });
-        reset.setBackground(app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        reset.setBackground(app.menuAssets().bgs.getModalBg());
         contents.add(reset).row();
     }
 }

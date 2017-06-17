@@ -64,7 +64,7 @@ public abstract class Modal extends WidgetGroup implements Disposable {
             dimActor = new Actor();
         }
         if (dimActor != null) {
-            dimActor.setSize(Display.WIDTH, Display.HEIGHT);
+            dimActor.setSize(Display.SCREEN_WIDTH, Display.SCREEN_HEIGHT);
             addActor(dimActor);
             if (touchDimToExit){
                 dimActor.addListener(new ClickListener(-1){
@@ -89,7 +89,7 @@ public abstract class Modal extends WidgetGroup implements Disposable {
     }
 
     protected void closeModal() {
-        if(!modalListeners.isEmpty()){
+        if(modalListeners != null && !modalListeners.isEmpty()){
             List<ModalListener> mlSnapshot = new ArrayList<>(modalListeners);
 
             for(ModalListener modalListener: mlSnapshot){

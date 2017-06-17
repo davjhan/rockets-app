@@ -1,7 +1,12 @@
 package com.rockets.gamescreen.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g3d.utils.BaseAnimationController;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.gamescreen.ActorGroup;
 
@@ -25,7 +30,10 @@ public class GameGroup<T extends Actor>  extends Group implements Disposable {
         entity.setPosition(x,y,align);
         addActor(entity);
     }
-
+    public void spawn(T entity, Vector2 loc, int align){
+        entity.setPosition(loc.x,loc.y,align);
+        addActor(entity);
+    }
     public void spawn(ActorGroup<T> actorGroup) {
         for(T a:actorGroup){
             addActor(a);
@@ -42,8 +50,26 @@ public class GameGroup<T extends Actor>  extends Group implements Disposable {
     public void act(float delta) {
         if(!paused) {
             super.act(delta);
+        }else{
+            Array<Action> actions = getActions();
+            if (actions.size > 0) {
+                if (getStage() != null && getStage().getActionsRequestRendering()) Gdx.graphics.requestRendering();
+                for (int i = 0; i < actions.size; i++) {
+                    Action action = actions.get(i);
+                    if (action.act(delta) && i < actions.size) {
+                        Action current = actions.get(i);
+                        int actionIndex = current == action ? i : actions.indexOf(action, true);
+                        if (actionIndex != -1) {
+                            actions.removeIndex(actionIndex);
+                            action.setActor(null);
+                            i--;
+                        }
+                    }
+                }
+            }
         }
     }
+
     public void setPaused(boolean paused) {
         this.paused = paused;
     }

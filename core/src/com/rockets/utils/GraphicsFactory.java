@@ -30,8 +30,8 @@ public class GraphicsFactory {
     public static Image solidImage(Color color){
         return solidImage(1,1,color);
     }
-    public static Image solidImage(int width,int height, Color color){
-        return new Image(new TextureRegion(solidTexture(color),width,height));
+    public static Image solidImage(float width,float height, Color color){
+        return new Image(new TextureRegion(solidTexture(color),(int)width,(int)height));
     }
 
     public static Drawable solidNineDrawable(Color color) {

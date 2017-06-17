@@ -1,5 +1,6 @@
 package com.rockets.gamescripts;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.Display;
 import com.rockets.data.readonly.Challenges;
@@ -51,19 +52,23 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void fresh() {
         super.fresh();
-        dir.gameWorld().bodies().clearChildren();
+        dir.gameWorld().fresh();
         hud.fresh();
         player.fresh();
         dir.gameWorld().bodies().spawn(
                 player,
-                Display.HALF_WIDTH,Display.HALF_HEIGHT, Align.center);
+                playerSpawnLoc(), Align.center);
         initHUD();
+    }
+
+    protected Vector2 playerSpawnLoc() {
+        return CollectChallenge.Grid.get(2,4);
     }
 
     @Override
     public void update(float delta) {
         if(!isState(STATE_PAUSED)) {
-            if(player.getTop() < -24){
+            if(player.getTop() < Display.CONTENT_BOTPAD-24){
                 endGame();
             }
         }
@@ -93,7 +98,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void setState(String state) {
         super.setState(state);
-        dir.gameWorld().setPaused(isState(STATE_PAUSED) );
+        dir.gameWorld().setPaused(isState(STATE_PAUSED) || isState(STATE_READY) || isState(STATE_BACKGROUND) || isState(STATE_END));
     }
 
     @Override

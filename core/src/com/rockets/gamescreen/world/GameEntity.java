@@ -17,7 +17,7 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
     public static final String STATE_READY = "ready";
     public static final String STATE_DEAD = "dead";
     public IGame game;
-    private String state;
+    private String state = STATE_READY;
     private StateListener stateListener;
 
     public GameEntity(IGame game) {
@@ -89,4 +89,5 @@ public abstract class GameEntity extends SpriteActor implements Stateable,Fresha
         setRotation(0);
         clearActions();
     }
+
 }

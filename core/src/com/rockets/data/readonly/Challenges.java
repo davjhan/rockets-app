@@ -47,6 +47,16 @@ public class Challenges {
         }
         return ret;
     }
+    public int getChallengeIndex(String challengeId) throws ChallengeNotFoundException {
+        int  i =1;
+        for(ChallengeModel challenge:challenges.values()){
+            if(challenge.id.equals(challengeId)){
+                return i;
+            }
+            i++;
+        }
+        throw new ChallengeNotFoundException();
+    }
     public ChallengeModel getById(String challengeId) {
         return challenges.get(challengeId);
     }
@@ -74,4 +84,6 @@ public class Challenges {
         }
     }
 
+    public class ChallengeNotFoundException extends Throwable {
+    }
 }

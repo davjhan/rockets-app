@@ -8,6 +8,6 @@ package com.rockets.constants;
  * Copyright (c) 2016 David Han
  **/
 public class PhysicsConst {
-    public static final float GRAVITY = 15f;
-    public static final float ABS_VELOCITY = 6f;
+    public static final float GRAVITY = 19f;
+    public static final float ABS_VELOCITY = 6.5f;
 }

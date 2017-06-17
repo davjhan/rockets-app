@@ -38,6 +38,7 @@ public class ChallengeCompleteModal extends BasicModal {
 
     @Override
     protected void initTitle() {
+        super.initTitle();
         setTitle(app.getString("challenge_completed"));
     }
 

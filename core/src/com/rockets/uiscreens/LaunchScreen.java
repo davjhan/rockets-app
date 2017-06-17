@@ -5,10 +5,12 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rockets.assets.GameLoader;
 import com.rockets.common.BaseUIScreen;
 import com.rockets.common.IApp;
 import com.rockets.common.IAppInitializer;
+import com.rockets.constants.Display;
 import com.rockets.data.ContentDB;
 import com.rockets.utils.GraphicsFactory;
 
@@ -25,10 +27,34 @@ public class LaunchScreen extends BaseUIScreen{
 
     public LaunchScreen(IApp game) {
         super(game,null);
+
         doneLoadingFromFile = false;
         gameLoader = new GameLoader();
         Texture.setAssetManager(gameLoader);
         initGraphics();
+    }
+
+    @Override
+    protected Viewport getViewPort() {
+        float ratio = (float)Gdx.graphics.getWidth()/(float)Gdx.graphics.getHeight();
+        float sixteenby9 = 9f/16f;
+        if(ratio ==sixteenby9){
+            Display.SCREEN_WIDTH = Display.CONTENT_WIDTH;
+            Display.SCREEN_HEIGHT = Display.CONTENT_HEIGHT;
+        }else if(ratio < sixteenby9){
+            Display.SCREEN_WIDTH = Display.CONTENT_WIDTH;
+            Display.SCREEN_HEIGHT = Display.CONTENT_WIDTH/ratio;
+        }else{
+            Display.SCREEN_HEIGHT = Display.CONTENT_HEIGHT;
+            Display.SCREEN_WIDTH = Display.CONTENT_HEIGHT*ratio;
+        }
+        Display.HALF_WIDTH = Display.SCREEN_WIDTH/2;
+        Display.HALF_HEIGHT = Display.SCREEN_HEIGHT/2;
+        Display.CONTENT_LEFTPAD = (Display.SCREEN_WIDTH - Display.CONTENT_WIDTH)/2;
+        Display.CONTENT_BOTPAD = (Display.SCREEN_HEIGHT - Display.CONTENT_HEIGHT)/2;
+
+        Gdx.app.log("tttt LaunchScreen", "WIDTH: " +Display.SCREEN_WIDTH+ " HEIGHT"+Display.SCREEN_HEIGHT);
+        return super.getViewPort();
     }
 
     @Override

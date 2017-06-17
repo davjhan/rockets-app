@@ -3,8 +3,11 @@ package com.rockets.graphics.views;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
+import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.rockets.common.IApp;
+import com.rockets.assets.Colr;
+import com.rockets.assets.Font;
 
 /**
  * name: HanLabel
@@ -15,113 +18,110 @@ import com.rockets.common.IApp;
  **/
 public class HanLabel extends VisLabel {
     private boolean isForceAllCaps = true;
-    public HanLabel(boolean isForceAllCaps) {
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, Color textColor, boolean isForceAllCaps) {
-        this(text, textColor);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, int alignment, boolean isForceAllCaps) {
-        this(text, alignment);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, boolean isForceAllCaps) {
-        this(text);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, LabelStyle style, boolean isForceAllCaps) {
-        this(text, style);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, String styleName, boolean isForceAllCaps) {
-        this(text, styleName);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, String fontName, Color color, boolean isForceAllCaps) {
-        super(text, fontName, color);
-        this.isForceAllCaps = isForceAllCaps;
-    }
-
-    public HanLabel(CharSequence text, String fontName, String colorName, boolean isForceAllCaps) {
-        super(text, fontName, Colors.get(colorName));
-        this.isForceAllCaps = isForceAllCaps;
-        checkTextCase();
-    }
-
-    public HanLabel(CharSequence text, Color textColor) {
-        super(text, textColor);
-    }
-
-    public HanLabel(CharSequence text, int alignment) {
-        super(text, alignment);
-    }
-
-    public HanLabel(CharSequence text) {
-        super(text);
-    }
-
-    public HanLabel(CharSequence text, LabelStyle style) {
-        super(text, style);
-    }
 
     public HanLabel(CharSequence text, String styleName) {
-        super(text, styleName);
+        this(text, new LabelStyle(VisUI.getSkin().get(styleName,LabelStyle.class)));
     }
-
-    public HanLabel(CharSequence text, String fontName, Color color) {
-        super(text, fontName, color);
-        checkTextCase();
-    }
-
-    public HanLabel(CharSequence text, String fontName, String colorName) {
-        super(text, fontName, Colors.get(colorName));
-        checkTextCase();
-    }
-
-    public HanLabel(IApp iApp, CharSequence text, LabelStyle style) {
+    public HanLabel(CharSequence text, LabelStyle style) {
         super(text, style);
+        init();
+
     }
 
-    public HanLabel(String text, String fontName, String fontColor) {
-        this(text, fontName, Colors.get(fontColor));
+    private void init() {
         checkTextCase();
+
     }
 
-    public void forceAllCaps(boolean force){
+    public void forceAllCaps(boolean force) {
         this.isForceAllCaps = force;
         checkTextCase();
     }
 
+
+
     @Override
-    public void setText(CharSequence newText) {
-        if(isForceAllCaps){
-            super.setText(((String)newText).toUpperCase());
-        }else {
-            super.setText(newText);
-        }
+    public void invalidateHierarchy() {
+        super.invalidateHierarchy();
     }
-    private void checkTextCase(){
-        if(isForceAllCaps){
+
+    private void checkTextCase() {
+        if (isForceAllCaps) {
             super.setText(getText().toString().toUpperCase());
         }
+        setAlignment(Align.center);
     }
 
     public void setFontColor(Color fontColor) {
-        LabelStyle style = new LabelStyle(getStyle());
-        style.fontColor = fontColor;
-        setStyle(style);
+        getStyle().fontColor = fontColor;
     }
-    public void setBackground(Drawable bg){
-        LabelStyle style = getStyle();
-        style.background = bg;
-        setStyle(style);
+
+    public void setBackground(Drawable bg) {
+       getStyle().background = bg;
+    }
+
+    public static LabelBuilder text(String text) {
+        return new LabelBuilder(text);
+    }
+
+    public static class LabelBuilder {
+        String text;
+        private String fontName = Font.h1;
+        private Drawable bg;
+        private String colorName = Colr.TEXT_LIGHT;
+        private boolean forceAllCaps = true;
+        int alignment = Align.center;
+
+        public LabelBuilder(String text) {
+            this.text = text;
+        }
+
+        public LabelBuilder font(String fontName) {
+            this.fontName = fontName;
+            return this;
+        }
+
+        public LabelBuilder color(String colorName) {
+            this.colorName = colorName;
+            return this;
+        }
+
+        public LabelBuilder background(Drawable bg) {
+            this.bg = bg;
+            return this;
+        }
+
+        public LabelBuilder forceAllCaps(boolean forceAllCaps) {
+            this.forceAllCaps = forceAllCaps;
+            return this;
+        }
+        public LabelBuilder align(int alignment) {
+            this.alignment = alignment;
+            return this;
+        }
+        public HanLabel build() {
+            LabelStyle style = new LabelStyle();
+            style.font = VisUI.getSkin().getFont(fontName);
+            if (this.colorName != null) {
+                style.fontColor = Colors.get(colorName);
+            }
+            if (this.bg != null) {
+                if(fontName.equals(Font.h1)){
+                    bg.setLeftWidth(8);
+                    bg.setRightWidth(8);
+                }else {
+                    bg.setLeftWidth(12);
+                    bg.setRightWidth(12);
+                }
+                style.background = bg;
+            }
+            HanLabel label = new HanLabel(text, style);
+            label.setAlignment(alignment);
+            label.isForceAllCaps = true;
+            return label;
+        }
+
+
     }
 
 }

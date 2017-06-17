@@ -41,7 +41,7 @@ public class Rockets extends Game implements IApp, IAppInitializer {
             VisUI.load();
         }
         inputMultiplexer = new InputMultiplexer();
-        modalStage = new Stage(new FitViewport(Display.WIDTH, Display.HEIGHT));
+        modalStage = new Stage(new FitViewport(Display.SCREEN_WIDTH, Display.SCREEN_HEIGHT));
         screenManager = new ScreenManager(this);
         screenManager.setScreen(new LaunchScreen(this));
         modalStageManager = new ModalStageManager(modalStage);

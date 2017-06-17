@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rockets.Rockets;
 import com.rockets.constants.Display;
 
@@ -23,8 +24,7 @@ public abstract class BaseScreen implements Screen {
 
     public BaseScreen(IApp app,Map<String,Object> extras){
         this.app = app;
-        Map<String, Object> extras1 = extras;
-        FitViewport vp = new FitViewport(Display.WIDTH,Display.HEIGHT);
+        Viewport vp = getViewPort();
         stage = new Stage(vp);
 
     }
@@ -79,5 +79,9 @@ public abstract class BaseScreen implements Screen {
         Gdx.app.log("tttt BaseScreen", "app is null: " + (app == null));
         app.screenManager().popScreen();
         return true;
+    }
+
+    protected Viewport getViewPort() {
+        return  new FitViewport(Display.SCREEN_WIDTH,Display.SCREEN_HEIGHT);
     }
 }

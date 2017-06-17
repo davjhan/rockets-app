@@ -135,9 +135,7 @@ public class GameScreen extends BaseScreen implements IGame {
     }
 
     public boolean onBackPressed() {
-        app.screenManager().pushScreen(
-                GameScreen.class,GameScreen.getChallengeExtras("coin_1")
-        );
+       gameWorld.showOptionsMenu();
         return true;
     }
 

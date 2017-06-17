@@ -21,33 +21,32 @@ public class MenuAssets extends AssetGroup{
     public TextureRegion[] bgTilesHome;
     public TextureRegion textfieldCursor;
     public NinePatch hudbg;
+    public TextureRegion[] completion;
     public TextureRegion[] icons;
     public TextureRegion[] connectionStrength;
-    public ViewAssetGroup cardBg;
     public BackgroundViewAssetGroup bgs;
     public NinePatch[] gameButton;
     public NinePatch[] scrollbar;
     public NinePatch[] levelBar;
-    public NinePatch[] levelButtonsRegular;
-    public NinePatch[] levelButtonsCompleted;
+    public TextureRegion[][] levelButtons;
     public NinePatch[] toolbarBG;
+    public TextureRegion bigPlaySymbol;
     public TextureRegion[] hearts;
     public TextureRegion[] menuIcons;
 
     public MenuAssets(AssetManager manager){
         final TextureAtlas atlas = manager.get(GameLoader.getAtlasFileName());
 
-        NinePatch[][] buttons = cutNinesGroup2d(atlas,"buttons",18,12,3);
+        NinePatch[][] buttons = cutNinesGroup2d(atlas,"buttons",18,12,4);
         btnGeneral = sliceNines(buttons,0,2);
         btnPrimary = sliceNines(buttons,1,2);
-        NinePatch[][] levelButtons = cutNinesGroup2d(atlas,"levelButtons",18,18,4);
-        levelButtonsRegular = sliceNines(levelButtons,0,2);
-        levelButtonsCompleted = sliceNines(levelButtons,1,2);
+        this.levelButtons = cut(atlas,"levelButtons",38,52);
 
-        TextureRegion[][] bgTiles = cut(atlas,"bgTiles",60,60);
+        TextureRegion[][] bgTiles = cut(atlas,"bgTiles",30,30);
 
 
         connectionStrength = cutLinear(atlas,"connectionstrength",7,7);
+        completion = cutLinear(atlas,"completion",24,24);
         bgTilesHome = sliceRegions(bgTiles,0,2);
 
         gameButton = cutNinesGroup(atlas,"gamebutton",48,48,16,22,14);
@@ -55,16 +54,18 @@ public class MenuAssets extends AssetGroup{
         toolbarBG = cutNinesGroup(atlas,"toolbarbg",12,12,5);
 
         textfieldCursor = cutSingle(atlas,"textfieldCursor");
+        bigPlaySymbol = cutSingle(atlas,"bigPlaySymbol");
 
-        cardBg = new ViewAssetGroup(cutNinesGroup2d(atlas,"cardbg",64,64,10));
-        bgs = new BackgroundViewAssetGroup(cutNinesGroup2d(atlas,"backgrounds",16,16,5));
+        bgs = new BackgroundViewAssetGroup(
+                cutNinesGroup2d(atlas,"bgninepatches",16,16,4),
+                cutNinesGroup2d(atlas,"specialBackgrounds",24,24,8));
 
         levelBar = cutNinesGroup(atlas,"levelbar",24,12,3);
 
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                TextureRegion darkIcons = TextureColorer.tintTexture(atlas.findRegion("icons"), Color.valueOf(Colr.TEXT_DARK));
+                TextureRegion darkIcons = TextureColorer.tintTexture(atlas.findRegion("icons"), Color.valueOf(Colr.TEXT_MID));
                 icons = flatten(darkIcons.split(12,12));
             }
         });

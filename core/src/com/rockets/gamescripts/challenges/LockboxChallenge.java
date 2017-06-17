@@ -32,6 +32,7 @@ public class LockboxChallenge extends CollectChallenge {
     @Override
     public void fresh() {
         super.fresh();
+        coin.remove();
     }
 
     @Override

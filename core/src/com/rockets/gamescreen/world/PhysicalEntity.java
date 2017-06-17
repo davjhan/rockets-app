@@ -115,7 +115,7 @@ public abstract class PhysicalEntity extends GameEntity implements PhysicsEntity
     protected void setBounciness(float bounciness){
         this.bounciness = bounciness;
     }
-    protected void setFriction(int friction) {
+    protected void setFriction(float friction) {
         this.friction = friction;
     }
 

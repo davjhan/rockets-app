@@ -3,8 +3,8 @@ package com.rockets.uiscreens.managers;
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.uiscreens.views.Selectable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * name: SelectionManager
@@ -13,16 +13,18 @@ import java.util.List;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class SelectionManager implements Disposable {
-    List<Selectable> selectables;
+public class SelectionManager<T> implements Disposable {
+    Map<Selectable,T> selectables;
     Selectable selected;
-
-    public SelectionManager() {
-        selectables = new ArrayList<>();
+    SelectionChangedListener<T> listener;
+    boolean canUnselect;
+    public SelectionManager(boolean canUnselect) {
+        selectables = new HashMap<>();
+        this.canUnselect = canUnselect;
     }
 
-    public void addSelectable(Selectable selectable) {
-        selectables.add(selectable);
+    public void addSelectable(Selectable selectable,T t) {
+        selectables.put(selectable,t);
     }
 
     public void removeSelectable(Selectable selectable) {
@@ -30,26 +32,48 @@ public class SelectionManager implements Disposable {
     }
 
     public void select(Selectable selectable) {
-        if (selectables.contains(selectable)) {
+        if (selectables.keySet().contains(selectable)) {
 
-            if (selectable.equals(selected)) {
-                selected.deselect();
+            if (selectable.equals(selected) && canUnselect) {
+                selected.setSelected(false);
                 selected = null;
+                notifyListeners();
                 return;
             }
-            if (selected != null) {
-                selected.deselect();
+            if (selected != null && (canUnselect || (selectable.isSelectable()))) {
+                selected.setSelected(false);
                 selected = null;
             }
             if (selectable.isSelectable()) {
-
-                selectable.select();
+                selectable.setSelected(true);
                 selected = selectable;
 
+            }
+            notifyListeners();
+        }
+    }
+
+    private void notifyListeners() {
+        if(listener != null){
+            if(selected == null){
+                listener.onSelectionChanged(null,null);
+            }else {
+                listener.onSelectionChanged(selected, selectables.get(selected));
             }
         }
     }
 
+    public void select(T data) {
+        for(Map.Entry<Selectable,T> entry: selectables.entrySet()){
+            if(entry.getValue().equals(data)){
+                select(entry.getKey());
+                return;
+            }
+        }
+    }
+    public T getSelectedData(){
+        return selectables.get(selected);
+    }
     @Override
     public void dispose() {
         selectables.clear();
@@ -57,10 +81,17 @@ public class SelectionManager implements Disposable {
         selected = null;
     }
 
+    public void setListener(SelectionChangedListener<T> listener) {
+        this.listener = listener;
+    }
+
     public void refresh() {
-        for (Selectable s : selectables) {
+        for (Selectable s : selectables.keySet()) {
             s.refresh();
         }
+    }
+    public static interface SelectionChangedListener<T>{
+        void onSelectionChanged(Selectable selectable,T data);
     }
 
 }

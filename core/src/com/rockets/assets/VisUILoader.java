@@ -41,7 +41,6 @@ public class VisUILoader {
         TextField.TextFieldStyle style = VisUI.getSkin().get(TextField.TextFieldStyle.class);
         style.font = VisUI.getSkin().getFont(Font.h1);
         style.fontColor = Colors.get(Colr.TEXT_LIGHT);
-        style.background = menuAssets.bgs.get(Catalog.Backgrounds.solid, Catalog.normal);
         style.cursor = new NinePatchDrawable(new NinePatch(menuAssets.textfieldCursor));
 
         VisUI.getSkin().add("default",style);
@@ -78,7 +77,7 @@ public class VisUILoader {
                         new NinePatchDrawable(menuAssets.btnGeneral[0]),
                         VisUI.getSkin().getFont(Font.h1)
                 );
-        def.fontColor = Colors.get(Colr.TEXT_DARK);
+        def.fontColor = Colors.get(Colr.TEXT_MID);
         def.unpressedOffsetY = 1;
         def.checkedOffsetY = 1;
         VisUI.getSkin().add("default", def);
@@ -96,14 +95,18 @@ public class VisUILoader {
         VisUI.getSkin().add(PRIMARY, primary);
 
         VisTextButton.VisTextButtonStyle primaryLarge = new VisTextButton.VisTextButtonStyle(primary);
+        primary.fontColor = Colors.get(Colr.TEXT_DARK);
         primaryLarge.font = VisUI.getSkin().getFont(Font.h2);
         VisUI.getSkin().add(PRIMARY_LG,primaryLarge);
     }
 
     private static void initFonts(AssetManager manager, MenuAssets menuAssets) {
         manager.get(Font.p1, BitmapFont.class).getData().setLineHeight(12);
-        manager.get(Font.p2, BitmapFont.class).getData().setScale(1.5f,1.5f);
-        manager.get(Font.h2, BitmapFont.class).getData().setScale(1.5f,1.5f);
+        manager.get(Font.p2, BitmapFont.class).getData().setScale(1.5f);
+        manager.get(Font.h2, BitmapFont.class).getData().setScale(1.5f);
+        manager.get(Font.outlined2, BitmapFont.class).getData().setScale(1.5f);
+        manager.get(Font.grand2, BitmapFont.class).getData().setScale(1.5f);
+        manager.get(Font.grand3, BitmapFont.class).getData().setScale(2f);
         for (Field field : Font.class.getFields()) {
             field.setAccessible(true);
             try {

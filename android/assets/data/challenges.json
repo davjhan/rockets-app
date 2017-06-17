@@ -20,4 +20,25 @@
         "difficulty": 0,
         "classname": "EdgeSpikeChallenge"
     },
+    {
+        "id": "clock_1",
+        "name": "Clockworks",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "ClockworkChallenge"
+    },
+    {
+        "id": "fallingBlocks",
+        "name": "Chicken Little",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "FallingBlocksChallenge"
+    },
+    {
+        "id": "apple",
+        "name": "Intro to spikes",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "EdgeSpikeChallenge"
+    },
 ]

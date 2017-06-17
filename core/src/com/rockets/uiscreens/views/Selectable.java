@@ -9,8 +9,7 @@ package com.rockets.uiscreens.views;
  **/
 public interface Selectable {
     boolean isSelected();
-    void select();
-    void deselect();
+    void setSelected(boolean selected);
     void refresh();
     boolean isSelectable();
 

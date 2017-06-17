@@ -22,17 +22,20 @@ public class ActionFactory {
 
     private static float tempDecay;
     private static float tempFloat1;
+
     public static Action shake(Actor actor,  float intensity){
+        return shake(actor,intensity,1);
+    }
+    public static Action shake(Actor actor,  float intensity,float decay){
         tempOrigin.set(actor.getX(),actor.getY());
-        tempDecay = 1f;
         tempFloat1 = MathUtils.random(0,360);
         SequenceAction seq = Actions.sequence();
-        while(!MathUtils.isEqual(intensity,tempDecay)){
+        while(!MathUtils.isEqual(intensity,decay)){
             temp1.set(0,intensity);
             temp1.setAngle(tempFloat1+MathUtils.random(90,270));
             tempFloat1 = temp1.angle();
             seq.addAction(Actions.moveTo(actor.getX()+temp1.x,actor.getY()+temp1.y, AnimConst.FAST));
-            intensity -= tempDecay;
+            intensity -= decay;
         }
         seq.addAction(Actions.moveTo(actor.getX(),actor.getY(), AnimConst.FAST));
         return seq;

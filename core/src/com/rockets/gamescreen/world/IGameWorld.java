@@ -14,7 +14,7 @@ import com.rockets.modal.Modal;
  * author: david
  * Copyright (c) 2016 David Han
  **/
-public interface IGameWorld {
+public interface IGameWorld extends Freshable{
     IGame game();
     GameGroup<Actor> background();
     GameGroup<Actor> bodies();

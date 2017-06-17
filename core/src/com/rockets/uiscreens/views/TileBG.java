@@ -21,8 +21,8 @@ public class TileBG extends Actor{
     private int totalHeight;
     public TileBG(TextureRegion[] graphics) {
         tileSize = graphics[0].getRegionWidth();
-        int numRows = 1+ Display.HEIGHT / tileSize;
-        int numCols = 1+ Display.WIDTH / tileSize;
+        int numRows = (int) (1+ Display.SCREEN_HEIGHT / tileSize);
+        int numCols = (int) (1+ Display.SCREEN_WIDTH / tileSize);
         int graphicNum = 0;
         tiles = new Sprite[numRows][numCols];
         for (int r = 0; r < numRows; r++) {

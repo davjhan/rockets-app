@@ -16,7 +16,7 @@ import com.rockets.modal.Modal;
  * Copyright (c) 2017 David Han
  **/
 public abstract class CollectChallenge extends BaseChallenge {
-    Coin coin;
+    protected Coin coin;
     protected int score;
     protected Vector2[] sequence;
 
@@ -36,7 +36,7 @@ public abstract class CollectChallenge extends BaseChallenge {
 
             return new Vector2(
                     (pad + x * unitSize + (unitSize / 2)),
-                    Display.WORLD_TOP-(pad + y * unitSize + (unitSize / 2))
+                    Display.WORLD_TOP -(pad + y * unitSize + (unitSize / 2))
             );
         }
     }
@@ -57,7 +57,6 @@ public abstract class CollectChallenge extends BaseChallenge {
             if(!incrementScore()){
                 dir.gameWorld().shakeScreen(2);
             }
-            hud.updateScore(score);
 
         }
     };
@@ -67,6 +66,7 @@ public abstract class CollectChallenge extends BaseChallenge {
         score = 0;
         super.fresh();
         nextPart();
+        coin.fresh();
     }
 
     protected boolean didReachGoal() {
@@ -126,6 +126,7 @@ public abstract class CollectChallenge extends BaseChallenge {
             onGoalReached();
             return false;
         }
+        hud.updateScore(score);
         nextPart();
         return true;
     }

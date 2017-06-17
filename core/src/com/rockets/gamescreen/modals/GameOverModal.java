@@ -37,6 +37,7 @@ public class GameOverModal extends BasicModal {
 
     @Override
     protected void initTitle() {
+        super.initTitle();
         setTitle(app.getString("game_over"));
     }
 

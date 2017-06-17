@@ -23,21 +23,24 @@ public class InlineView extends Table {
     HanLabel subTitleLabel;
     HanLabel valueLabel;
 
-    public InlineView(IApp app, String title, String subtitle, String value, OnClickListener clickListener){
+    public InlineView(IApp app, String title, String subtitle, String value, OnClickListener clickListener) {
         add(getTitle(title)).growX().left().expandY();
-        if(value != null){
+        if (value != null) {
 
             add(getValue(value)).space(Spacing.SMALL).expandY();
-          }
+        }
 
-        if(subtitle != null){
-            subTitleLabel = new HanLabel(subtitle,Font.c1, Colr.TEXT_LIGHT);
+        if (subtitle != null) {
+            subTitleLabel = HanLabel.text(subtitle)
+                    .font(Font.c1)
+                    .color(Colr.TEXT_LIGHT)
+                    .build();
             row();
             add(subTitleLabel).colspan(getColumns()).grow().spaceTop(Spacing.XSMALL);
         }
 
         pack();
-        if(clickListener != null){
+        if (clickListener != null) {
             addListener(clickListener);
             addListener(new SquishyButtonListener());
             setTransform(true);
@@ -46,16 +49,19 @@ public class InlineView extends Table {
     }
 
     private Actor getValue(String value) {
-        valueLabel = new HanLabel(value,Font.p1);
+        valueLabel = new HanLabel(value, Font.p1);
         return valueLabel;
     }
 
-    public InlineView(IApp app,String title,String subtitle,OnClickListener clickListener){
-        this(app,title,subtitle,null,clickListener);
+    public InlineView(IApp app, String title, String subtitle, OnClickListener clickListener) {
+        this(app, title, subtitle, null, clickListener);
     }
 
     private Actor getTitle(String title) {
-        titleLabel = new HanLabel(title, Font.h1, Colr.TEXT_LIGHT);
+        titleLabel = HanLabel.text(title)
+                .font(Font.h1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
 
         return titleLabel;
     }

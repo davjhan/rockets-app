@@ -3,7 +3,6 @@ package com.rockets.modal;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
-import com.rockets.assets.Catalog;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.IApp;
@@ -31,7 +30,7 @@ public class TextInputModal extends Modal{
     public TextInputModal(IApp app,
                           String
              titleText, String text, TextInputListener listener) {
-        super(app, listener, true, true,app.menuAssets().bgs.get(Catalog.Backgrounds.bordered));
+        super(app, listener, true, true,app.menuAssets().bgs.getModalBg());
         this.listener = listener;
         this.inputText = text;
         this.titleText = titleText;
@@ -53,7 +52,10 @@ public class TextInputModal extends Modal{
 
     protected void init() {
         super.init();
-        HanLabel titleLabel = new HanLabel(titleText,Font.h1,Colr.TEXT_LIGHT);
+        HanLabel titleLabel = HanLabel.text(titleText)
+                .font(Font.h1)
+                .color(Colr.TEXT_LIGHT)
+                .build();
         textField = new HanTextField(inputText);
 
         textField.setCursorPosition(textField.getText().length());
@@ -83,7 +85,7 @@ public class TextInputModal extends Modal{
     }
 
     protected void setRootPosition() {
-        root.setPosition(Display.HALF_WIDTH,Display.HEIGHT - Spacing.LARGE, Align.top);
+        root.setPosition(Display.HALF_WIDTH,Display.SCREEN_HEIGHT - Spacing.LARGE, Align.top);
     }
 
 }

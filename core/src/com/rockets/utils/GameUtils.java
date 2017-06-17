@@ -13,10 +13,10 @@ import com.rockets.gamescreen.world.Facing;
  **/
 public class GameUtils {
     public static boolean isOutOfBounds(Vector2 position, float radius) {
-        return(position.x > radius+ Display.WIDTH ||
+        return(position.x > radius+ Display.SCREEN_WIDTH ||
                 position.x < -radius||
-                position.y > radius+ Display.HEIGHT-Display.TOP_PAD||
-                position.y < Display.BOT_PAD-radius
+                position.y > radius+ Display.SCREEN_HEIGHT -Display.TOP_PAD||
+                position.y < Display.CONTENT_BOTPAD-radius
                 );
     }
 

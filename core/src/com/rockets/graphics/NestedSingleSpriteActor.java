@@ -2,6 +2,7 @@ package com.rockets.graphics;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -83,5 +84,9 @@ public class NestedSingleSpriteActor extends Actor implements Disposable,Nested{
         parentScale.set(parentScaleX,parentScaleY);
         setRotation(rotation);
         draw(batch, alphaModulation);
+    }
+
+    public Sprite getSprite() {
+        return (Sprite)sprite;
     }
 }

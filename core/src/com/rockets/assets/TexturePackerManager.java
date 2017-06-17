@@ -19,6 +19,5 @@ public class TexturePackerManager {
         settings = new TexturePacker.Settings();
         settings.silent = false;
         TexturePacker.processIfModified(settings,INPUT_DIR+"default/", OUTPUT_DIR, "default_"+PACK_FILENAME);
-
     }
 }

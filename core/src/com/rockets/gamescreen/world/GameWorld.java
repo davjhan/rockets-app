@@ -1,21 +1,27 @@
 package com.rockets.gamescreen.world;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.Hud;
+import com.rockets.gamescreen.modals.OptionsModal;
 import com.rockets.gamescreen.physics.CollisionManager;
 import com.rockets.gamescreen.physics.Side;
 import com.rockets.graphics.ActionFactory;
 import com.rockets.modal.Modal;
 import com.rockets.uiscreens.HomeScreen;
+import com.rockets.utils.GraphicsFactory;
 
 /**
  * name: GameWorld
@@ -29,13 +35,13 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     protected IGame game;
     protected Stage stage;
     private String state;
+    Actor solid;
     protected GameGroup<Actor> background;
     protected GameGroup<Actor> bodies;
     protected GameGroup<Actor> markers;
     protected GameGroup<Actor> overtop;
     protected GameGroup<Actor> gameContainer;
     protected CollisionManager collisionManager;
-
 
     public GameWorld(IApp iApp, IGame game) {
         this.iApp = iApp;
@@ -50,6 +56,18 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         initWalls();
         initHud();
         initInput();
+
+        initExtraSpaceBg();
+    }
+
+    protected void initExtraSpaceBg(){
+        if(Display.CONTENT_BOTPAD > 0){
+            Image bottomBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH,Display.CONTENT_BOTPAD,Color.BLACK);
+            Image topBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH,Display.CONTENT_BOTPAD,Color.BLACK);
+            stage.addActor(bottomBlocker);
+            stage.addActor(topBlocker);
+            topBlocker.setPosition(0,Display.SCREEN_HEIGHT, Align.topLeft);
+        }
     }
 
     protected void initInput() {
@@ -60,6 +78,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
 
     private void initGroups() {
+
         gameContainer = new GameGroup<>();
         background = new GameGroup<>();
         bodies = new GameGroup<>();
@@ -68,11 +87,19 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         gameContainer.addActor(background);
         gameContainer.addActor(bodies);
         gameContainer.addActor(markers);
+        gameContainer.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
+        overtop.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
+       // gameContainer.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
+       // overtop.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
         stage.addActor(gameContainer);
         stage.addActor(overtop);
     }
 
     protected void initBG() {
+        solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT,Color.valueOf("#141518"));
+        background.addActor(solid);
+        //Actor bg = new SpriteActor(game.gameAssets().bg);
+       // background.addActor(bg);
     }
 
     private void initWalls() {
@@ -119,9 +146,9 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     @Override
     public void ensureInBounds(Actor actor) {
         actor.setX(Math.max(Display.LEFT_PAD, actor.getX()));
-        actor.setX(Math.min(Display.LEFT_PAD + Display.WORLD_WIDTH - actor.getWidth(), actor.getX()));
-        actor.setY(Math.max(Display.BOT_PAD, actor.getY()));
-        actor.setY(Math.min(Display.BOT_PAD + Display.WORLD_HEIGHT - actor.getHeight(), actor.getY()));
+        actor.setX(Math.min(Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth(), actor.getX()));
+        actor.setY(Math.max(Display.CONTENT_BOTPAD, actor.getY()));
+        actor.setY(Math.min(Display.CONTENT_BOTPAD + Display.CONTENT_HEIGHT - actor.getHeight(), actor.getY()));
     }
 
     @Override
@@ -130,16 +157,16 @@ public abstract class GameWorld implements IGameWorld, Disposable {
             actor.setX(Display.LEFT_PAD);
             actor.onCollision(Side.LEFT);
         }
-        if (actor.getX() > Display.LEFT_PAD + Display.WORLD_WIDTH - actor.getWidth()) {
-            actor.setX(Display.LEFT_PAD + Display.WORLD_WIDTH - actor.getWidth());
+        if (actor.getX() > Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth()) {
+            actor.setX(Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth());
             actor.onCollision(Side.RIGHT);
         }
 //        if(actor.getY()< Display.BOT_PAD){
 //            actor.setY(Display.BOT_PAD);
 //            actor.onCollision(Side.BOTTOM);
 //        }
-        if (actor.getY() > Display.WORLD_HEIGHT - actor.getHeight() - Display.TOP_PAD) {
-            actor.setY(Display.WORLD_HEIGHT - actor.getHeight() - Display.TOP_PAD);
+        if (actor.getY() > Display.WORLD_TOP - actor.getHeight()) {
+            actor.setY(Display.WORLD_TOP - actor.getHeight());
             actor.onCollision(Side.TOP);
         }
     }
@@ -151,7 +178,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if (x < Display.WORLD_WIDTH + Display.LEFT_PAD) {
+            if (x < Display.CONTENT_WIDTH + Display.LEFT_PAD) {
 
             }
             return super.touchDown(event, x, y, pointer, button);
@@ -170,7 +197,8 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     @Override
     public void shakeScreen(int intensity) {
         Action action = ActionFactory.shake(gameContainer,intensity);
-        gameContainer.addAction(action);
+        gameContainer.addAction(Actions.sequence(action,
+                Actions.moveTo(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD)));
     }
     public void update(float delta){
 
@@ -201,10 +229,25 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     public void showOptionsMenu() {
+        sceneScript().setPaused(true);
+        showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
+            @Override
+            public void onLeaveGame() {
+                goHome();
+            }
 
+            @Override
+            public void onDismiss(Modal modal) {
+                setPaused(false);
+            }
+        }));
     }
 
-
+    @Override
+    public void fresh() {
+        gameContainer.clearActions();
+        gameContainer.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
+    }
 
     @Override
     public void goHome() {

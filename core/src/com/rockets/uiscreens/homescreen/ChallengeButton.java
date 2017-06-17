@@ -1,18 +1,18 @@
 package com.rockets.uiscreens.homescreen;
 
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.kotcrab.vis.ui.VisUI;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.IApp;
 import com.rockets.data.readonly.Challenges;
-import com.rockets.gamescreen.GameScreen;
 import com.rockets.gamescreen.world.GameGroup;
-import com.rockets.graphics.views.HanTextButton;
+import com.rockets.graphics.views.HanLabel;
+import com.rockets.uiscreens.listeners.SquishyButtonListener;
+import com.rockets.uiscreens.views.Selectable;
 
 /**
  * name: LevelButton
@@ -21,33 +21,59 @@ import com.rockets.graphics.views.HanTextButton;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class ChallengeButton extends GameGroup<Actor> {
-    HanTextButton textButton;
-    public ChallengeButton(final IApp app, int index,final Challenges.ChallengeModel model){
-        textButton = new HanTextButton(String.valueOf(index));
-        TextButton.TextButtonStyle textButtonStyle = textButton.getNormalStyle();
-        NinePatch[] drawables = app.menuAssets().levelButtonsRegular;
-        textButtonStyle.up = new NinePatchDrawable(drawables[0]);
-        textButtonStyle.down = new NinePatchDrawable(drawables[1]);
-        textButtonStyle.checked = new NinePatchDrawable(drawables[0]);
-        textButtonStyle.font = VisUI.getSkin().getFont(Font.h2);
+public class ChallengeButton extends GameGroup<Actor> implements Selectable {
+    HanLabel indexLabel;
+    Image image;
+    boolean selected;
+    Drawable bgNormal;
+    Drawable bgSelected;
 
-        textButton.setNormalStyle(textButtonStyle);
-        spawn(textButton);
-        textButton.pack();
+    public static final int WIDTH = 38;
+    public static final int HEIGHT = 52;
 
-        addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                app.screenManager().pushScreen(GameScreen.class,GameScreen.getChallengeExtras(model.id));
-            }
-        });
+    public ChallengeButton(final IApp app, int index, final Challenges.ChallengeModel model) {
+        setSize(WIDTH, HEIGHT);
+        bgNormal = new TextureRegionDrawable(app.menuAssets().levelButtons[0][0]);
+        bgSelected = new TextureRegionDrawable(app.menuAssets().levelButtons[0][1]);
+        image = new Image(bgNormal);
+        image.setFillParent(true);
+        indexLabel = HanLabel.text(String.valueOf(index + 1))
+                .font(Font.c1)
+                .color(Colr.TEXT_DARK)
+                .build();
+        spawn(image);
+        spawn(indexLabel, WIDTH / 2, 13, Align.center);
+        addListener(new SquishyButtonListener());
+        setOrigin(Align.center);
     }
 
     @Override
     protected void sizeChanged() {
         super.sizeChanged();
-        textButton.setSize(getWidth(),getHeight());
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        if (selected) {
+            image.setDrawable(bgSelected);
+        } else {
+            image.setDrawable(bgNormal);
+        }
+    }
+
+    @Override
+    public void refresh() {
+
+    }
+
+    @Override
+    public boolean isSelectable() {
+        return true;
     }
 }

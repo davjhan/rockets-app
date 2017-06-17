@@ -2,10 +2,13 @@ package com.rockets.graphics.views;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.rockets.constants.Spacing;
 
 /**
  * name: HanButton
@@ -17,6 +20,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 public class HanTextButton extends VisTextButton implements Clickable {
     TextButtonStyle normalStyle;
     TextButtonStyle disabledStyle;
+    Image leftIcon;
     boolean enabled = true;
 
     public HanTextButton(String text, String styleName) {
@@ -70,10 +74,10 @@ public class HanTextButton extends VisTextButton implements Clickable {
     private void init() {
         setNormalStyle(new TextButtonStyle(getStyle()));
         //disabledStyle =  VisUI.getSkin().get(HanSkin.DISABLED,TextButtonStyle.class);
-        getLabelCell().padTop(4);
-        getLabelCell().padBottom(2);
-        getLabelCell().padLeft(8);
-        getLabelCell().padRight(8);
+        padTop(4);
+        padBottom(4);
+        padLeft(8);
+        padRight(8);
         setChecked(false);
         pack();
     }
@@ -97,6 +101,15 @@ public class HanTextButton extends VisTextButton implements Clickable {
         super.setText(text);
     }
 
+    public void setLeftIcon (TextureRegion icon){
+
+        leftIcon = new Image(icon);
+        Label label = getLabel();
+        clearChildren();
+        add(leftIcon).spaceRight(Spacing.SMALL);
+        add(label);
+        init();
+    }
     @Override
     public void addClickListener(OnClickListener clickListener) {
         addListener(clickListener);
