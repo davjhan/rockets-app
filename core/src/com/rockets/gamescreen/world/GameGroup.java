@@ -1,7 +1,6 @@
 package com.rockets.gamescreen.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.utils.BaseAnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -72,6 +71,10 @@ public class GameGroup<T extends Actor>  extends Group implements Disposable {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
 
     @Override

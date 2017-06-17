@@ -1,5 +1,6 @@
 package com.rockets.gamescreen.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -42,7 +43,6 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     protected GameGroup<Actor> overtop;
     protected GameGroup<Actor> gameContainer;
     protected CollisionManager collisionManager;
-
     public GameWorld(IApp iApp, IGame game) {
         this.iApp = iApp;
         this.game = game;
@@ -229,18 +229,22 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     public void showOptionsMenu() {
-        sceneScript().setPaused(true);
-        showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
-            @Override
-            public void onLeaveGame() {
-                goHome();
-            }
+        if(sceneScript().isPauseable()) {
+            setPaused(true);
+            sceneScript().setPaused(true);
+            showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
+                @Override
+                public void onLeaveGame() {
+                    goHome();
+                }
 
-            @Override
-            public void onDismiss(Modal modal) {
-                setPaused(false);
-            }
-        }));
+                @Override
+                public void onDismiss(Modal modal) {
+                    setPaused(false);
+                    sceneScript().setPaused(false);
+                }
+            }));
+        }
     }
 
     @Override
