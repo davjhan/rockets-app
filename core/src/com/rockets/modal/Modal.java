@@ -2,10 +2,12 @@ package com.rockets.modal;
 
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.rockets.assets.Colr;
 import com.rockets.common.IApp;
+import com.rockets.constants.AnimConst;
 import com.rockets.constants.Display;
 import com.rockets.constants.Spacing;
 import com.rockets.utils.GraphicsFactory;
@@ -34,7 +37,7 @@ public abstract class Modal extends WidgetGroup implements Disposable {
 
     protected NinePatchDrawable bgDrawable;
     protected Table root;
-    private Actor dimActor;
+    protected Actor dimActor;
     List<ModalListener> modalListeners;
     protected IApp app;
     boolean touchDimToExit = true;
@@ -80,7 +83,7 @@ public abstract class Modal extends WidgetGroup implements Disposable {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        closeModal();
+                        animatedCloseModal();
                     }
                 });
 
@@ -88,18 +91,6 @@ public abstract class Modal extends WidgetGroup implements Disposable {
         }
 
         addActor(root);
-    }
-    protected void animatedCloseModal(){
-
-    }
-    protected void animatedCloseModal(Action before){
-        root.addAction(Actions.sequence(before,
-                Actions.run(new Runnable() {
-                    @Override
-                    public void run() {
-                        closeModal();
-                    }
-                })));
     }
     protected void closeModal() {
         if(modalListeners != null && !modalListeners.isEmpty()){
@@ -111,6 +102,69 @@ public abstract class Modal extends WidgetGroup implements Disposable {
         }
         remove();
     }
+
+
+    @Override
+    protected void setStage(Stage stage) {
+        super.setStage(stage);
+        onShow();
+    }
+
+    protected void onShow() {
+        if(getDimEnterAction() != null){
+            dimActor.setVisible(false);
+            dimActor.addAction(getDimEnterAction());
+        }
+        if(getRootEnterAction() != null){
+            root.setVisible(false);
+            root.addAction(getRootEnterAction());
+        }
+
+    }
+
+    protected Action getRootEnterAction() {
+        return Actions.sequence(
+                Actions.delay(0.1f),
+                Actions.scaleTo(0.95f, 0.95f),
+                Actions.visible(true),
+                Actions.scaleTo(1.05f, 1.05f, AnimConst.FAST, Interpolation.pow2Out),
+                Actions.scaleTo(1, 1, AnimConst.FAST, Interpolation.pow2Out)
+        );
+    }
+
+    protected Action getRootExitAction() {
+        return Actions.sequence(
+                Actions.scaleTo(1.05f, 1.05f, AnimConst.FAST, Interpolation.pow2Out),
+                Actions.parallel(
+                        Actions.sequence(Actions.scaleTo(0.95f, 0.95f, AnimConst.FAST, Interpolation.pow2Out),
+                                Actions.fadeOut(AnimConst.FAST)
+                        )
+                )
+        );
+    }
+
+    protected Action getDimEnterAction() {
+        return Actions.visible(true);
+    }
+
+    protected Action getDimExitAction() {
+        return Actions.sequence(
+                Actions.delay(0.2f),
+                Actions.visible(false)
+        );
+    }
+
+    protected void animatedCloseModal() {
+        root.addAction(Actions.sequence(getRootExitAction(),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeModal();
+                    }
+                })));
+        dimActor.addAction(getDimExitAction());
+    }
+
 
     protected void init() {
         root.setBackground(bgDrawable);
