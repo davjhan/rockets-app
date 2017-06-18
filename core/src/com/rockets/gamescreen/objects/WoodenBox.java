@@ -1,12 +1,12 @@
 package com.rockets.gamescreen.objects;
 
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
 import com.rockets.gamescreen.physics.CollisionGroup;
 import com.rockets.gamescreen.physics.Side;
 import com.rockets.gamescreen.world.GameEntity;
+import com.rockets.graphics.ActionFactory;
 import com.rockets.graphics.NestedSingleSpriteActor;
 import com.rockets.utils.WhiteBlinkUtils;
 
@@ -60,7 +60,7 @@ public class WoodenBox extends GameEntity implements Collidable {
                 die();
                 if(listener != null)listener.onBroken();
             }else{
-                graphic.addAction(Actions.moveBy(100,100,1));
+                graphic.addAction(ActionFactory.shake(graphic,4));
             }
         }
     }
