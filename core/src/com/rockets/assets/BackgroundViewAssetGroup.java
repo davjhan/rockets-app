@@ -50,4 +50,8 @@ public class BackgroundViewAssetGroup{
     public NinePatchDrawable getWhiteNametag() {
         return getReg(0,1);
     }
+
+    public Drawable getStartButtonBg() {
+        return getSpecial(0,1);
+    }
 }

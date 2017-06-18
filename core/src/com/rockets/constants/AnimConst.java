@@ -8,6 +8,7 @@ package com.rockets.constants;
  * Copyright (c) 2016 David Han
  **/
 public class AnimConst {
+    public static final float TRANSITION = 0.2f;
     public static final float MEDIUM = 0.12f;
     public static final float SHORT = 0.1f;
     public static final float FAST = 0.05f;

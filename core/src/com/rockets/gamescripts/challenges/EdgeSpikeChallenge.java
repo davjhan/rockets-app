@@ -25,7 +25,7 @@ public class EdgeSpikeChallenge extends CollectChallenge {
              Spike spike = new Spike(dir.game());
              spikes.add(spike);
              dir.gameWorld().bodies().spawn(spike,
-                     -38+(x* (Display.CONTENT_WIDTH+26)),
+                     -38+(x* (Display.CONTENT_WIDTH+32)),
                      Display.CONTENT_HEIGHT -(i*50), Align.topLeft);
          }
         }

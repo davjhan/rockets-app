@@ -84,14 +84,14 @@ public abstract class CollectChallenge extends BaseChallenge {
 
             @Override
             public void playAgain() {
-                dir.app().screenManager().pushScreen(
+                dir.app().screenManager().clearAndPushScreen(
                         GameScreen.class, GameScreen.getChallengeExtras(challengeModel.id)
                 );
             }
 
             @Override
             public void nextChallenge() {
-                dir.app().screenManager().pushScreen(
+                dir.app().screenManager().clearAndPushScreen(
                         GameScreen.class, GameScreen.getChallengeExtras(
                                 dir.app().contentDB().challenges().getNextChallengeId(challengeModel.id)
                         )

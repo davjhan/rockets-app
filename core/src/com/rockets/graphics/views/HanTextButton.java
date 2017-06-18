@@ -74,10 +74,10 @@ public class HanTextButton extends VisTextButton implements Clickable {
     private void init() {
         setNormalStyle(new TextButtonStyle(getStyle()));
         //disabledStyle =  VisUI.getSkin().get(HanSkin.DISABLED,TextButtonStyle.class);
-        padTop(4);
-        padBottom(4);
-        padLeft(8);
-        padRight(8);
+        getLabelCell().padTop(4);
+        getLabelCell().padBottom(2);
+        getLabelCell().padLeft(8);
+        getLabelCell().padRight(8);
         setChecked(false);
         pack();
     }
@@ -108,7 +108,6 @@ public class HanTextButton extends VisTextButton implements Clickable {
         clearChildren();
         add(leftIcon).spaceRight(Spacing.SMALL);
         add(label);
-        init();
     }
     @Override
     public void addClickListener(OnClickListener clickListener) {

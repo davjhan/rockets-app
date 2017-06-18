@@ -45,14 +45,14 @@ public class ChallengeCompleteModal extends BasicModal {
     @Override
     protected void initContents() {
 
-        HanTextButton readyButton = new HanTextButton("NEXT CHALLENGE", new OnClickListener() {
+        HanTextButton nextChallengeButton = new HanTextButton("NEXT CHALLENGE", new OnClickListener() {
             @Override
             public void onClick() {
-                modalListener.playAgain();
+                modalListener.nextChallenge();
                 closeModal();
             }
         });
-        readyButton.setStyle(VisUI.getSkin().get("primary", VisTextButton.VisTextButtonStyle.class));
+        nextChallengeButton.setStyle(VisUI.getSkin().get("primary", VisTextButton.VisTextButtonStyle.class));
 
         HanTextButton playAgainButton = new HanTextButton("PLAY AGAIN", new OnClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class ChallengeCompleteModal extends BasicModal {
             }
         });
         contents.align(Align.bottom);
-        contents.add(readyButton).spaceBottom(Spacing.REG);
+        contents.add(nextChallengeButton).spaceBottom(Spacing.REG);
         contents.row();
         contents.add(playAgainButton).fill();
         contents.row();

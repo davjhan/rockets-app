@@ -1,5 +1,12 @@
 [
     {
+        "id": "coin_0",
+        "name": "Tutorial",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "TutorialChallenge"
+    },
+    {
         "id": "coin_1",
         "name": "Basic Level 1",
         "type": "collect",

@@ -10,9 +10,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		TexturePackerManager.packTextures();
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		float scale = 1;
+		float scale = 2;
 		config.width = (int)(Display.SCREEN_WIDTH *scale);
-		config.height = (int)(540 * scale);
+		config.height = (int)(Display.SCREEN_HEIGHT * scale);
 		new LwjglApplication(new Rockets(), config);
 	}
 }

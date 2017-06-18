@@ -1,24 +1,26 @@
 package com.rockets.gamescreen.modals;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.assets.Icons;
-import com.rockets.assets.VisUILoader;
 import com.rockets.common.IApp;
+import com.rockets.constants.AnimConst;
 import com.rockets.constants.Spacing;
 import com.rockets.data.readonly.Challenges;
 import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
+import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.HanLabel;
-import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.IconAndLabel;
 import com.rockets.graphics.views.OnClickListener;
+import com.rockets.graphics.views.SquishyButton;
 import com.rockets.modal.BasicModal;
 
 /**
@@ -47,7 +49,7 @@ public class ChallengeIntroModal extends BasicModal {
         Gdx.app.log("tttt ChallengeIntroModal", "width: " +root.getTop());
 
        // placard.setPosition(root.getX()+root.getWidth()/2,root.getTop()+8,Align.bottom);
-        iconAndLabel.setPosition(root.getX()+root.getWidth()/2,root.getTop(),Align.center);
+        iconAndLabel.setPosition(root.getWidth()/2,root.getHeight(),Align.center);
     }
 
     @Override
@@ -62,51 +64,67 @@ public class ChallengeIntroModal extends BasicModal {
         title.setAlignment(Align.center);
         completion = new Image(app.menuAssets().completion[1]);
         iconAndLabel = new IconAndLabel(completion,title);
-        addActor(iconAndLabel);
+        root.addActor(iconAndLabel);
     }
 
 
     @Override
     protected void initContents() {
 
-        HanTextButton readyButton = new HanTextButton("START GAME", new OnClickListener() {
-            @Override
-            public void onClick() {
-                closeModal();
-            }
-        });
-        Label readyButtonLabel = readyButton.getLabel();
-        Image playButtonSymbol = new Image(app.menuAssets().bigPlaySymbol);
-        readyButton.pad(Spacing.LARGE);
-        readyButton.clearChildren();
-        readyButton.add(playButtonSymbol).spaceTop(Spacing.REG);
-        readyButton.row();
-        readyButton.add(readyButtonLabel).spaceTop(Spacing.REG);
+        Table startButton = new SquishyButton();
 
-        readyButton.setStyle(VisUI.getSkin().get(VisUILoader.PRIMARY_LG, VisTextButton.VisTextButtonStyle.class));
+        Label startButtonLabel = HanLabel.text("Start game")
+                .color(Colr.TEXT_DARK)
+                .font(Font.h2)
+                .build();
 
-        HanTextButton settingsButton = new HanTextButton("SETTINGS", new OnClickListener() {
+        Image startButtonIcon = new Image(app.menuAssets().bigPlaySymbol);
+
+        startButton.pad(Spacing.LARGE);
+        startButton.add(startButtonIcon).padTop(Spacing.REG);
+        startButton.row();
+        startButton.add(startButtonLabel).spaceTop(Spacing.REG);
+        startButton.pack();
+
+        startButton.setBackground(app.menuAssets().bgs.getStartButtonBg());
+        startButton.addListener(new OnClickListener() {
             @Override
             public void onClick() {
-                modalListener.onLeaveGame();
-                closeModal();
+                animatedCloseModal();
             }
         });
-        settingsButton.setLeftIcon(app.menuAssets().icons[Icons.SETTINGS]);
-        HanTextButton leaveButton = new HanTextButton("QUIT", new OnClickListener() {
-            @Override
-            public void onClick() {
-                modalListener.onLeaveGame();
-                closeModal();
-            }
-        });
-        leaveButton.setLeftIcon(app.menuAssets().icons[Icons.BACK]);
+        HanButton leaveButton = HanButton.with(app)
+                .text("Quit")
+                .leftIcon(app.menuAssets().icons[Icons.SETTINGS])
+                .onClick(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        modalListener.onLeaveGame();
+                        closeModal();
+                    }
+                })
+                .build();
+        HanButton settingsButton = HanButton.with(app)
+                .text("Options")
+                .leftIcon(app.menuAssets().icons[Icons.SETTINGS])
+                .onClick(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        modalListener.onLeaveGame();
+                        closeModal();
+                    }
+                })
+                .build();
         contents.padTop(Spacing.LARGE);
         contents.align(Align.bottom);
-        contents.add(readyButton).colspan(2).spaceBottom(Spacing.SMALL).grow();
+        contents.add(startButton).colspan(2).spaceBottom(Spacing.SMALL).grow();
         contents.row();
         contents.add(leaveButton).fill().spaceRight(Spacing.SMALL);
         contents.add(settingsButton).fill();
     }
 
+    @Override
+    protected void animatedCloseModal() {
+        super.animatedCloseModal(Actions.scaleBy(0.9f,0.9f, AnimConst.SHORT, Interpolation.bounceOut));
+    }
 }

@@ -2,9 +2,11 @@ package com.rockets.modal;
 
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
@@ -87,7 +89,18 @@ public abstract class Modal extends WidgetGroup implements Disposable {
 
         addActor(root);
     }
+    protected void animatedCloseModal(){
 
+    }
+    protected void animatedCloseModal(Action before){
+        root.addAction(Actions.sequence(before,
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeModal();
+                    }
+                })));
+    }
     protected void closeModal() {
         if(modalListeners != null && !modalListeners.isEmpty()){
             List<ModalListener> mlSnapshot = new ArrayList<>(modalListeners);

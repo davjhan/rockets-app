@@ -2,6 +2,7 @@ package com.rockets.graphics.views;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
@@ -67,8 +68,10 @@ public class HanLabel extends VisLabel {
     public static class LabelBuilder {
         String text;
         private String fontName = Font.h1;
+        private BitmapFont font = null;
         private Drawable bg;
         private String colorName = Colr.TEXT_LIGHT;
+        private Color color;
         private boolean forceAllCaps = true;
         int alignment = Align.center;
 
@@ -80,12 +83,18 @@ public class HanLabel extends VisLabel {
             this.fontName = fontName;
             return this;
         }
-
+        public LabelBuilder font(BitmapFont font) {
+            this.font = font;
+            return this;
+        }
         public LabelBuilder color(String colorName) {
             this.colorName = colorName;
             return this;
         }
-
+        public LabelBuilder color(Color color) {
+            this.color = color;
+            return this;
+        }
         public LabelBuilder background(Drawable bg) {
             this.bg = bg;
             return this;
@@ -101,8 +110,14 @@ public class HanLabel extends VisLabel {
         }
         public HanLabel build() {
             LabelStyle style = new LabelStyle();
-            style.font = VisUI.getSkin().getFont(fontName);
-            if (this.colorName != null) {
+            if(font == null) {
+                style.font = VisUI.getSkin().getFont(fontName);
+            }else{
+                style.font = font;
+            }
+            if (this.color != null) {
+                style.fontColor = color;
+            }else if (this.colorName != null) {
                 style.fontColor = Colors.get(colorName);
             }
             if (this.bg != null) {

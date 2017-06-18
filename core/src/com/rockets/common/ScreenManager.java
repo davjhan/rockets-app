@@ -37,6 +37,10 @@ public class ScreenManager {
         screenStack.push(newScreen);
         setScreen(newScreen);
     }
+    public void clearAndPushScreen(Class c, Map<String,Object> extras){
+        screenStack.clear();
+        pushScreen(c,extras);
+    }
     public void pushScreen(Class c){
         pushScreen(c,null);
     }
