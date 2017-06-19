@@ -61,7 +61,7 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
             @Override
             public void onClick() {
                 if(game.world().sceneScript().isPauseable()){
-                    spawnOptionsModal();
+                    game.world().pauseGame();
                 }
             }
         });
@@ -73,9 +73,6 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
         topTable.add(rightGroup).align(Align.center).fill().minWidth(pauseButton.getHeight());
     }
 
-    protected void spawnOptionsModal(){
-      game.world().showOptionsMenu();
-    }
 
     public void setInstructionsVisible(boolean visible){
         instructions.setVisible(visible);

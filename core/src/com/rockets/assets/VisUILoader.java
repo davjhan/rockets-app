@@ -89,13 +89,13 @@ public class VisUILoader {
                         new NinePatchDrawable(menuAssets.btnPrimary[0]),
                         VisUI.getSkin().getFont(Font.h1)
                 );
-        primary.fontColor = Colors.get(Colr.TEXT_DARK);
+        primary.fontColor = Colors.get(Colr.TEXT_NAVY);
         primary.unpressedOffsetY = 1;
         primary.checkedOffsetY = 1;
         VisUI.getSkin().add(PRIMARY, primary);
 
         VisTextButton.VisTextButtonStyle primaryLarge = new VisTextButton.VisTextButtonStyle(primary);
-        primary.fontColor = Colors.get(Colr.TEXT_DARK);
+        primary.fontColor = Colors.get(Colr.TEXT_BROWN);
         primaryLarge.font = VisUI.getSkin().getFont(Font.h2);
         VisUI.getSkin().add(PRIMARY_LG,primaryLarge);
     }

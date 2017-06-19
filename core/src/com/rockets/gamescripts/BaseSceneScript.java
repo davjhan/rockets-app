@@ -90,6 +90,6 @@ public abstract class BaseSceneScript implements SceneScript,StateListener {
 
     @Override
     public boolean isPauseable() {
-        return isState(STATE_RUNNING) || isState(STATE_READY);
+        return isState(STATE_RUNNING) || isState(STATE_READY)|| isState(STATE_END);
     }
 }

@@ -53,7 +53,7 @@ public class OptionsModal extends BasicModal {
         HanTextButton resumeButton = new HanTextButton(app.getString("resume"),new OnClickListener(){
             @Override
             public void onClick() {
-                closeModal();
+                animatedCloseModal();
             }
         });
         resumeButton.setStyle(VisUI.getSkin().get(VisUILoader.PRIMARY_LG,VisTextButton.VisTextButtonStyle.class));
@@ -61,7 +61,7 @@ public class OptionsModal extends BasicModal {
 
             @Override
             public void onClick() {
-                closeModal();
+                animatedCloseModal();
             }
         });
         contents.add(resumeButton).spaceBottom(Spacing.REG).grow().row();

@@ -69,7 +69,7 @@ public class FontLoader {
     private static AssetLoaderParameters<BitmapFont> makeOutlined(FreetypeFontLoader.FreeTypeFontLoaderParameter params,
                                                                   float scale) {
         params.fontParameters.borderWidth = 1/scale;
-        params.fontParameters.borderColor = Color.valueOf(Colr.TEXT_DARK);
+        params.fontParameters.borderColor = Color.valueOf(Colr.TEXT_BROWN);
         params.fontParameters.color = Color.valueOf(Colr.TEXT_LIGHT);
         return params;
     }
@@ -84,7 +84,7 @@ public class FontLoader {
             FreetypeFontLoader.FreeTypeFontLoaderParameter params, float scale) {
         params.fontParameters.borderWidth = 1/scale;
         params.fontParameters.color = Color.valueOf(Colr.TEXT_MID);
-        params.fontParameters.borderColor = Color.valueOf(Colr.TEXT_DARK);
+        params.fontParameters.borderColor = Color.valueOf(Colr.TEXT_NAVY);
         params.fontParameters.shadowOffsetY = 1;
         params.fontParameters.shadowColor = Color.valueOf("178ce1");
         return params;

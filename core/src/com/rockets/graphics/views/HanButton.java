@@ -63,7 +63,11 @@ public class HanButton extends Button implements Clickable {
         if(builder.onClick != null){
             addClickListener(builder.onClick);
         }
-        pad(padding);
+        if(builder.pad > -1){
+            pad(builder.pad);
+        }else {
+            pad(padding);
+        }
     }
 
     public void setText(CharSequence text){
@@ -89,6 +93,8 @@ public class HanButton extends Button implements Clickable {
         private String fontName = Font.h1;
         private OnClickListener onClick = null;
         private boolean allCaps = true;
+        private float pad = -1;
+
         private Builder(IApp app) {
             this.app = app;
         }
@@ -128,6 +134,11 @@ public class HanButton extends Button implements Clickable {
             HanButton button = new HanButton(this);
             app = null;
             return button;
+        }
+
+        public Builder pad(float pad) {
+            this.pad = pad;
+            return this;
         }
     }
 }

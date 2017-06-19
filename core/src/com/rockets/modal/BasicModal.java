@@ -57,7 +57,7 @@ public abstract class BasicModal extends Modal {
 
     }
 
-    protected void initTitle(){
+    protected void initTitle() {
         title = HanLabel.text("")
                 .font(Font.h2)
                 .build();
@@ -80,7 +80,9 @@ public abstract class BasicModal extends Modal {
         initContents();
 
         contents.pack();
-        if(addTitleToContent)root.add(title).fillX().expandX().center().expandY().spaceBottom(Spacing.REG).row();
+        if (addTitleToContent)
+            root.add(title).fillX().expandX().center().expandY().spaceBottom(Spacing.REG).row();
+        root.setTransform(true);
         root.add(contents).fill().expand();
         root.pack();
         root.setWidth(Math.max(minWidth, root.getWidth()));
@@ -95,6 +97,7 @@ public abstract class BasicModal extends Modal {
             }
 
         });
+        root.setOrigin(Align.center);
     }
 
     protected void setRootPosition() {

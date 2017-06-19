@@ -42,6 +42,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     protected GameGroup<Actor> overtop;
     protected GameGroup<Actor> gameContainer;
     protected CollisionManager collisionManager;
+
     public GameWorld(IApp iApp, IGame game) {
         this.iApp = iApp;
         this.game = game;
@@ -59,13 +60,13 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         initExtraSpaceBg();
     }
 
-    protected void initExtraSpaceBg(){
-        if(Display.CONTENT_BOTPAD > 0){
-            Image bottomBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH,Display.CONTENT_BOTPAD,Color.BLACK);
-            Image topBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH,Display.CONTENT_BOTPAD,Color.BLACK);
+    protected void initExtraSpaceBg() {
+        if (Display.CONTENT_BOTPAD > 0) {
+            Image bottomBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH, Display.CONTENT_BOTPAD+1, Color.BLACK);
+            Image topBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH, Display.CONTENT_BOTPAD+1, Color.BLACK);
             stage.addActor(bottomBlocker);
             stage.addActor(topBlocker);
-            topBlocker.setPosition(0,Display.SCREEN_HEIGHT, Align.topLeft);
+            topBlocker.setPosition(0, Display.SCREEN_HEIGHT, Align.topLeft);
         }
     }
 
@@ -86,19 +87,19 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         gameContainer.addActor(background);
         gameContainer.addActor(bodies);
         gameContainer.addActor(markers);
-        gameContainer.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
-        overtop.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
-       // gameContainer.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
-       // overtop.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
+        gameContainer.setPosition(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD);
+        overtop.setPosition(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD);
+        // gameContainer.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
+        // overtop.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
         stage.addActor(gameContainer);
         stage.addActor(overtop);
     }
 
     protected void initBG() {
-        solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT,Color.valueOf("#141518"));
+        solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH, Display.CONTENT_HEIGHT, Color.valueOf("#141518"));
         background.addActor(solid);
         //Actor bg = new SpriteActor(game.gameAssets().bg);
-       // background.addActor(bg);
+        // background.addActor(bg);
     }
 
     private void initWalls() {
@@ -135,7 +136,9 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     @Override
-    public GameGroup<Actor> overtop() {return overtop;}
+    public GameGroup<Actor> overtop() {
+        return overtop;
+    }
 
     @Override
     public CollisionManager collisionManager() {
@@ -195,13 +198,15 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     @Override
     public void shakeScreen(int intensity) {
-        Action action = ActionFactory.shake(gameContainer,intensity);
+        Action action = ActionFactory.shake(gameContainer, intensity);
         gameContainer.addAction(Actions.sequence(action,
-                Actions.moveTo(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD)));
+                Actions.moveTo(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD)));
     }
-    public void update(float delta){
+
+    public void update(float delta) {
 
     }
+
     @Override
     public void setPaused(boolean paused) {
         gameContainer.setPaused(paused);
@@ -209,7 +214,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     @Override
     public void showModal(Modal modal) {
-        overtop().addActorAt(overtop.getChildren().size-1,modal);
+        overtop().addActorAt(overtop.getChildren().size - 1, modal);
     }
 
     @Override
@@ -228,7 +233,24 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     public void showOptionsMenu() {
-        if(sceneScript().isPauseable()) {
+
+
+        showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
+            @Override
+            public void onLeaveGame() {
+                goHome();
+            }
+
+            @Override
+            public void onDismiss(Modal modal) {
+            }
+        }));
+
+    }
+
+    @Override
+    public void pauseGame() {
+        if (sceneScript().isPauseable()) {
             setPaused(true);
             sceneScript().setPaused(true);
             showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
@@ -249,11 +271,12 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     @Override
     public void fresh() {
         gameContainer.clearActions();
-        gameContainer.setPosition(Display.CONTENT_LEFTPAD,Display.CONTENT_BOTPAD);
+        gameContainer.setPosition(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD);
     }
 
     @Override
     public void goHome() {
         iApp.screenManager().restoreScreen(HomeScreen.class);
     }
+
 }

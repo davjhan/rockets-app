@@ -18,7 +18,7 @@ public class BackgroundViewAssetGroup{
         super();
         this.reg = reg;
         this.special = special;
-        getFrameBg().setBottomHeight(10);
+        special[0][0].setPadBottom(12);
     }
 
     public NinePatchDrawable getModalBg() {
@@ -26,6 +26,12 @@ public class BackgroundViewAssetGroup{
     }
     public NinePatchDrawable getInlay() {
         return getReg(0,0);
+    }
+    public NinePatchDrawable getGoldFrameBg() {
+        return getSpecial(1,0);
+    }
+    public NinePatchDrawable getCoinDisplayBgGold() {
+        return getSpecial(1,1);
     }
 
     private NinePatchDrawable getReg(int type,int state){
@@ -35,7 +41,8 @@ public class BackgroundViewAssetGroup{
 
         return new NinePatchDrawable(reg[type][Catalog.normal]);
     }
-    private NinePatchDrawable getSpecial(int type,int state){
+
+    private NinePatchDrawable getSpecial(int type, int state) {
         return new NinePatchDrawable(special[type][state]);
     }
     private NinePatchDrawable getSpecial(int type){
@@ -48,10 +55,14 @@ public class BackgroundViewAssetGroup{
     }
 
     public NinePatchDrawable getWhiteNametag() {
-        return getReg(0,1);
+        return getReg(0,2);
     }
 
     public Drawable getStartButtonBg() {
         return getSpecial(0,1);
+    }
+
+    public NinePatchDrawable getGoldNameTag() {
+        return getReg(0,3);
     }
 }

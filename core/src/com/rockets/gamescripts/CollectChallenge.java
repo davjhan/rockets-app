@@ -76,7 +76,7 @@ public abstract class CollectChallenge extends BaseChallenge {
     protected void onGoalReached() {
         setState(STATE_END);
         ChallengeCompleteModal challengeCompleteModal = new ChallengeCompleteModal(
-                dir.app(), challengeModel, new ChallengeCompleteModal.ChallengeCompleteModalListener() {
+                dir.game(), challengeModel, new ChallengeCompleteModal.ChallengeCompleteModalListener() {
             @Override
             public void goHome() {
                 dir.gameWorld().goHome();

@@ -9,7 +9,9 @@ import com.rockets.common.BaseScreen;
 import com.rockets.common.IApp;
 import com.rockets.gamescreen.singleplayer.ChallengeGameWorld;
 import com.rockets.gamescreen.world.GameWorld;
+import com.rockets.gamescripts.BaseSceneScript;
 import com.rockets.modal.ErrorModal;
+import com.rockets.uiscreens.HomeScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -135,7 +137,11 @@ public class GameScreen extends BaseScreen implements IGame {
     }
 
     public boolean onBackPressed() {
-       gameWorld.showOptionsMenu();
+        if(gameWorld.sceneScript().isState(BaseSceneScript.STATE_END)){
+            app.screenManager().restoreScreen(HomeScreen.class);
+        }else{
+            gameWorld.showOptionsMenu();
+        }
         return true;
     }
 

@@ -1,8 +1,7 @@
 package com.rockets.gamescreen.modals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,10 +10,9 @@ import com.badlogic.gdx.utils.Align;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.assets.Icons;
-import com.rockets.common.IApp;
-import com.rockets.constants.AnimConst;
 import com.rockets.constants.Spacing;
 import com.rockets.data.readonly.Challenges;
+import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
 import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.HanLabel;
@@ -36,8 +34,10 @@ public class ChallengeIntroModal extends BasicModal {
     Image completion;
     IconAndLabel iconAndLabel;
     protected Label title;
-    public ChallengeIntroModal(IApp app, Challenges.ChallengeModel challenge, OptionsModalListener modalListener) {
-        super(app, modalListener,true,false);
+    IGame game;
+    public ChallengeIntroModal(IGame game, Challenges.ChallengeModel challenge, OptionsModalListener modalListener) {
+        super(game.iApp(), modalListener,true,false);
+        this.game = game;
         this.challenge = challenge;
         this.modalListener = modalListener;
         init();
@@ -58,7 +58,7 @@ public class ChallengeIntroModal extends BasicModal {
 
         title = HanLabel.text(challenge.getName())
                 .font(Font.h1)
-                .color(Colr.TEXT_DARK)
+                .color(Colr.TEXT_NAVY)
                 .background(titleBG)
                 .build();
         title.setAlignment(Align.center);
@@ -74,7 +74,7 @@ public class ChallengeIntroModal extends BasicModal {
         Table startButton = new SquishyButton();
 
         Label startButtonLabel = HanLabel.text("Start game")
-                .color(Colr.TEXT_DARK)
+                .color(Colr.TEXT_BROWN)
                 .font(Font.h2)
                 .build();
 
@@ -95,7 +95,7 @@ public class ChallengeIntroModal extends BasicModal {
         });
         HanButton leaveButton = HanButton.with(app)
                 .text("Quit")
-                .leftIcon(app.menuAssets().icons[Icons.SETTINGS])
+                .leftIcon(app.menuAssets().icons[Icons.BACK])
                 .onClick(new OnClickListener() {
                     @Override
                     public void onClick() {
@@ -110,8 +110,7 @@ public class ChallengeIntroModal extends BasicModal {
                 .onClick(new OnClickListener() {
                     @Override
                     public void onClick() {
-                        modalListener.onLeaveGame();
-                        closeModal();
+                        game.world().showOptionsMenu();
                     }
                 })
                 .build();
@@ -124,7 +123,13 @@ public class ChallengeIntroModal extends BasicModal {
     }
 
     @Override
-    protected void animatedCloseModal() {
-        super.animatedCloseModal(Actions.scaleBy(0.9f,0.9f, AnimConst.SHORT, Interpolation.bounceOut));
+    protected Action getDimEnterAction() {
+        return null;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.game = null;
     }
 }

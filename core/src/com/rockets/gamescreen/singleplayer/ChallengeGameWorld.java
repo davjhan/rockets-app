@@ -48,7 +48,7 @@ public class ChallengeGameWorld extends GameWorld implements SceneDirector {
         hud.attachChallenge(challenge);
         newGame();
         challenge.setState(BaseSceneScript.STATE_BACKGROUND);
-        ChallengeIntroModal introModal = new ChallengeIntroModal(app(),challengeModel,
+        ChallengeIntroModal introModal = new ChallengeIntroModal(game(),challengeModel,
                 new OptionsModalListener() {
             @Override
             public void onLeaveGame() {

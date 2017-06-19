@@ -35,7 +35,7 @@ public class BottomBar extends Table {
         root.setBackground(app.menuAssets().bgs.getFrameBg());
         challengeTitle = HanLabel.text("")
                 .font(Font.h1)
-                .color(Colr.TEXT_DARK)
+                .color(Colr.TEXT_NAVY)
                 .background(app.menuAssets().bgs.getWhiteNametag())
                 .align(Align.center)
                 .build();

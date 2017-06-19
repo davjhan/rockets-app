@@ -39,7 +39,7 @@ public class ChallengeButton extends GameGroup<Actor> implements Selectable {
         image.setFillParent(true);
         indexLabel = HanLabel.text(String.valueOf(index + 1))
                 .font(Font.c1)
-                .color(Colr.TEXT_DARK)
+                .color(Colr.TEXT_BROWN)
                 .build();
         spawn(image);
         spawn(indexLabel, WIDTH / 2, 13, Align.center);
