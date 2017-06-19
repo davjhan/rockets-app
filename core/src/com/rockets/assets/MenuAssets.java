@@ -58,7 +58,7 @@ public class MenuAssets extends AssetGroup{
 
         bgs = new BackgroundViewAssetGroup(
                 cutNinesGroup2d(atlas,"bgninepatches",16,16,4),
-                cutNinesGroup2d(atlas,"specialBackgrounds",24,24,8));
+                cutNinesGroup2d(atlas,"specialBackgrounds",24,24,8,8,11));
 
         levelBar = cutNinesGroup(atlas,"levelbar",24,12,3);
 

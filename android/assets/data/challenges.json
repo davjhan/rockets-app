@@ -42,10 +42,17 @@
         "classname": "FallingBlocksChallenge"
     },
     {
-        "id": "apple",
-        "name": "Intro to spikes",
+        "id": "middlewall",
+        "name": "Seperator",
         "type": "collect",
         "difficulty": 0,
-        "classname": "EdgeSpikeChallenge"
+        "classname": "MiddleWallChallenge"
+    },
+    {
+        "id": "cage",
+        "name": "Caged in",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "MiddleWallChallenge"
     },
 ]

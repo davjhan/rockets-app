@@ -6,266 +6,259 @@ filter: Nearest,Nearest
 repeat: none
 backgrounds
   rotate: false
-  xy: 2, 20
+  xy: 66, 162
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 bg
   rotate: false
-  xy: 2, 348
+  xy: 2, 462
   size: 270, 560
   orig: 270, 560
   offset: 0, 0
   index: -1
 bgTiles
   rotate: false
-  xy: 168, 226
+  xy: 2, 28
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 bgTiles2
   rotate: false
-  xy: 236, 298
+  xy: 202, 328
   size: 36, 48
   orig: 36, 48
   offset: 0, 0
   index: -1
 bgninepatches
   rotate: false
-  xy: 824, 668
+  xy: 508, 374
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 bigPlaySymbol
   rotate: false
-  xy: 968, 710
+  xy: 968, 868
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 bird
   rotate: false
-  xy: 274, 312
+  xy: 274, 426
   size: 400, 300
   orig: 400, 300
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 2, 118
+  xy: 2, 90
   size: 62, 168
   orig: 62, 168
   offset: 0, 0
   index: -1
 buttons
   rotate: false
-  xy: 676, 404
+  xy: 66, 112
   size: 36, 48
   orig: 36, 48
   offset: 0, 0
   index: -1
 cardbg
   rotate: false
-  xy: 824, 686
+  xy: 824, 844
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 clockframe
   rotate: false
-  xy: 2, 2
+  xy: 104, 264
   size: 30, 16
   orig: 30, 16
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 824, 816
+  xy: 104, 418
   size: 168, 42
   orig: 168, 42
   offset: 0, 0
   index: -1
 coinLarge
   rotate: false
-  xy: 2, 288
+  xy: 274, 366
   size: 232, 58
   orig: 232, 58
   offset: 0, 0
   index: -1
 completion
   rotate: false
-  xy: 168, 200
+  xy: 696, 730
   size: 48, 24
   orig: 48, 24
   offset: 0, 0
   index: -1
 connectionstrength
   rotate: false
-  xy: 36, 109
+  xy: 770, 761
   size: 28, 7
   orig: 28, 7
   offset: 0, 0
   index: -1
 crosshair
   rotate: false
-  xy: 696, 616
+  xy: 104, 378
   size: 152, 38
   orig: 152, 38
   offset: 0, 0
   index: -1
 gamebutton
   rotate: false
-  xy: 824, 860
+  xy: 824, 974
   size: 192, 48
   orig: 192, 48
   offset: 0, 0
   index: -1
 hearts
   rotate: false
-  xy: 762, 563
+  xy: 890, 849
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
   index: -1
 hudbg
   rotate: false
-  xy: 994, 842
+  xy: 676, 710
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-hudbgs
-  rotate: false
-  xy: 676, 504
-  size: 64, 32
-  orig: 64, 32
-  offset: 0, 0
-  index: -1
 icons
   rotate: false
-  xy: 66, 108
+  xy: 2, 2
   size: 96, 24
   orig: 96, 24
   offset: 0, 0
   index: -1
 levelButtons
   rotate: false
-  xy: 890, 710
+  xy: 890, 868
   size: 76, 104
   orig: 76, 104
   offset: 0, 0
   index: -1
 levelbar
   rotate: false
-  xy: 890, 696
+  xy: 696, 756
   size: 72, 12
   orig: 72, 12
   offset: 0, 0
   index: -1
 menuicons
   rotate: false
-  xy: 66, 134
+  xy: 104, 326
   size: 96, 50
   orig: 96, 50
   offset: 0, 0
   index: -1
 nameplate
   rotate: false
-  xy: 236, 288
+  xy: 240, 368
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
   index: -1
 nametag
   rotate: false
-  xy: 236, 288
+  xy: 240, 368
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
   index: -1
 scrollbar
   rotate: false
-  xy: 230, 278
+  xy: 202, 318
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 676, 538
+  xy: 104, 282
   size: 84, 42
   orig: 84, 42
   offset: 0, 0
   index: -1
 sparkles
   rotate: false
-  xy: 696, 582
+  xy: 508, 392
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 specialBackgrounds
   rotate: false
-  xy: 676, 454
-  size: 48, 48
-  orig: 48, 48
+  xy: 824, 770
+  size: 72, 72
+  orig: 72, 72
   offset: 0, 0
   index: -1
 specialObjects
   rotate: false
-  xy: 66, 186
-  size: 100, 100
-  orig: 100, 100
+  xy: 2, 260
+  size: 100, 200
+  orig: 100, 200
   offset: 0, 0
   index: -1
 spike
   rotate: false
-  xy: 968, 760
+  xy: 968, 918
   size: 54, 54
   orig: 54, 54
   offset: 0, 0
   index: -1
 textfieldCursor
   rotate: false
-  xy: 164, 182
+  xy: 1018, 1020
   size: 2, 2
   orig: 2, 2
   offset: 0, 0
   index: -1
 toolbarbg
   rotate: false
-  xy: 274, 298
+  xy: 638, 412
   size: 36, 12
   orig: 36, 12
   offset: 0, 0
   index: -1
 upArrow
   rotate: false
-  xy: 1012, 850
+  xy: 190, 316
   size: 10, 8
   orig: 10, 8
   offset: 0, 0
   index: -1
 vfx
   rotate: false
-  xy: 274, 614
+  xy: 274, 728
   size: 420, 294
   orig: 420, 294
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 696, 656
+  xy: 696, 770
   size: 126, 252
   orig: 126, 252
   offset: 0, 0
   index: -1
 youtag
   rotate: false
-  xy: 826, 602
+  xy: 258, 404
   size: 14, 12
   orig: 14, 12
   offset: 0, 0

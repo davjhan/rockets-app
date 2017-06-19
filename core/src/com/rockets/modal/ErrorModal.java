@@ -25,11 +25,6 @@ public class ErrorModal extends BasicModal {
     }
 
     @Override
-    protected void initTitle() {
-        setTitle("Error");
-    }
-
-    @Override
     protected void initContents() {
         HanLabel msg = HanLabel.text(message)
                 .font(Font.p1)
@@ -47,5 +42,10 @@ public class ErrorModal extends BasicModal {
         contents.row();
         contents.add(okay);
         contents.pack();
+    }
+
+    @Override
+    public String getTitleString() {
+        return "Error";
     }
 }

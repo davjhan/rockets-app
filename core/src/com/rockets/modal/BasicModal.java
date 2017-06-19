@@ -6,12 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
-import com.rockets.constants.Spacing;
 import com.rockets.graphics.views.HanLabel;
 
 /**
@@ -24,7 +25,6 @@ import com.rockets.graphics.views.HanLabel;
 public abstract class BasicModal extends Modal {
     protected Label title;
     protected Table contents;
-    protected boolean addTitleToContent = false;
     private int minWidth;
 
     public BasicModal(IApp app, ModalListener modalListener, boolean dim, boolean touchDimToExit,
@@ -39,7 +39,6 @@ public abstract class BasicModal extends Modal {
     public BasicModal(IApp app, ModalListener modalListener, boolean dim, boolean touchDimToExit,
                       NinePatchDrawable drawable) {
         super(app, modalListener, dim, touchDimToExit, drawable);
-
     }
 
     public BasicModal(IApp app, ModalListener modalListener, NinePatchDrawable drawable) {
@@ -58,12 +57,13 @@ public abstract class BasicModal extends Modal {
     }
 
     protected void initTitle() {
-        title = HanLabel.text("")
-                .font(Font.h2)
+        title = HanLabel.text(getTitleString())
+                .font(Font.h1)
+                .color(Colr.TEXT_NAVY)
+                .background(getTitleBG())
                 .build();
-
         title.setAlignment(Align.center);
-        addTitleToContent = true;
+        root.addActor(title);
     }
 
     protected abstract void initContents();
@@ -80,10 +80,8 @@ public abstract class BasicModal extends Modal {
         initContents();
 
         contents.pack();
-        if (addTitleToContent)
-            root.add(title).fillX().expandX().center().expandY().spaceBottom(Spacing.REG).row();
         root.setTransform(true);
-        root.add(contents).fill().expand();
+        root.add(contents).padTop(10).fill().expand();
         root.pack();
         root.setWidth(Math.max(minWidth, root.getWidth()));
         setRootPosition();
@@ -98,8 +96,12 @@ public abstract class BasicModal extends Modal {
 
         });
         root.setOrigin(Align.center);
-    }
 
+        title.setPosition(root.getWidth()/2,root.getHeight(),Align.center);
+    }
+    protected Drawable getTitleBG(){
+        return app.menuAssets().bgs.getWhiteNametag();
+    }
     protected void setRootPosition() {
         root.setPosition(Display.HALF_WIDTH, Display.HALF_HEIGHT, Align.center);
     }
@@ -107,4 +109,6 @@ public abstract class BasicModal extends Modal {
     protected void setMinWidth(int minWidth) {
         this.minWidth = minWidth;
     }
+
+    public abstract String getTitleString();
 }

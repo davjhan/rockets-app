@@ -15,12 +15,14 @@ import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.Hud;
-import com.rockets.gamescreen.modals.OptionsModal;
+import com.rockets.gamescreen.modals.PauseModal;
 import com.rockets.gamescreen.physics.CollisionManager;
 import com.rockets.gamescreen.physics.Side;
 import com.rockets.graphics.ActionFactory;
 import com.rockets.modal.Modal;
+import com.rockets.modal.ModalListener;
 import com.rockets.uiscreens.HomeScreen;
+import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.utils.GraphicsFactory;
 
 /**
@@ -232,17 +234,13 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         this.state = state;
     }
 
-    public void showOptionsMenu() {
+    public void showSettingsModal() {
 
 
-        showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
-            @Override
-            public void onLeaveGame() {
-                goHome();
-            }
-
+        showModal(new SettingsModal(iApp, new ModalListener() {
             @Override
             public void onDismiss(Modal modal) {
+
             }
         }));
 
@@ -253,7 +251,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         if (sceneScript().isPauseable()) {
             setPaused(true);
             sceneScript().setPaused(true);
-            showModal(new OptionsModal(iApp, new OptionsModal.OptionsModalListener() {
+            showModal(new PauseModal(game, new PauseModal.OptionsModalListener() {
                 @Override
                 public void onLeaveGame() {
                     goHome();

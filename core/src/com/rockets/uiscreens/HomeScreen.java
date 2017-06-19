@@ -15,7 +15,7 @@ import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.constants.Spacing;
 import com.rockets.data.readonly.Challenges;
-import com.rockets.graphics.views.HanIconButton;
+import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.HanLabel;
 import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.OnClickListener;
@@ -25,6 +25,7 @@ import com.rockets.uiscreens.managers.SelectionManager;
 import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.uiscreens.views.ScrollingTileBG;
 import com.rockets.uiscreens.views.Selectable;
+import com.rockets.uiscreens.views.ViewFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -147,16 +148,14 @@ public class HomeScreen extends BaseUIScreen {
                 .font(Font.grand2)
                 .build();
         topBar.add(titleLabel);
+        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app,new OnClickListener(){
 
-        HanIconButton settingsButton = new HanIconButton(
-                app,
-                app.menuAssets().icons[1]);
-        settingsButton.addClickListener(new OnClickListener() {
             @Override
             public void onClick() {
                 app.showModal(new SettingsModal(app,null));
             }
         });
+        settingsButton.pack();
         settingsButton.setPosition(Display.SCREEN_WIDTH -Spacing.SMALL,Display.SCREEN_HEIGHT -Spacing.SMALL,Align.topRight);
         stage.addActor(settingsButton);
 

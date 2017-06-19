@@ -122,11 +122,11 @@ public abstract class CollectChallenge extends BaseChallenge {
     }
     public boolean incrementScore() {
         score++;
+        hud.updateScore(score);
         if (didReachGoal()) {
             onGoalReached();
             return false;
         }
-        hud.updateScore(score);
         nextPart();
         return true;
     }

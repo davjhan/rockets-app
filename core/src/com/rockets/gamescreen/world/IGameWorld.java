@@ -26,7 +26,7 @@ public interface IGameWorld extends Freshable{
 
     void ensureInBounds(Actor actor);
     void ensureInBounds(PhysicalEntity actor);
-    void showOptionsMenu();
+    void showSettingsModal();
     void pauseGame();
     void shakeScreen(int intensity);
 

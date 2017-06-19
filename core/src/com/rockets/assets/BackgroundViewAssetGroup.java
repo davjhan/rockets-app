@@ -18,7 +18,6 @@ public class BackgroundViewAssetGroup{
         super();
         this.reg = reg;
         this.special = special;
-        special[0][0].setPadBottom(12);
     }
 
     public NinePatchDrawable getModalBg() {
@@ -29,6 +28,9 @@ public class BackgroundViewAssetGroup{
     }
     public NinePatchDrawable getGoldFrameBg() {
         return getSpecial(1,0);
+    }
+    public NinePatchDrawable getWhiteFrameBg() {
+        return getSpecial(0,2);
     }
     public NinePatchDrawable getCoinDisplayBgGold() {
         return getSpecial(1,1);

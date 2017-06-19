@@ -18,7 +18,8 @@ import com.rockets.uiscreens.views.InlineView;
 public class SettingsModal extends BasicModal {
 
     public SettingsModal(IApp app, ModalListener modalListener) {
-        super(app, modalListener);
+        super(app, modalListener,true,true);
+        init();
     }
 
     @Override
@@ -27,8 +28,8 @@ public class SettingsModal extends BasicModal {
     }
 
     @Override
-    protected void initTitle() {
-        setTitle(app.getString("settings"));
+    public String getTitleString() {
+        return "Settings";
     }
 
     @Override
@@ -42,7 +43,7 @@ public class SettingsModal extends BasicModal {
                 closeModal();
             }
         });
-        reset.setBackground(app.menuAssets().bgs.getModalBg());
+        reset.setBackground(app.menuAssets().bgs.getInlay());
         contents.add(reset).row();
     }
 }

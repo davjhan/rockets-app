@@ -18,7 +18,6 @@ import com.rockets.utils.WhiteBlinkUtils;
  * Copyright (c) 2017 David Han
  **/
 public class FallingSpike extends PhysicalEntity implements Collidable {
-    public static final int SIZE = 50;
     public static final String STATE_STILL = "still";
     public static final String STATE_SHAKING = "shaking";
     public static final String STATE_FALLING = "falling";
@@ -34,8 +33,10 @@ public class FallingSpike extends PhysicalEntity implements Collidable {
 
     @Override
     protected void init() {
-        graphic = new NestedSingleSpriteActor(game.gameAssets().specialObjects[0]);
+        graphic = new NestedSingleSpriteActor(game.gameAssets().specialObjects[4]);
         addSprite(graphic);
+        graphic.setPosition(-8,-8);
+        setSize(34,34);
         setOrigin(Align.center);
     }
 
@@ -131,7 +132,7 @@ public class FallingSpike extends PhysicalEntity implements Collidable {
         }else if (state.equals(STATE_FALLING)){
 
             graphic.clearActions();
-            graphic.setPosition(getX(), getY());
+            graphic.setPosition(-8,-8);
         }
     }
 }

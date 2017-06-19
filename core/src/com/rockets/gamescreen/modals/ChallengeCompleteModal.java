@@ -5,12 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
-import com.rockets.assets.Icons;
 import com.rockets.constants.AnimConst;
 import com.rockets.constants.Spacing;
 import com.rockets.data.readonly.Challenges;
@@ -21,6 +19,7 @@ import com.rockets.graphics.views.HanLabel;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.BasicModal;
 import com.rockets.modal.ModalListener;
+import com.rockets.uiscreens.views.ViewFactory;
 
 
 /**
@@ -31,7 +30,6 @@ import com.rockets.modal.ModalListener;
  * Copyright (c) 2017 David Han
  **/
 public class ChallengeCompleteModal extends BasicModal {
-    Table rightTable;
     ChallengeCompleteModalListener modalListener;
     Challenges.ChallengeModel challenge;
     Table completionGraphic;
@@ -49,20 +47,16 @@ public class ChallengeCompleteModal extends BasicModal {
     @Override
     protected void init() {
         super.init();
-        title.setPosition(root.getWidth()/2,root.getHeight(),Align.center);
     }
 
     @Override
-    protected void initTitle() {
-        NinePatchDrawable titleBG = new NinePatchDrawable(app.menuAssets().bgs.getGoldNameTag());
+    public String getTitleString() {
+        return "STAGE CLEAR!";
+    }
 
-        title = HanLabel.text("STAGE CLEARED!")
-                .font(Font.h1)
-                .color(Colr.TEXT_BROWN)
-                .background(titleBG)
-                .build();
-        title.setAlignment(Align.center);
-        root.addActor(title);
+    @Override
+    protected Drawable getTitleBG() {
+        return app.menuAssets().bgs.getGoldNameTag();
     }
 
     @Override
@@ -90,16 +84,13 @@ public class ChallengeCompleteModal extends BasicModal {
                         closeModal();
                     }
                 }).build();
-        HanButton leaveButton = HanButton.with(app)
-                .text("QUIT")
-                .leftIcon(app.menuAssets().icons[Icons.BACK])
-                .onClick(new OnClickListener() {
-                    @Override
-                    public void onClick() {
-                        modalListener.goHome();
-                        closeModal();
-                    }
-                }).build();
+        HanButton leaveButton = ViewFactory.getQuitButton(game,new OnClickListener() {
+            @Override
+            public void onClick() {
+                modalListener.goHome();
+                closeModal();
+            }
+        });
         HanButton playAgain = HanButton.with(app)
                 .text("PLAY AGAIN")
                 .onClick(new OnClickListener() {
@@ -110,19 +101,10 @@ public class ChallengeCompleteModal extends BasicModal {
                     }
                 }).build();
 
-        HanButton settingsButton = HanButton.with(app)
-                .text("Options")
-                .leftIcon(app.menuAssets().icons[Icons.SETTINGS])
-                .onClick(new OnClickListener() {
-                    @Override
-                    public void onClick() {
-                        game.world().showOptionsMenu();
-                    }
-                })
-                .build();
+        HanButton settingsButton = ViewFactory.getSettingsButton(game);
 
         contents.align(Align.bottom);
-        contents.add(completionGraphic).growY().padTop(Spacing.LARGE).spaceBottom(Spacing.LARGE).center().colspan(2);
+        contents.add(completionGraphic).growY().spaceBottom(Spacing.LARGE).center().colspan(2);
         contents.row();
         contents.add(nextChallengeButton).grow().spaceBottom(Spacing.SMALL).colspan(2);
         contents.row();

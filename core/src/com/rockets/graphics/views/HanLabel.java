@@ -122,8 +122,8 @@ public class HanLabel extends VisLabel {
             }
             if (this.bg != null) {
                 if(fontName.equals(Font.h1)){
-                    bg.setLeftWidth(8);
-                    bg.setRightWidth(8);
+                    bg.setLeftWidth(12);
+                    bg.setRightWidth(12);
                 }else {
                     bg.setLeftWidth(12);
                     bg.setRightWidth(12);

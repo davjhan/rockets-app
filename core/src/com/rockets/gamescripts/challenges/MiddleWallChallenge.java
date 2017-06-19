@@ -14,7 +14,7 @@ import com.rockets.graphics.DisposableList;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class EdgeSpikeChallenge extends CollectChallenge {
+public class MiddleWallChallenge extends CollectChallenge {
     DisposableList<Spike> spikes;
     @Override
     protected void init() {

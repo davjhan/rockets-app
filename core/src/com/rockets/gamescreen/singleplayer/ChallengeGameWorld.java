@@ -6,7 +6,7 @@ import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.hud.ChallengeHud;
 import com.rockets.gamescreen.hud.Hud;
 import com.rockets.gamescreen.modals.ChallengeIntroModal;
-import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
+import com.rockets.gamescreen.modals.PauseModal.OptionsModalListener;
 import com.rockets.gamescreen.world.GameWorld;
 import com.rockets.gamescreen.world.IGameWorld;
 import com.rockets.gamescripts.BaseChallenge;

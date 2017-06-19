@@ -6,7 +6,7 @@ import com.rockets.constants.Display;
 import com.rockets.data.readonly.Challenges;
 import com.rockets.gamescreen.hud.ChallengeHud;
 import com.rockets.gamescreen.modals.GameOverModal;
-import com.rockets.gamescreen.modals.OptionsModal.OptionsModalListener;
+import com.rockets.gamescreen.modals.PauseModal.OptionsModalListener;
 import com.rockets.gamescreen.objects.Player;
 import com.rockets.gamescreen.world.StateListener;
 import com.rockets.modal.Modal;
@@ -77,7 +77,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     protected void endGame() {
         if(!isState(STATE_END)){
             setState(STATE_END);
-            GameOverModal gameOverModal = new GameOverModal(dir.app(),new OptionsModalListener(){
+            GameOverModal gameOverModal = new GameOverModal(dir.game(),new OptionsModalListener(){
 
                 @Override
                 public void onLeaveGame() {

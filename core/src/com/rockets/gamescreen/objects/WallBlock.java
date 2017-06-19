@@ -1,5 +1,6 @@
 package com.rockets.gamescreen.objects;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
@@ -17,12 +18,25 @@ public class WallBlock extends GameEntity implements Collidable {
     public static final int SIZE = 50;
     public WallBlock(IGame game) {
         super(game);
-        init();
+        init(null);
     }
 
     @Override
     protected void init() {
-        setSprite(game.gameAssets().specialObjects[2]);
+
+    }
+
+    public WallBlock(IGame game, TextureRegion texture) {
+        super(game);
+        init(texture);
+    }
+
+    protected void init(TextureRegion texture) {
+        if(texture != null){
+            setSprite(texture);
+        }else {
+            setSprite(game.gameAssets().specialObjects[2]);
+        }
         setSize(SIZE,SIZE);
         setOrigin(Align.center);
     }
