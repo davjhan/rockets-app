@@ -1,5 +1,6 @@
 package com.rockets.gamescreen.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
@@ -55,13 +56,13 @@ public class WoodenBox extends GameEntity implements Collidable {
         if(gameEntity.getCollisionGroup().equals(CollisionGroup.player)){
             Player player = (Player) gameEntity;
             Side.applyBounce(player.getVel(),side,1,5);
-            sprites.get(0);
             if(player.isState(Player.STATE_THRUSTING)){
                 die();
                 if(listener != null)listener.onBroken();
             }else{
                 graphic.addAction(ActionFactory.shake(graphic,4));
             }
+            Gdx.app.log("tttt WoodenBox", "side: " +side);
         }
     }
 

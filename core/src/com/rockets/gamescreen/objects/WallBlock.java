@@ -1,10 +1,12 @@
 package com.rockets.gamescreen.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.physics.Collidable;
 import com.rockets.gamescreen.physics.CollisionGroup;
+import com.rockets.gamescreen.physics.Side;
 import com.rockets.gamescreen.world.GameEntity;
 
 /**
@@ -58,7 +60,10 @@ public class WallBlock extends GameEntity implements Collidable {
 
     @Override
     public void onHit(Collidable gameEntity, int side) {
-
+        if(gameEntity.getCollisionGroup().equals(CollisionGroup.player)){
+            Player player = (Player) gameEntity;
+            Gdx.app.log("tttt WallBlock", "side: " +side);
+        }
     }
 
     @Override

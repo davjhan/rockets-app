@@ -20,9 +20,18 @@ public class Side {
     public int type;
 
     public Side(Vector2 p1, Vector2 p2,int type) {
-        this.p1 = p1;
-        this.p2 = p2;
+        this.p1 = new Vector2(p1);
+        this.p2 = new Vector2(p2);
         this.type = type;
+        //TODO: May be inefficient to make new vectors here.
+        if(isVertical(type)){
+            this.p1.x +=1;
+            this.p2.x -=1;
+        }else{
+            this.p1.y +=1;
+            this.p2.y -=1;
+        }
+
     }
 
     public static boolean isHorizontal(int side) {

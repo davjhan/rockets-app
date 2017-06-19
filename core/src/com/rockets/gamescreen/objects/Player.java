@@ -124,6 +124,7 @@ public class Player extends PhysicalEntity implements IPlayer{
             rotationVel = MathUtils.clamp(rotationVel, -MAX_ROT_VEL, MAX_ROT_VEL);
             rotateBy(delta * rotationVel);
         }
+        Gdx.app.log("tttt Player", "vel: " +getVel());
         super.act(delta);
     }
 
