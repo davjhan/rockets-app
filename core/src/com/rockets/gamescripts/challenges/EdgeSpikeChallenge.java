@@ -2,7 +2,6 @@ package com.rockets.gamescripts.challenges;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.rockets.constants.Display;
 import com.rockets.gamescreen.objects.Spike;
 import com.rockets.gamescripts.CollectChallenge;
 import com.rockets.graphics.DisposableList;
@@ -16,17 +15,20 @@ import com.rockets.graphics.DisposableList;
  **/
 public class EdgeSpikeChallenge extends CollectChallenge {
     DisposableList<Spike> spikes;
+    public EdgeSpikeChallenge(){
+        makeLeftWall = false;
+        makeRightWall = false;
+    }
     @Override
     protected void init() {
         super.init();
         spikes = new DisposableList<>();
         for(int x = 0; x < 2; x ++){
-         for(int i = 0; i < 9; i ++) {
+         for(int i = 0; i < 10; i ++) {
              Spike spike = new Spike(dir.game());
              spikes.add(spike);
              dir.gameWorld().bodies().spawn(spike,
-                     -36+(x* (Display.CONTENT_WIDTH+30)),
-                     Display.CONTENT_HEIGHT -(i*50), Align.topLeft);
+                     Grid.get((x*6)-1,i), Align.center);
          }
         }
     }

@@ -98,7 +98,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     }
 
     protected void initBG() {
-        solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH, Display.CONTENT_HEIGHT, Color.valueOf("#141518"));
+        solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH, Display.CONTENT_HEIGHT, Color.valueOf("#0b1b38"));
         background.addActor(solid);
     }
 

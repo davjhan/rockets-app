@@ -38,21 +38,21 @@
         "id": "fallingBlocks",
         "name": "Chicken Little",
         "type": "collect",
-        "difficulty": 0,
+        "difficulty": 1,
         "classname": "FallingBlocksChallenge"
     },
     {
         "id": "middlewall",
         "name": "Seperator",
         "type": "collect",
-        "difficulty": 0,
+        "difficulty": 2,
         "classname": "MiddleWallChallenge"
     },
     {
         "id": "cage",
         "name": "Caged in",
         "type": "collect",
-        "difficulty": 0,
+        "difficulty": 2,
         "classname": "MiddleWallChallenge"
     },
 ]

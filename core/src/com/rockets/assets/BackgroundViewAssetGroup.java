@@ -67,4 +67,8 @@ public class BackgroundViewAssetGroup{
     public NinePatchDrawable getGoldNameTag() {
         return getReg(0,3);
     }
+
+    public Drawable getLevelHeaderBg() {
+         return getReg(1,0);
+    }
 }

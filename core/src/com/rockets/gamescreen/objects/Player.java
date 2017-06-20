@@ -73,7 +73,7 @@ public class Player extends PhysicalEntity implements IPlayer{
     private final EventListener clickListener = new ClickListener(){
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if(y < Display.CONTENT_HEIGHT-Display.TOPBAR_HEIGHT){
+            if(y < Display.CONTENT_HEIGHT){
                 if(!fingerDown){
                     thrusting.setTime(0);
                     setSprite(0,thrusting);

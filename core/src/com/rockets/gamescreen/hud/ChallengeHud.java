@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Align;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.constants.Display;
-import com.rockets.constants.Spacing;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.world.StateListener;
 import com.rockets.gamescripts.BaseChallenge;
@@ -23,7 +22,6 @@ import com.rockets.graphics.views.HanLabel;
 public class ChallengeHud extends Hud {
 
     Label scoreLabel;
-    Label goalLabel;
     Label instructionsLabel;
 
     public ChallengeHud(IGame game) {
@@ -40,19 +38,11 @@ public class ChallengeHud extends Hud {
     private void initCenterGroup() {
         centerGroup.align(Align.center);
         scoreLabel = HanLabel.text("")
-                .font(Font.h1)
-                .color(Colr.TEXT_LIGHT)
-                .build();
-        scoreLabel.setAlignment(Align.center);
-        goalLabel = HanLabel.text("")
                 .font(Font.c1)
                 .color(Colr.TEXT_LIGHT)
                 .build();
-        goalLabel.setAlignment(Align.center);
-        updateGoal(10);
-        centerGroup.add(scoreLabel).align(Align.center).spaceBottom(Spacing.XSMALL);
-        centerGroup.row();
-        centerGroup.add(goalLabel).align(Align.center);
+        scoreLabel.setAlignment(Align.center);
+        centerGroup.add(scoreLabel).align(Align.center);
     }
 
     @Override
@@ -68,16 +58,11 @@ public class ChallengeHud extends Hud {
         instructions.add(instructionsLabel);
     }
 
-    private void initRightGroup() {
+
+    public void updateScore(int score ,int goal) {
+        scoreLabel.setText(String.valueOf(score)+"/"+goal);
     }
 
-    public void updateScore(int score) {
-        scoreLabel.setText(String.valueOf(score));
-    }
-
-    public void updateGoal(int goal) {
-        goalLabel.setText("GOAL : " + String.valueOf(goal));
-    }
 
     public void attachChallenge(BaseChallenge challenge) {
         challenge.addStateListener(new StateListener() {

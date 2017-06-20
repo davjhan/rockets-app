@@ -34,9 +34,9 @@ bgTiles2
   index: -1
 bgninepatches
   rotate: false
-  xy: 508, 374
-  size: 64, 16
-  orig: 64, 16
+  xy: 696, 736
+  size: 64, 32
+  orig: 64, 32
   offset: 0, 0
   index: -1
 bigPlaySymbol
@@ -97,14 +97,14 @@ coinLarge
   index: -1
 completion
   rotate: false
-  xy: 696, 730
+  xy: 762, 744
   size: 48, 24
   orig: 48, 24
   offset: 0, 0
   index: -1
 connectionstrength
   rotate: false
-  xy: 770, 761
+  xy: 508, 369
   size: 28, 7
   orig: 28, 7
   offset: 0, 0
@@ -153,7 +153,7 @@ levelButtons
   index: -1
 levelbar
   rotate: false
-  xy: 696, 756
+  xy: 508, 378
   size: 72, 12
   orig: 72, 12
   offset: 0, 0

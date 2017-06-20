@@ -21,22 +21,21 @@ public abstract class CollectChallenge extends BaseChallenge {
     protected Vector2[] sequence;
 
     public static class Grid {
-        private static int pad = 10;
         private static int rowSize = 5;
-        private static int colSize = 8;
+        private static int colSize = 9;
         private static int unitSize = 50;
 
         public static Vector2 get(int x, int y) {
-            if (x >= rowSize) {
+            if (x > rowSize) {
                 throw new IllegalArgumentException();
             }
-            if (y >= colSize) {
+            if (y > colSize) {
                 throw new IllegalArgumentException();
             }
 
             return new Vector2(
-                    (pad + x * unitSize + (unitSize / 2)),
-                    Display.WORLD_TOP -(pad + y * unitSize + (unitSize / 2))
+                    (Display.WORLD_BORDER_PAD + x * unitSize + (unitSize / 2)),
+                    Display.WORLD_TOP -(y * unitSize + (unitSize / 2))
             );
         }
     }
@@ -109,8 +108,7 @@ public abstract class CollectChallenge extends BaseChallenge {
 
     @Override
     protected void initHUD() {
-        hud.updateScore(score);
-        hud.updateGoal(getGoal());
+        hud.updateScore(score,getGoal());
     }
 
     protected void spawnCoin(Vector2 loc){
@@ -122,7 +120,7 @@ public abstract class CollectChallenge extends BaseChallenge {
     }
     public boolean incrementScore() {
         score++;
-        hud.updateScore(score);
+        hud.updateScore(score,getGoal());
         if (didReachGoal()) {
             onGoalReached();
             return false;

@@ -1,19 +1,22 @@
 package com.rockets.gamescreen.hud;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
-import com.rockets.assets.Icons;
+import com.rockets.assets.Colr;
+import com.rockets.assets.Font;
 import com.rockets.common.IApp;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.ActorGroup;
 import com.rockets.gamescreen.IGame;
 import com.rockets.gamescreen.world.Freshable;
 import com.rockets.gamescreen.world.GameGroup;
-import com.rockets.graphics.views.HanIconButton;
+import com.rockets.graphics.views.HanLabel;
 import com.rockets.graphics.views.OnClickListener;
+import com.rockets.utils.GraphicsFactory;
 
 /**
  * name: Hud
@@ -26,10 +29,8 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     Image bg;
     IApp app;
     IGame game;
-    Table topTable;
-    HanIconButton pauseButton;
+    HanLabel pauseButton;
     Table centerGroup;
-    Table rightGroup;
     Table instructions;
     public Hud(IGame game){
         this.game = game;
@@ -38,13 +39,9 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     }
 
     public void init(){
-        bg = new Image(game.menuAssets().hudbg);
-        bg.setSize(Display.CONTENT_WIDTH,Display.TOPBAR_HEIGHT);
-        spawn(bg,0,Display.CONTENT_HEIGHT, Align.topLeft);
+        bg = GraphicsFactory.solidImage(Display.CONTENT_WIDTH,Display.WORLD_BORDER_PAD, Color.BLACK);
+        spawn(bg,0,Display.SCREEN_HEIGHT-Display.CONTENT_BOTPAD*2, Align.topLeft);
 
-        topTable = new Table();
-        topTable.setSize(Display.CONTENT_WIDTH,Display.TOPBAR_HEIGHT);
-        spawn(topTable,0,Display.CONTENT_HEIGHT,Align.topLeft);
         initCenterLabel();
 
         instructions = new Table();
@@ -55,9 +52,12 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
     protected abstract void initInstructions();
 
     private void initCenterLabel() {
-        pauseButton = new HanIconButton(app,app.menuAssets().icons[Icons.PAUSE]);
-
-        pauseButton.addClickListener(new OnClickListener() {
+        pauseButton =HanLabel.text(app.getString("pause"))
+                .font(Font.c1)
+                .color(Colr.TEXT_MID)
+                .build();
+        pauseButton.setHeight(10);
+        pauseButton.addListener(new OnClickListener() {
             @Override
             public void onClick() {
                 if(game.world().sceneScript().isPauseable()){
@@ -66,11 +66,9 @@ public abstract class Hud extends GameGroup<Actor> implements Disposable,Freshab
             }
         });
         centerGroup = new Table();
-        rightGroup = new Table();
-
-        topTable.add(pauseButton).width(pauseButton.getHeight());
-        topTable.add(centerGroup).align(Align.center).grow();
-        topTable.add(rightGroup).align(Align.center).fill().minWidth(pauseButton.getHeight());
+        centerGroup.setHeight(10);
+        spawn(pauseButton,0,Display.SCREEN_HEIGHT-Display.CONTENT_BOTPAD*2,Align.topLeft);
+        spawn(centerGroup,Display.SCREEN_WIDTH/2,Display.SCREEN_HEIGHT-Display.CONTENT_BOTPAD*2,Align.top);
     }
 
 

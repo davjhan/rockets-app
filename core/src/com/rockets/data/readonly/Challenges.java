@@ -21,7 +21,7 @@ public class Challenges {
     public static final int EASY = 0;
     private Map<String,ChallengeModel> challenges;
     private List<String> challengeIds;
-    public static int NUM_DIFFICULTIES = 1;
+    public static int NUM_DIFFICULTIES = 4;
 
     public Challenges(String challengesJson) {
         challenges = new LinkedHashMap<>();

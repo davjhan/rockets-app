@@ -140,7 +140,7 @@ public class GameScreen extends BaseScreen implements IGame {
         if(gameWorld.sceneScript().isState(BaseSceneScript.STATE_END)){
             app.screenManager().restoreScreen(HomeScreen.class);
         }else{
-            gameWorld.showSettingsModal();
+            gameWorld.pauseGame();
         }
         return true;
     }

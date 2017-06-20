@@ -103,7 +103,7 @@ public abstract class BasicModal extends Modal {
         return app.menuAssets().bgs.getWhiteNametag();
     }
     protected void setRootPosition() {
-        root.setPosition(Display.HALF_WIDTH, Display.HALF_HEIGHT, Align.center);
+        root.setPosition(Display.CONTENT_WIDTH/2, Display.CONTENT_HEIGHT/2, Align.center);
     }
 
     protected void setMinWidth(int minWidth) {

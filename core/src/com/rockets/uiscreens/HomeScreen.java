@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.layout.GridGroup;
+import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.BaseUIScreen;
 import com.rockets.common.IApp;
@@ -45,11 +46,10 @@ public class HomeScreen extends BaseUIScreen {
     private ScrollPane scrollPane;
     private HanTextButton playButton;
     //Level bar
-    GridGroup levelGrid;
     SelectionManager<String> selectionManager;
 
-    public HomeScreen(IApp game, Map<String,Object> extras) {
-        super(game,extras);
+    public HomeScreen(IApp game, Map<String, Object> extras) {
+        super(game, extras);
 
 
         selectionManager = new SelectionManager<>(false);
@@ -68,13 +68,12 @@ public class HomeScreen extends BaseUIScreen {
     }
 
 
-
     private void initTables() {
         topBar = new Table();
         contentTable = new Table();
         levelsRack = new Table();
         scrollPane = new ScrollPane(levelsRack);
-        scrollPane.setScrollingDisabled(true,false);
+        scrollPane.setScrollingDisabled(true, false);
 
         topBar.setHeight(56);
         topBar.setWidth(Display.SCREEN_WIDTH);
@@ -98,43 +97,58 @@ public class HomeScreen extends BaseUIScreen {
             public void onSelectionChanged(Selectable selectable, String data) {
                 Challenges.ChallengeModel model = app.contentDB().challenges().getById(data);
                 try {
-                    bottomBar.onSelectionChanged(app.contentDB().challenges().getChallengeIndex(data),model);
+                    bottomBar.onSelectionChanged(app.contentDB().challenges().getChallengeIndex(data), model);
                 } catch (Challenges.ChallengeNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        bottomBar = new BottomBar(app,selectionManager);
+        bottomBar = new BottomBar(app, selectionManager);
     }
 
     private void initLevels() {
+        levelsRack.align(Align.top);
         int index = 0;
         List<List<Challenges.ChallengeModel>> challenges = app.contentDB().challenges().getAllByDifficulty(Challenges.EASY);
-        for(int dif =0;dif < Challenges.NUM_DIFFICULTIES;dif++){
-            levelGrid = new GridGroup(6,Spacing.SMALL);
-            levelGrid.setItemSize(ChallengeButton.WIDTH,ChallengeButton.HEIGHT);
+        for (int dif = 0; dif < Challenges.NUM_DIFFICULTIES; dif++) {
+            // Header:
+            Table header = new Table();
+            header.align(Align.left);
+            header.setBackground(app.menuAssets().bgs.getLevelHeaderBg());
+            HanLabel headerText = HanLabel.text(app.getString("difficulty_" + dif))
+                    .align(Align.left)
+                    .color(Colr.TEXT_MID)
+                    .build();
+            header.add(headerText).padLeft(Spacing.XSMALL);
+            levelsRack.add(header).growX().spaceBottom(Spacing.SMALL).padLeft(Spacing.REG).left().padRight(Spacing.REG);
+            levelsRack.row();
 
-            for(Challenges.ChallengeModel model:challenges.get(dif)) {
+            //Level Grid.
+            GridGroup levelGrid = new GridGroup(6, Spacing.SMALL);
+            levelGrid.setItemSize(ChallengeButton.WIDTH, ChallengeButton.HEIGHT);
+
+            for (Challenges.ChallengeModel model : challenges.get(dif)) {
                 final ChallengeButton challengeButton = new ChallengeButton(app, index, model);
-                selectionManager.addSelectable(challengeButton,model.id);
-                challengeButton.addListener(new ClickListener(){
+                selectionManager.addSelectable(challengeButton, model.id);
+                challengeButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
-                        if(challengeButton.isSelectable()){
+                        if (challengeButton.isSelectable()) {
                             selectionManager.select(challengeButton);
                         }
                     }
                 });
                 levelGrid.addActor(challengeButton);
-                index ++;
+                index++;
             }
             levelGrid.pack();
-            levelsRack.add(levelGrid).grow().center().padLeft(7);
+
+            levelsRack.add(levelGrid).growX().padLeft(7).spaceBottom(Spacing.REG);
             levelsRack.row();
         }
-
+        levelsRack.pack();
     }
 
     private void initBG() {
@@ -148,15 +162,15 @@ public class HomeScreen extends BaseUIScreen {
                 .font(Font.grand2)
                 .build();
         topBar.add(titleLabel);
-        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app,new OnClickListener(){
+        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app, new OnClickListener() {
 
             @Override
             public void onClick() {
-                app.showModal(new SettingsModal(app,null));
+                app.showModal(new SettingsModal(app, null));
             }
         });
         settingsButton.pack();
-        settingsButton.setPosition(Display.SCREEN_WIDTH -Spacing.SMALL,Display.SCREEN_HEIGHT -Spacing.SMALL,Align.topRight);
+        settingsButton.setPosition(Display.SCREEN_WIDTH - Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topRight);
         stage.addActor(settingsButton);
 
 

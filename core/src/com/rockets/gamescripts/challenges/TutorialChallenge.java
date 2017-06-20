@@ -24,11 +24,10 @@ public class TutorialChallenge extends CollectChallenge {
     protected void init() {
         super.init();
         wallBlocks = new DisposableList<>();
-        for(int i = 0; i < 7; i ++){
+        for(int i = 0; i < 5; i ++){
             WallBlock block = new WallBlock(dir.game());
             dir.game().world().bodies().spawn(block,
-                    -40+(WallBlock.SIZE*i),
-                    20, Align.topLeft
+                    Grid.get(i,9), Align.center
                     );
             wallBlocks.add(block);
         }
