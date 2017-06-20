@@ -56,19 +56,21 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         initGroups();
         initBG();
         initWalls();
+
+        initExtraSpaceBg();
         initHud();
         initInput();
 
-        initExtraSpaceBg();
     }
 
     protected void initExtraSpaceBg() {
         if (Display.CONTENT_BOTPAD > 0) {
-            Image bottomBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH, Display.CONTENT_BOTPAD+1, Color.BLACK);
+            Image bottomBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH,Display.CONTENT_BOTPAD+1, Color.BLACK);
             Image topBlocker = GraphicsFactory.solidImage(Display.SCREEN_WIDTH, Display.CONTENT_BOTPAD+1, Color.BLACK);
-            stage.addActor(bottomBlocker);
-            stage.addActor(topBlocker);
-            topBlocker.setPosition(0, Display.SCREEN_HEIGHT, Align.topLeft);
+            overtop.addActor(bottomBlocker);
+            overtop.addActor(topBlocker);
+            topBlocker.setPosition(0, Display.SCREEN_HEIGHT-Display.CONTENT_BOTPAD, Align.topLeft);
+            bottomBlocker.setPosition(0, -Display.CONTENT_BOTPAD);
         }
     }
 
@@ -91,8 +93,6 @@ public abstract class GameWorld implements IGameWorld, Disposable {
         gameContainer.addActor(markers);
         gameContainer.setPosition(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD);
         overtop.setPosition(Display.CONTENT_LEFTPAD, Display.CONTENT_BOTPAD);
-        // gameContainer.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
-        // overtop.setSize(Display.CONTENT_WIDTH,Display.CONTENT_HEIGHT);
         stage.addActor(gameContainer);
         stage.addActor(overtop);
     }
@@ -100,8 +100,6 @@ public abstract class GameWorld implements IGameWorld, Disposable {
     protected void initBG() {
         solid = GraphicsFactory.solidImage(Display.CONTENT_WIDTH, Display.CONTENT_HEIGHT, Color.valueOf("#141518"));
         background.addActor(solid);
-        //Actor bg = new SpriteActor(game.gameAssets().bg);
-        // background.addActor(bg);
     }
 
     private void initWalls() {
@@ -149,20 +147,20 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
     @Override
     public void ensureInBounds(Actor actor) {
-        actor.setX(Math.max(Display.LEFT_PAD, actor.getX()));
-        actor.setX(Math.min(Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth(), actor.getX()));
+        actor.setX(Math.max(Display.WORLD_BORDER_PAD, actor.getX()));
+        actor.setX(Math.min(Display.WORLD_BORDER_PAD + Display.CONTENT_WIDTH - actor.getWidth(), actor.getX()));
         actor.setY(Math.max(Display.CONTENT_BOTPAD, actor.getY()));
         actor.setY(Math.min(Display.CONTENT_BOTPAD + Display.CONTENT_HEIGHT - actor.getHeight(), actor.getY()));
     }
 
     @Override
     public void ensureInBounds(PhysicalEntity actor) {
-        if (actor.getX() < Display.LEFT_PAD) {
-            actor.setX(Display.LEFT_PAD);
+        if (actor.getX() < Display.WORLD_BORDER_PAD) {
+            actor.setX(Display.WORLD_BORDER_PAD);
             actor.onCollision(Side.LEFT);
         }
-        if (actor.getX() > Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth()) {
-            actor.setX(Display.LEFT_PAD + Display.CONTENT_WIDTH - actor.getWidth());
+        if (actor.getX() > -Display.WORLD_BORDER_PAD + Display.CONTENT_WIDTH - actor.getWidth()) {
+            actor.setX(-Display.WORLD_BORDER_PAD + Display.CONTENT_WIDTH - actor.getWidth());
             actor.onCollision(Side.RIGHT);
         }
 //        if(actor.getY()< Display.BOT_PAD){
@@ -182,7 +180,7 @@ public abstract class GameWorld implements IGameWorld, Disposable {
 
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if (x < Display.CONTENT_WIDTH + Display.LEFT_PAD) {
+            if (x < Display.CONTENT_WIDTH + Display.WORLD_BORDER_PAD) {
 
             }
             return super.touchDown(event, x, y, pointer, button);
