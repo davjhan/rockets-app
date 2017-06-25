@@ -1,5 +1,7 @@
 package com.rockets.gamescripts;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.Display;
@@ -104,6 +106,16 @@ public abstract class CollectChallenge extends BaseChallenge {
         }
         );
         dir.gameWorld().showModal(challengeCompleteModal);
+    }
+
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        //TODO:remove on release:
+        if(Gdx.input.isKeyJustPressed(Input.Keys.N)){
+            Gdx.app.log("tttt CollectChallenge", "at update()");
+            incrementScore();
+        }
     }
 
     @Override

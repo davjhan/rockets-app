@@ -15,16 +15,37 @@ import com.rockets.gamescreen.world.GameEntity;
  **/
 public class Spike extends GameEntity implements Collidable {
     public static final int SIZE = 51;
+    public static final float SKINNY_SIZE_REM = 8f;
+    public static enum Type{
+        fullsized,skinnyTall,skinnyFlat
+    }
     public Spike(IGame game) {
-        super(game);
-        init();
+        this(game,Type.fullsized);
     }
 
     @Override
     protected void init() {
-        setSprite(game.gameAssets().specialObjects[0]);
-        setSize(SIZE,SIZE);
-        sprites.get(0).setPosition(0.5f,0.5f);
+
+    }
+
+    public Spike(IGame game,Type type) {
+        super(game);
+        init(type);
+    }
+    protected void init(Type type) {
+        switch (type){
+            case fullsized:
+                setSprite(game.gameAssets().specialObjects[0]);
+                setSize(SIZE,SIZE);
+                sprites.get(0).setPosition(0.5f,0.5f);
+                break;
+            case skinnyTall:
+                setSprite(game.gameAssets().specialObjects[6]);
+                setSize(38,SIZE);
+                sprites.get(0).setPosition(0.5f,0.5f);
+                break;
+        }
+
         setOrigin(Align.center);
     }
 

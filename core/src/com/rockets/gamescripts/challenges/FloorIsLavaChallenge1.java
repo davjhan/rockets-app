@@ -10,7 +10,7 @@ import com.rockets.gamescripts.CollectChallenge;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class CoinChallenge extends CollectChallenge {
+public class FloorIsLavaChallenge1 extends CollectChallenge {
 
     @Override
     public void fresh() {
@@ -20,11 +20,11 @@ public class CoinChallenge extends CollectChallenge {
     @Override
     protected void initSequence() {
         sequence = new Vector2[]{
-                Grid.get(2, 0),
-                Grid.get(0, 3),
-                Grid.get(2, 6),
-                Grid.get(4, 3),
-                Grid.get(2, 3),
+                Grid.get(0, 0),
+                Grid.get(4, 0),
+                Grid.get(1, 1),
+                Grid.get(3, 1),
+                Grid.get(5, 2),
 
         };
     }

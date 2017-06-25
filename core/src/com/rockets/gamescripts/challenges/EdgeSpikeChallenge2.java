@@ -12,11 +12,10 @@ import com.rockets.graphics.DisposableList;
  * author: david
  * Copyright (c) 2017 David Han
  **/
-public class EdgeSpikeChallenge extends CollectChallenge {
+public class EdgeSpikeChallenge2 extends CollectChallenge {
     DisposableList<Spike> spikes;
-    public EdgeSpikeChallenge(){
-        leftWall = WallType.spike;
-        rightWall = WallType.spike;
+    public EdgeSpikeChallenge2(){
+        topWall = WallType.spike;
     }
     @Override
     protected void init() {
@@ -31,17 +30,23 @@ public class EdgeSpikeChallenge extends CollectChallenge {
     @Override
     protected void initSequence() {
         sequence = new Vector2[]{
-                Grid.get(1, 0),
-                Grid.get(3, 1),
+                Grid.get(1, 6),
+                Grid.get(3, 5),
+                Grid.get(0, 1),
+                Grid.get(4, 0),
+                Grid.get(2, 8),
                 Grid.get(0, 2),
-                Grid.get(4, 3),
-                Grid.get(0, 4),
-                Grid.get(4, 5),
-                Grid.get(0, 6),
-                Grid.get(2, 0),
-                Grid.get(4, 7),
+                Grid.get(1, 0),
+                Grid.get(2, 2),
+                Grid.get(3, 0),
+                Grid.get(4, 2),
 
         };
+    }
+
+    @Override
+    protected Vector2 playerSpawnLoc() {
+        return Grid.get(2,8);
     }
 
     @Override

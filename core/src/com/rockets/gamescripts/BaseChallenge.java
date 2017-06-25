@@ -3,16 +3,22 @@ package com.rockets.gamescripts;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Disposable;
 import com.rockets.constants.Display;
 import com.rockets.data.readonly.Challenges;
 import com.rockets.gamescreen.hud.ChallengeHud;
 import com.rockets.gamescreen.modals.GameOverModal;
 import com.rockets.gamescreen.modals.PauseModal.OptionsModalListener;
 import com.rockets.gamescreen.objects.Player;
+import com.rockets.gamescreen.objects.Spike;
 import com.rockets.gamescreen.world.StateListener;
+import com.rockets.graphics.DisposableList;
 import com.rockets.modal.Modal;
 
+import static com.rockets.gamescripts.BaseChallenge.WallType.block;
+
 /**
+ * s
  * name: Challenge
  * desc:
  * date: 2017-05-24
@@ -23,10 +29,10 @@ public abstract class BaseChallenge extends BaseSceneScript {
     protected Challenges.ChallengeModel challengeModel;
     protected ChallengeHud hud;
 
-    protected boolean makeTopWall = true;
-    protected boolean makeLeftWall = true;
-    protected boolean makeRightWall = true;
-
+    protected WallType topWall = block;
+    protected WallType leftWall = block;
+    protected WallType rightWall = block;
+    protected DisposableList<Disposable> wallsBlocks;
     protected Player player;
 
     public void create(SceneDirector director, Challenges.ChallengeModel challengeModel, ChallengeHud hud) {
@@ -38,29 +44,17 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     protected void init() {
         super.init();
-        if (makeTopWall) {
-            int begin = 0;
-            int end = 5;
-            if (!makeLeftWall) {
-                begin--;
-            }
-            if (!makeRightWall) {
-                end++;
-            }
-            for (int i = begin; i < end; i++) {
-                makeWallBlock(CollectChallenge.Grid.get(i, -1));
-            }
+        wallsBlocks = new DisposableList();
+        for (int i = 0; i < 7; i++) {
+            makeWallBlock(topWall, CollectChallenge.Grid.get(i-1, -1));
+        }
 
+        for (int i = 0; i < 10; i++) {
+            makeWallBlock(leftWall, CollectChallenge.Grid.get(-1, i));
         }
-        if (makeLeftWall) {
-            for (int i = 0; i < 11; i++) {
-                makeWallBlock(CollectChallenge.Grid.get(-1, i - 1));
-            }
-        }
-        if (makeRightWall) {
-            for (int i = 0; i < 11; i++) {
-                makeWallBlock(CollectChallenge.Grid.get(5, i - 1));
-            }
+
+        for (int i = 0; i < 10; i++) {
+            makeWallBlock(rightWall, CollectChallenge.Grid.get(5, i));
         }
         player = new Player(dir.game());
         player.addStateListener(new StateListener() {
@@ -75,12 +69,19 @@ public abstract class BaseChallenge extends BaseSceneScript {
                 }
             }
         });
+
     }
 
-    private void makeWallBlock(Vector2 pos) {
-        Image block = new Image(dir.app().gameAssets().specialObjects[2]);
-        block.setAlign(Align.center);
-        dir.gameWorld().bodies().spawn(block, pos, Align.center);
+    private void makeWallBlock(WallType type, Vector2 pos) {
+        if (type.equals(WallType.block)) {
+            Image block = new Image(dir.app().gameAssets().specialObjects[2]);
+            block.setAlign(Align.center);
+            dir.gameWorld().bodies().spawn(block, pos, Align.center);
+        } else if (type.equals(WallType.spike)) {
+            Spike spike = new Spike(dir.game());
+            wallsBlocks.add(spike);
+            dir.gameWorld().bodies().spawn(spike, pos, Align.center);
+        }
     }
 
     @Override
@@ -138,6 +139,7 @@ public abstract class BaseChallenge extends BaseSceneScript {
     @Override
     public void dispose() {
         player.dispose();
+        wallsBlocks.dispose();
         super.dispose();
     }
 
@@ -145,6 +147,11 @@ public abstract class BaseChallenge extends BaseSceneScript {
     public void onStateChanged(String oldState, String newState) {
         hud.setInstructionsVisible(newState.equals(STATE_READY));
     }
+
+    public static enum WallType {
+        block, spike
+    }
+
 
     protected abstract void initHUD();
 }

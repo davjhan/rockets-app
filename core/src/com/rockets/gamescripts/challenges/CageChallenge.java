@@ -2,10 +2,11 @@ package com.rockets.gamescripts.challenges;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.rockets.constants.Display;
 import com.rockets.gamescreen.objects.Spike;
 import com.rockets.gamescripts.CollectChallenge;
 import com.rockets.graphics.DisposableList;
+
+import java.util.ArrayList;
 
 /**
  * name: CoinChallege
@@ -16,19 +17,35 @@ import com.rockets.graphics.DisposableList;
  **/
 public class CageChallenge extends CollectChallenge {
     DisposableList<Spike> spikes;
+    int topY = 0;
+    int botY = topY + 6;
     @Override
     protected void init() {
         super.init();
         spikes = new DisposableList<>();
-        for(int x = 0; x < 2; x ++){
-         for(int i = 0; i < 9; i ++) {
-             Spike spike = new Spike(dir.game());
-             spikes.add(spike);
-             dir.gameWorld().bodies().spawn(spike,
-                     -36+(x* (Display.CONTENT_WIDTH+30)),
-                     Display.CONTENT_HEIGHT -(i*50), Align.topLeft);
-         }
+
+        ArrayList<Vector2> spikeLoc = new ArrayList<>();
+        for (int y = topY; y < botY; y++) {
+            spikeLoc.add(Grid.get(0,y));
+            spikeLoc.add(Grid.get(4,y));
         }
+        for (int x = 0; x < 5; x++) {
+            spikeLoc.add(Grid.get(x,topY));
+            if(x != 2){
+                spikeLoc.add(Grid.get(x,botY));
+            }
+        }
+
+        for(Vector2 loc:spikeLoc){
+            Spike spike = new Spike(dir.game());
+            spikes.add(spike);
+            dir.gameWorld().bodies().spawn(spike,loc, Align.center);
+        }
+    }
+
+    @Override
+    protected Vector2 playerSpawnLoc() {
+        return Grid.get(2,3);
     }
 
     @Override
@@ -39,14 +56,13 @@ public class CageChallenge extends CollectChallenge {
     @Override
     protected void initSequence() {
         sequence = new Vector2[]{
-                Grid.get(0, 0),
-                Grid.get(4, 1),
-                Grid.get(0, 2),
-                Grid.get(4, 3),
-                Grid.get(0, 4),
-                Grid.get(4, 5),
-                Grid.get(0, 6),
-                Grid.get(4, 7),
+                Grid.get(2, 1),
+                Grid.get(3, botY-1),
+                Grid.get(1, topY+1),
+                Grid.get(1, botY-1),
+                Grid.get(3, topY+1),
+                Grid.get(0, 8),
+                Grid.get(2, 3),
 
         };
     }

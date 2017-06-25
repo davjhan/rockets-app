@@ -8,10 +8,17 @@
     },
     {
         "id": "coin_1",
-        "name": "Basic Level 1",
+        "name": "Floor Is Lava I",
         "type": "collect",
         "difficulty": 0,
-        "classname": "CoinChallenge"
+        "classname": "FloorIsLavaChallenge1"
+    },
+    {
+        "id": "floor_is_lava",
+        "name": "Floor Is Lava II",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "FloorIsLavaChallenge2"
     },
     {
         "id": "coin_2",
@@ -26,6 +33,13 @@
         "type": "collect",
         "difficulty": 0,
         "classname": "EdgeSpikeChallenge"
+    },
+    {
+        "id": "spikes_2",
+        "name": "Spike Ceiling",
+        "type": "collect",
+        "difficulty": 0,
+        "classname": "EdgeSpikeChallenge2"
     },
     {
         "id": "clock_1",
@@ -53,6 +67,13 @@
         "name": "Caged in",
         "type": "collect",
         "difficulty": 2,
-        "classname": "MiddleWallChallenge"
+        "classname": "CageChallenge"
+    },
+    {
+        "id": "narrow",
+        "name": "claustrophobia",
+        "type": "collect",
+        "difficulty": 2,
+        "classname": "ClaustrophobiaChallenge"
     },
 ]

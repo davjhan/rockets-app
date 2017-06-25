@@ -52,7 +52,7 @@ public class Coin extends GameEntity implements Collidable {
         if(gameEntity.getCollisionGroup().equals(CollisionGroup.player)){
             Player player = (Player) gameEntity;
             player.getVel().y = Math.max(player.getVel().y,0);
-            player.getVel().add(0,5);
+            player.getVel().add(0,1);
             die();
             collect();
         }
