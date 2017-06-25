@@ -14,6 +14,10 @@ import com.rockets.constants.Display;
 import com.rockets.data.ContentDB;
 import com.rockets.utils.GraphicsFactory;
 
+import de.tomgrill.gdxfacebook.core.GDXFacebook;
+import de.tomgrill.gdxfacebook.core.GDXFacebookConfig;
+import de.tomgrill.gdxfacebook.core.GDXFacebookSystem;
+
 /**
  * name: LaunchScreen
  * desc:
@@ -32,6 +36,20 @@ public class LaunchScreen extends BaseUIScreen{
         gameLoader = new GameLoader();
         Texture.setAssetManager(gameLoader);
         initGraphics();
+        initData();
+    }
+
+    private void initData() {
+        GDXFacebookConfig config = new GDXFacebookConfig();
+        config.APP_ID = "235441680306375"; // required
+        config.PREF_FILENAME = ".facebookSessionData"; // optional
+        config.GRAPH_API_VERSION = "v2.6"; // optional, default is v2.6
+        GDXFacebook gdxFacebook = GDXFacebookSystem.install(config);
+
+        if(gdxFacebook.isSignedIn()){
+            Gdx.app.log("tttt LaunchScreen", "facebook: signed in");
+        }
+        gdxFacebook.signOut();
     }
 
     @Override

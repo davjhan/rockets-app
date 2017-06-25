@@ -5,8 +5,9 @@
 	<inherits name='libgdx-utils' />
 	<inherits name='com.kotcrab.vis.vis-ui' />
 
-	<inherits name='Tag' />
+	<inherits name='Rockets' />
 	<entry-point class='com.rockets.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<inherits name='de.tomgrill.gdxfacebook.html.gdx_facebook_gwt' />
 </module>

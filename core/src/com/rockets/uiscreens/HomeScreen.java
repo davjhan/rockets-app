@@ -20,9 +20,12 @@ import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.HanLabel;
 import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.OnClickListener;
+import com.rockets.modal.Modal;
+import com.rockets.modal.ModalListener;
 import com.rockets.uiscreens.homescreen.BottomBar;
 import com.rockets.uiscreens.homescreen.ChallengeButton;
 import com.rockets.uiscreens.managers.SelectionManager;
+import com.rockets.uiscreens.modals.FacebookConversionModal;
 import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.uiscreens.views.ScrollingTileBG;
 import com.rockets.uiscreens.views.Selectable;
@@ -30,6 +33,8 @@ import com.rockets.uiscreens.views.ViewFactory;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.rockets.assets.Icons.PROFILE;
 
 /**
  * name: LaunchScreen
@@ -42,8 +47,9 @@ public class HomeScreen extends BaseUIScreen {
     private Table topBar;
     private Table contentTable;
     private BottomBar bottomBar;
-    private Table levelsRack;
+    private Table scrollPaneContent;
     private ScrollPane scrollPane;
+    private HanButton facebookButton;
     private HanTextButton playButton;
     //Level bar
     SelectionManager<String> selectionManager;
@@ -71,24 +77,50 @@ public class HomeScreen extends BaseUIScreen {
     private void initTables() {
         topBar = new Table();
         contentTable = new Table();
-        levelsRack = new Table();
-        scrollPane = new ScrollPane(levelsRack);
+        scrollPaneContent = new Table();
+        scrollPane = new ScrollPane(scrollPaneContent);
+        scrollPane.setupOverscroll(32,150,200);
         scrollPane.setScrollingDisabled(true, false);
 
-        topBar.setHeight(56);
+        topBar.setHeight(128);
         topBar.setWidth(Display.SCREEN_WIDTH);
         topBar.setPosition(0, Display.SCREEN_HEIGHT, Align.topLeft);
         contentTable.setWidth(Display.SCREEN_WIDTH);
         contentTable.setHeight(Display.SCREEN_HEIGHT - topBar.getHeight());
         contentTable.align(Align.top);
 
-
+        initTopBar();
         initLevels();
 
         initBottomBar();
         contentTable.add(scrollPane).grow();
         contentTable.row();
 
+    }
+
+    private void initTopBar() {
+        facebookButton = HanButton.with(app)
+                .leftIcon(app.menuAssets().icons[PROFILE])
+                .text("Facebook")
+                .allCaps(false)
+                .onClick(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        FacebookConversionModal conversionModal = new FacebookConversionModal(app, new ModalListener() {
+                            @Override
+                            public void onDismiss(Modal modal) {
+
+                            }
+                        });
+                        app.showModal(conversionModal);
+                    }
+                })
+                .build();
+
+        facebookButton.pack();
+        facebookButton.setPosition(Spacing.REG,Display.SCREEN_HEIGHT-Spacing.REG,Align.topLeft);
+        scrollPaneContent.add(facebookButton);
+        scrollPaneContent.row().spaceBottom(Spacing.REG);
     }
 
     private void initBottomBar() {
@@ -108,7 +140,7 @@ public class HomeScreen extends BaseUIScreen {
     }
 
     private void initLevels() {
-        levelsRack.align(Align.top);
+        scrollPaneContent.align(Align.top);
         int index = 0;
         List<List<Challenges.ChallengeModel>> challenges = app.contentDB().challenges().getAllByDifficulty(Challenges.EASY);
         for (int dif = 0; dif < Challenges.NUM_DIFFICULTIES; dif++) {
@@ -121,8 +153,8 @@ public class HomeScreen extends BaseUIScreen {
                     .color(Colr.TEXT_MID)
                     .build();
             header.add(headerText).padLeft(Spacing.XSMALL);
-            levelsRack.add(header).growX().spaceBottom(Spacing.SMALL).padLeft(Spacing.REG).left().padRight(Spacing.REG);
-            levelsRack.row();
+            scrollPaneContent.add(header).growX().spaceBottom(Spacing.SMALL).padLeft(Spacing.REG).left().padRight(Spacing.REG);
+            scrollPaneContent.row();
 
             //Level Grid.
             GridGroup levelGrid = new GridGroup(6, Spacing.SMALL);
@@ -145,10 +177,11 @@ public class HomeScreen extends BaseUIScreen {
             }
             levelGrid.pack();
 
-            levelsRack.add(levelGrid).growX().padLeft(7).spaceBottom(Spacing.REG);
-            levelsRack.row();
+            scrollPaneContent.add(levelGrid).growX().padLeft(7).spaceBottom(Spacing.REG);
+            scrollPaneContent.row();
         }
-        levelsRack.pack();
+        scrollPaneContent.padBottom(72);
+        scrollPaneContent.pack();
     }
 
     private void initBG() {

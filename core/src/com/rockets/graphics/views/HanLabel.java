@@ -74,6 +74,7 @@ public class HanLabel extends VisLabel {
         private Color color;
         private boolean forceAllCaps = true;
         int alignment = Align.center;
+        private boolean wrap = false;
 
         public LabelBuilder(String text) {
             this.text = text;
@@ -132,11 +133,16 @@ public class HanLabel extends VisLabel {
             }
             HanLabel label = new HanLabel(text, style);
             label.setAlignment(alignment);
+            label.setWrap(wrap);
             label.isForceAllCaps = true;
             return label;
         }
 
 
+        public LabelBuilder wrap(boolean wrap) {
+            this.wrap = wrap;
+            return this;
+        }
     }
 
 }
