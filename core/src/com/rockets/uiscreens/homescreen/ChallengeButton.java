@@ -1,5 +1,6 @@
 package com.rockets.uiscreens.homescreen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -27,14 +28,16 @@ public class ChallengeButton extends GameGroup<Actor> implements Selectable {
     boolean selected;
     Drawable bgNormal;
     Drawable bgSelected;
-
+    int isCompleted;
     public static final int WIDTH = 38;
     public static final int HEIGHT = 52;
-
+    Challenges.ChallengeModel model;
+    IApp app;
     public ChallengeButton(final IApp app, int index, final Challenges.ChallengeModel model) {
+        this.app = app;
+        this.model = model;
         setSize(WIDTH, HEIGHT);
-        bgNormal = new TextureRegionDrawable(app.menuAssets().levelButtons[0][0]);
-        bgSelected = new TextureRegionDrawable(app.menuAssets().levelButtons[0][1]);
+        refresh();
         image = new Image(bgNormal);
         image.setFillParent(true);
         indexLabel = HanLabel.text(String.valueOf(index + 1))
@@ -46,6 +49,7 @@ public class ChallengeButton extends GameGroup<Actor> implements Selectable {
         addListener(new SquishyButtonListener());
         setOrigin(Align.center);
     }
+
 
     @Override
     protected void sizeChanged() {
@@ -69,7 +73,17 @@ public class ChallengeButton extends GameGroup<Actor> implements Selectable {
 
     @Override
     public void refresh() {
+        Gdx.app.log("tttt ChallengeButton", "refresh: ");
+        isCompleted = app.backend().challenges().didComplete(model.id)? 1: 0;
+        bgNormal = new TextureRegionDrawable(app.menuAssets().levelButtons[isCompleted][0]);
+        bgSelected = new TextureRegionDrawable(app.menuAssets().levelButtons[isCompleted][1]);
+    }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.app =null;
+        this.model = null;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class FloorIsLavaChallenge1 extends CollectChallenge {
                 Grid.get(4, 0),
                 Grid.get(1, 1),
                 Grid.get(3, 1),
-                Grid.get(5, 2),
+                Grid.get(4, 2),
 
         };
     }

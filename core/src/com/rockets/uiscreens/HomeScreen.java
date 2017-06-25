@@ -82,7 +82,7 @@ public class HomeScreen extends BaseUIScreen {
         scrollPane.setupOverscroll(32,150,200);
         scrollPane.setScrollingDisabled(true, false);
 
-        topBar.setHeight(128);
+        topBar.setHeight(56);
         topBar.setWidth(Display.SCREEN_WIDTH);
         topBar.setPosition(0, Display.SCREEN_HEIGHT, Align.topLeft);
         contentTable.setWidth(Display.SCREEN_WIDTH);
@@ -120,7 +120,13 @@ public class HomeScreen extends BaseUIScreen {
         facebookButton.pack();
         facebookButton.setPosition(Spacing.REG,Display.SCREEN_HEIGHT-Spacing.REG,Align.topLeft);
         scrollPaneContent.add(facebookButton);
-        scrollPaneContent.row().spaceBottom(Spacing.REG);
+        scrollPaneContent.row().spaceBottom(64);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        selectionManager.refresh();
     }
 
     private void initBottomBar() {

@@ -1,6 +1,5 @@
 package com.rockets.data.readonly;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.badlogic.gdx.Gdx.app;
 
 /**
  * name: Challenges
@@ -22,7 +23,6 @@ public class Challenges {
     private Map<String,ChallengeModel> challenges;
     private List<String> challengeIds;
     public static int NUM_DIFFICULTIES = 4;
-
     public Challenges(String challengesJson) {
         challenges = new LinkedHashMap<>();
         challengeIds = new ArrayList<>();
@@ -79,7 +79,7 @@ public class Challenges {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            Gdx.app.error("INVALID PATH:", "CLASSNAME COULD NOT BE READ: "+ fullpath);
+            app.error("INVALID PATH:", "CLASSNAME COULD NOT BE READ: "+ fullpath);
             return null;
         }
     }

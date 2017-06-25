@@ -1,7 +1,6 @@
 package com.rockets.uiscreens.modals;
 
 import com.badlogic.gdx.Gdx;
-import com.rockets.Rockets;
 import com.rockets.common.IApp;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.BasicModal;
@@ -37,10 +36,8 @@ public class SettingsModal extends BasicModal {
         InlineView reset = new InlineView(app, "reset", "This will reset everything.", new OnClickListener() {
             @Override
             public void onClick() {
-                Gdx.app.getPreferences(Rockets.SHARED_PREFS_NAME).clear();
-                Gdx.app.getPreferences(Rockets.SHARED_PREFS_NAME).flush();
+                app.saves().resetSaves();
                 Gdx.app.exit();
-                closeModal();
             }
         });
         reset.setBackground(app.menuAssets().bgs.getInlay());

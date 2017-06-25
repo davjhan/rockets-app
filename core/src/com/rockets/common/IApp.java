@@ -3,7 +3,9 @@ package com.rockets.common;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.rockets.assets.GameAssets;
 import com.rockets.assets.MenuAssets;
+import com.rockets.data.Backend;
 import com.rockets.data.ContentDB;
+import com.rockets.data.Saves;
 import com.rockets.modal.Modal;
 
 /**
@@ -23,4 +25,6 @@ public interface IApp {
     String getString(String key);
 
     void showModal(Modal optionsModal);
+    Backend backend();
+    Saves saves();
 }

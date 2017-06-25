@@ -10,6 +10,8 @@ import com.rockets.gamescreen.modals.ChallengeCompleteModal;
 import com.rockets.gamescreen.objects.Coin;
 import com.rockets.modal.Modal;
 
+import static com.badlogic.gdx.Gdx.app;
+
 /**
  * name: CollectChallenge
  * desc:
@@ -76,6 +78,7 @@ public abstract class CollectChallenge extends BaseChallenge {
 
     protected void onGoalReached() {
         setState(STATE_END);
+        dir.app().backend().challenges().completeChallenge(challengeModel.id);
         ChallengeCompleteModal challengeCompleteModal = new ChallengeCompleteModal(
                 dir.game(), challengeModel, new ChallengeCompleteModal.ChallengeCompleteModalListener() {
             @Override
@@ -113,7 +116,7 @@ public abstract class CollectChallenge extends BaseChallenge {
         super.update(delta);
         //TODO:remove on release:
         if(Gdx.input.isKeyJustPressed(Input.Keys.N)){
-            Gdx.app.log("tttt CollectChallenge", "at update()");
+            app.log("tttt CollectChallenge", "at update()");
             incrementScore();
         }
     }

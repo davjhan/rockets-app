@@ -48,11 +48,9 @@ public class BottomBar extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                Gdx.app.log("tttt BottomBar", "at clicked()");
                 app.screenManager().pushScreen(GameScreen.class, GameScreen.getChallengeExtras(selectionManager.getSelectedData()));
             }
         });
-        Gdx.app.log("tttt BottomBar", "touch: " +playButton.isTouchable());
         add(root).grow();
         root.add(playButton).grow().padTop(Spacing.REG);
         pack();

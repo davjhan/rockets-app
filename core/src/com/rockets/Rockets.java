@@ -15,7 +15,9 @@ import com.rockets.common.IApp;
 import com.rockets.common.IAppInitializer;
 import com.rockets.common.ScreenManager;
 import com.rockets.constants.Display;
+import com.rockets.data.Backend;
 import com.rockets.data.ContentDB;
+import com.rockets.data.Saves;
 import com.rockets.modal.Modal;
 import com.rockets.modal.ModalStageManager;
 import com.rockets.uiscreens.LaunchScreen;
@@ -28,6 +30,8 @@ public class Rockets extends Game implements IApp, IAppInitializer {
     ModalStageManager modalStageManager;
     Stage modalStage;
     ContentDB contentDB;
+    Saves saves;
+    Backend backend;
     public InputMultiplexer inputMultiplexer;
     private boolean modalDebugAll = false;
     private boolean currentScreenDebug = false;
@@ -45,6 +49,8 @@ public class Rockets extends Game implements IApp, IAppInitializer {
         screenManager = new ScreenManager(this);
         screenManager.setScreen(new LaunchScreen(this));
         modalStageManager = new ModalStageManager(modalStage);
+        saves = new Saves();
+        backend = new Backend(this);
         initInput();
     }
 
@@ -79,7 +85,6 @@ public class Rockets extends Game implements IApp, IAppInitializer {
 
 
     }
-
     @Override
     public void resume() {
         super.resume();
@@ -139,6 +144,16 @@ public class Rockets extends Game implements IApp, IAppInitializer {
     @Override
     public void showModal(Modal modal) {
         modalStageManager.showModal(modal);
+    }
+
+    @Override
+    public Backend backend() {
+        return backend;
+    }
+
+    @Override
+    public Saves saves() {
+        return saves;
     }
 
     @Override

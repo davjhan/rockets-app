@@ -44,7 +44,7 @@ public class FacebookConversionModal extends BasicModal {
                 .build();
 
         connectButton = HanButton.with(app)
-                .text(app.getString("Continue"))
+                .text(app.getString("continue"))
                 .style(HanButton.PRIMARY)
                 .fontName(Font.h2)
                 .onClick(new OnClickListener() {
