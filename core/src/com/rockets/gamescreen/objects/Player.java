@@ -52,9 +52,9 @@ public class Player extends PhysicalEntity implements IPlayer{
     protected void init(){
         collisionGroup = CollisionGroup.player;
         falling = new NestedAnimatedSprite(new Animation<>(AnimConst.MEDIUM,
-                game.gameAssets().animals.get("bird").get(0), Animation.PlayMode.NORMAL));
+                game.gameAssets().playerSkins.get("bird").get(0), Animation.PlayMode.NORMAL));
         thrusting = new NestedAnimatedSprite(new Animation<>(AnimConst.MEDIUM,
-                game.gameAssets().animals.get("bird").get(1), Animation.PlayMode.NORMAL));
+                game.gameAssets().playerSkins.get("bird").get(1), Animation.PlayMode.NORMAL));
         autoResize = false;
         setSprite(falling);
         setSize(34,34);

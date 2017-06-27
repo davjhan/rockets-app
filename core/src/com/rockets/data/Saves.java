@@ -18,26 +18,26 @@ public class Saves {
     private SaveFile save;
     private Json json = new Json();
 
-    public Saves(){
+    public Saves() {
         setSave(loadSave());
         commitSave();
     }
 
     private void commitSave() {
-        if(save == null){
+        if (save == null) {
             Gdx.app.error("Error: Saves", "save is null.");
             throw new RuntimeException("Save is null.");
-        }else{
-            Gdx.files.local(SAVE_FILE_NAME).writeString(json.prettyPrint(json.toJson(save)),false);
+        } else {
+            Gdx.files.local(SAVE_FILE_NAME).writeString(json.prettyPrint(json.toJson(save)), false);
         }
     }
 
-    public SaveFile loadSave(){
+    public SaveFile loadSave() {
         FileHandle file = Gdx.files.local(SAVE_FILE_NAME);
-        if(!file.exists()){
+        if (!file.exists()) {
             return createNewSave();
         }
-        return json.fromJson(SaveFile.class,file.readString());
+        return json.fromJson(SaveFile.class, file.readString());
     }
 
     private SaveFile createNewSave() {
@@ -59,18 +59,38 @@ public class Saves {
     }
 
 
-    public SavesController control(){
+    public SavesController control() {
         return savesController;
+    }
+
+    public SavesReader read() {
+        return savesReader;
     }
 
     private void setSave(SaveFile save) {
         this.save = save;
     }
 
+    public interface SavesReader {
+        int getMedalsCount();
+        String getCurrentSkinId();
+    }
+
+    private SavesReader savesReader = new SavesReader() {
+        @Override
+        public int getMedalsCount() {
+            return save.medals;
+        }
+
+        @Override
+        public String getCurrentSkinId() {
+            return save.selectedSkin;
+        }
+    };
     private SavesController savesController = new SavesController() {
         @Override
         public void markChallengeAsCompleted(String challengeId) {
-            if(!save.completedChallenges.contains(challengeId)){
+            if (!save.completedChallenges.contains(challengeId)) {
                 save.completedChallenges.add(challengeId);
                 commitSave();
             }
@@ -78,27 +98,27 @@ public class Saves {
 
         @Override
         public void unlockSkin(String skinId) {
-            if(!save.unlockedSkins.contains(skinId)){
+            if (!save.unlockedSkins.contains(skinId)) {
                 save.unlockedSkins.add(skinId);
                 commitSave();
             }
         }
 
         @Override
-        public void acquireGems(int amount) {
-            save.gems += amount;
+        public void acquireMedals(int amount) {
+            save.medals += amount;
             commitSave();
         }
 
         @Override
-        public void discardGems(int amount) {
-            save.gems -= amount;
+        public void discardMedals(int amount) {
+            save.medals -= amount;
             commitSave();
         }
 
         @Override
-        public void setGemsCount(int amount) {
-            save.gems = amount;
+        public void setMedalsCount(int amount) {
+            save.medals = amount;
             commitSave();
         }
 

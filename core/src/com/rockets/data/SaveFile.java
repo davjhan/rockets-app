@@ -12,6 +12,6 @@ import java.util.ArrayList;
 public class SaveFile {
     public ArrayList<String> completedChallenges;
     public ArrayList<String> unlockedSkins;
-    public int gems;
+    public int medals;
     public String selectedSkin;
 }

@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rockets.Rockets;
 import com.rockets.constants.Display;
+import com.rockets.graphics.DisposableList;
 
 import java.util.Map;
 
@@ -21,6 +23,7 @@ import java.util.Map;
 public abstract class BaseScreen implements Screen {
     protected IApp app;
     public Stage stage;
+    protected DisposableList<Disposable> disposables = new DisposableList<>();
 
     public BaseScreen(IApp app,Map<String,Object> extras){
         this.app = app;
@@ -68,7 +71,8 @@ public abstract class BaseScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-      //  stage = null;
+        disposables.dispose();
+        Gdx.app.log("tttt BaseScreen", "Disposing Screen: "+this.getClass().getName());
     }
 
     public void toggleDebug() {

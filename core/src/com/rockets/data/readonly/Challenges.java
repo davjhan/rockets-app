@@ -37,7 +37,7 @@ public class Challenges {
     public String getNextChallengeId(String prevChallenge){
         return challengeIds.get((challengeIds.indexOf(prevChallenge)+1)%challengeIds.size());
     }
-    public List<List<ChallengeModel>> getAllByDifficulty(int difficulty){
+    public List<List<ChallengeModel>> getAllByDifficulty(){
         List<List<ChallengeModel>> ret = new ArrayList<>();
         for(int i = 0; i < NUM_DIFFICULTIES; i ++) {
             ret.add(new ArrayList<ChallengeModel>());

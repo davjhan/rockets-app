@@ -86,7 +86,8 @@ public class LaunchScreen extends BaseUIScreen{
 
     private void initModels(IApp app){
         FileHandle challengesFH = Gdx.files.internal("data/challenges.json");
-        ((IAppInitializer) app).setContentDB(new ContentDB(challengesFH.readString()));
+        FileHandle skinsFH = Gdx.files.internal("data/skins.json");
+        ((IAppInitializer) app).setContentDB(new ContentDB(challengesFH.readString(),skinsFH.readString()));
     }
     private void initGraphics() {
         Drawable bg = GraphicsFactory.solidDrawable(Color.YELLOW);

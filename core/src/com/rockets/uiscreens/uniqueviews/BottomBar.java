@@ -1,6 +1,5 @@
-package com.rockets.uiscreens.homescreen;
+package com.rockets.uiscreens.uniqueviews;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -31,6 +30,7 @@ public class BottomBar extends Table {
     public BottomBar(final IApp app,final SelectionManager<String> selectionManager){
         root = new Table();
         pad(Spacing.REG);
+        padTop(0);
         root.pad(Spacing.REG);
         root.setBackground(app.menuAssets().bgs.getFrameBg());
         challengeTitle = HanLabel.text("")

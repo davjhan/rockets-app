@@ -1,6 +1,7 @@
 package com.rockets.data;
 
 import com.rockets.data.readonly.Challenges;
+import com.rockets.data.readonly.Skins;
 
 /**
  * name: Models
@@ -11,10 +12,18 @@ import com.rockets.data.readonly.Challenges;
  **/
 public class ContentDB {
     private Challenges challenges;
-    public ContentDB(String challengesJson){
+    private Skins skins;
+
+    public ContentDB(String challengesJson,String skinsJson) {
         challenges = new Challenges(challengesJson);
+        skins = new Skins(skinsJson);
     }
-    public Challenges challenges(){
+
+    public Challenges challenges() {
         return challenges;
+    }
+
+    public Skins skins() {
+        return skins;
     }
 }

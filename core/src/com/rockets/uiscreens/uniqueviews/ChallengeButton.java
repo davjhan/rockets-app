@@ -1,6 +1,5 @@
-package com.rockets.uiscreens.homescreen;
+package com.rockets.uiscreens.uniqueviews;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -73,7 +72,6 @@ public class ChallengeButton extends GameGroup<Actor> implements Selectable {
 
     @Override
     public void refresh() {
-        Gdx.app.log("tttt ChallengeButton", "refresh: ");
         isCompleted = app.backend().challenges().didComplete(model.id)? 1: 0;
         bgNormal = new TextureRegionDrawable(app.menuAssets().levelButtons[isCompleted][0]);
         bgSelected = new TextureRegionDrawable(app.menuAssets().levelButtons[isCompleted][1]);

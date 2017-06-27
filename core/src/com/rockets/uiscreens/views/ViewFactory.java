@@ -2,6 +2,7 @@ package com.rockets.uiscreens.views;
 
 import com.rockets.assets.Icons;
 import com.rockets.common.IApp;
+import com.rockets.constants.Spacing;
 import com.rockets.gamescreen.IGame;
 import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.OnClickListener;
@@ -29,6 +30,13 @@ public class ViewFactory {
     public static final HanButton getSettingsButtonSmall(IApp app,OnClickListener onClickListener){
         return HanButton.with(app)
                 .leftIcon(app.menuAssets().icons[Icons.SETTINGS])
+                .onClick(onClickListener)
+                .build();
+    }
+    public static final HanButton getBackButton(IApp app,OnClickListener onClickListener){
+        return HanButton.with(app)
+                .leftIcon(app.menuAssets().icons[Icons.BACK])
+                .pad(Spacing.REG)
                 .onClick(onClickListener)
                 .build();
     }

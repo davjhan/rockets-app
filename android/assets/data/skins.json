@@ -1,0 +1,59 @@
+[
+    {
+        "index": 0,
+        "id": "default",
+        "name": "David",
+        "type": "default",
+        "price": 0
+    },
+    {
+        "index": 1,
+        "id": "red_squid",
+        "name": "Rick",
+        "type": "unlock",
+        "price": 5
+    },
+    {
+        "index": 3,
+        "id": "purple_jellyfish",
+        "name": "Jimmy",
+        "type": "unlock",
+        "price": 15
+    },
+    {
+        "index": 1,
+        "id": "pink_squid",
+        "name": "Emily",
+        "type": "unlock",
+        "price": 30
+    },
+    {
+        "index": 1,
+        "id": "green_octopus",
+        "name": "Kevin",
+        "type": "unlock",
+        "price": 50
+    },
+    {
+        "index": 1,
+        "id": "gold_octopus",
+        "name": "King Octopus",
+        "type": "unlock",
+        "price": 75
+    },
+
+    {
+        "index": 7,
+        "id": "chicken",
+        "name": "Chicken",
+        "type": "unlock",
+        "price": 0
+    },
+    {
+        "index": 8,
+        "id": "egg",
+        "name": "Benedict",
+        "type": "iap",
+        "price": 1
+    },
+]

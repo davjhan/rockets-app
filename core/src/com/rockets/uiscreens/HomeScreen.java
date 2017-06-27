@@ -1,7 +1,5 @@
 package com.rockets.uiscreens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -22,8 +20,8 @@ import com.rockets.graphics.views.HanTextButton;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.modal.Modal;
 import com.rockets.modal.ModalListener;
-import com.rockets.uiscreens.homescreen.BottomBar;
-import com.rockets.uiscreens.homescreen.ChallengeButton;
+import com.rockets.uiscreens.uniqueviews.BottomBar;
+import com.rockets.uiscreens.uniqueviews.ChallengeButton;
 import com.rockets.uiscreens.managers.SelectionManager;
 import com.rockets.uiscreens.modals.FacebookConversionModal;
 import com.rockets.uiscreens.modals.SettingsModal;
@@ -50,6 +48,7 @@ public class HomeScreen extends BaseUIScreen {
     private Table scrollPaneContent;
     private ScrollPane scrollPane;
     private HanButton facebookButton;
+    private HanButton unlocksButton;
     private HanTextButton playButton;
     //Level bar
     SelectionManager<String> selectionManager;
@@ -60,16 +59,17 @@ public class HomeScreen extends BaseUIScreen {
 
         selectionManager = new SelectionManager<>(false);
         initTables();
-        initTitle();
         initBG();
 
-        stage.addActor(topBar);
-        stage.addActor(contentTable);
+        rootTable.add(topBar).growX();
+        rootTable.row();
+        rootTable.add(contentTable).grow();
+        rootTable.row();
+        rootTable.add(bottomBar).growX();
+        rootTable.pack();
 
-        stage.addActor(bottomBar);
-        bottomBar.setWidth(contentTable.getWidth());
 
-        String selectedButtonId = app.contentDB().challenges().getAllByDifficulty(Challenges.EASY).get(0).get(0).id;
+        String selectedButtonId = app.contentDB().challenges().getAllByDifficulty().get(0).get(0).id;
         selectionManager.select(selectedButtonId);
     }
 
@@ -81,12 +81,8 @@ public class HomeScreen extends BaseUIScreen {
         scrollPane = new ScrollPane(scrollPaneContent);
         scrollPane.setupOverscroll(32,150,200);
         scrollPane.setScrollingDisabled(true, false);
+        scrollPaneContent.row().spaceBottom(64);
 
-        topBar.setHeight(56);
-        topBar.setWidth(Display.SCREEN_WIDTH);
-        topBar.setPosition(0, Display.SCREEN_HEIGHT, Align.topLeft);
-        contentTable.setWidth(Display.SCREEN_WIDTH);
-        contentTable.setHeight(Display.SCREEN_HEIGHT - topBar.getHeight());
         contentTable.align(Align.top);
 
         initTopBar();
@@ -99,6 +95,23 @@ public class HomeScreen extends BaseUIScreen {
     }
 
     private void initTopBar() {
+
+        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app, new OnClickListener() {
+
+            @Override
+            public void onClick() {
+                app.showModal(new SettingsModal(app, null));
+            }
+        });
+        settingsButton.pack();
+        settingsButton.setPosition(Display.SCREEN_WIDTH - Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topRight);
+        stage.addActor(settingsButton);
+
+        Label titleLabel = HanLabel.text("GAME TITLE")
+                .font(Font.grand2)
+                .build();
+
+        Table topTray = new Table();
         facebookButton = HanButton.with(app)
                 .leftIcon(app.menuAssets().icons[PROFILE])
                 .text("Facebook")
@@ -116,11 +129,24 @@ public class HomeScreen extends BaseUIScreen {
                     }
                 })
                 .build();
+        unlocksButton = HanButton.with(app)
+                .leftIcon(app.menuAssets().icons[PROFILE])
+                .text("Unlocks")
+                .allCaps(false)
+                .onClick(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        app.screenManager().restoreScreen(UnlocksScreen.class);
+                    }
+                })
+                .build();
 
-        facebookButton.pack();
-        facebookButton.setPosition(Spacing.REG,Display.SCREEN_HEIGHT-Spacing.REG,Align.topLeft);
-        scrollPaneContent.add(facebookButton);
-        scrollPaneContent.row().spaceBottom(64);
+        topTray.add(facebookButton).spaceRight(Spacing.REG);
+        topTray.add(unlocksButton);
+
+        topBar.add(titleLabel).pad(Spacing.REG).spaceBottom(Spacing.REG);
+        topBar.row();
+        topBar.add(topTray).spaceBottom(Spacing.REG);
     }
 
     @Override
@@ -148,7 +174,7 @@ public class HomeScreen extends BaseUIScreen {
     private void initLevels() {
         scrollPaneContent.align(Align.top);
         int index = 0;
-        List<List<Challenges.ChallengeModel>> challenges = app.contentDB().challenges().getAllByDifficulty(Challenges.EASY);
+        List<List<Challenges.ChallengeModel>> challenges = app.contentDB().challenges().getAllByDifficulty();
         for (int dif = 0; dif < Challenges.NUM_DIFFICULTIES; dif++) {
             // Header:
             Table header = new Table();
@@ -194,41 +220,6 @@ public class HomeScreen extends BaseUIScreen {
         ScrollingTileBG scrollingTileBG = new ScrollingTileBG(0.2f, app.menuAssets().bgTilesHome);
         stage.addActor(scrollingTileBG);
         scrollingTileBG.setZIndex(0);
-    }
-
-    private void initTitle() {
-        Label titleLabel = HanLabel.text("GAME TITLE")
-                .font(Font.grand2)
-                .build();
-        topBar.add(titleLabel);
-        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app, new OnClickListener() {
-
-            @Override
-            public void onClick() {
-                app.showModal(new SettingsModal(app, null));
-            }
-        });
-        settingsButton.pack();
-        settingsButton.setPosition(Display.SCREEN_WIDTH - Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topRight);
-        stage.addActor(settingsButton);
-
-
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    private void startSPGame() {
-        //app.screenManager().pushScreen(new GameScreen(app,"coin_1"));
-    }
-
-    @Override
-    public void update(float delta) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            startSPGame();
-        }
     }
 
 }

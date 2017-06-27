@@ -33,4 +33,9 @@ public abstract class BaseUIScreen extends BaseScreen {
         }
         super.dispose();
     }
+
+    @Override
+    public void update(float delta) {
+
+    }
 }

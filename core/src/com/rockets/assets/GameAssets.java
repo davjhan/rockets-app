@@ -21,7 +21,7 @@ import java.util.Map;
  * Copyright (c) 2016 David Han
  **/
 public class GameAssets extends AssetGroup{
-    public Map<String,Array<Array<TextureRegion>>> animals;
+    public Map<String,Array<Array<TextureRegion>>> playerSkins;
     public TextureRegion[] coin;
     public TextureRegion[] coinLarge;
     public TextureRegion upArrow;
@@ -62,7 +62,7 @@ public class GameAssets extends AssetGroup{
             }
         });
 
-        cutAnimals(atlas);
+        cutPlayerSkins(atlas);
         cutParticles(atlas);
         cutVfx(atlas);
     }
@@ -78,15 +78,15 @@ public class GameAssets extends AssetGroup{
         glisten = getKeyFrames(vfx,1,0,4);
     }
 
-    private void cutAnimals(TextureAtlas atlas) {
-        animals = new HashMap<>();
-        String[] names = new String[]{"bird"};
+    private void cutPlayerSkins(TextureAtlas atlas) {
+        playerSkins = new HashMap<>();
+        String[] names = new String[]{"playerSkins"};
         for(String name:names){
             TextureRegion[][] stills = cut(atlas,name, 50,50);
             Array<Array<TextureRegion>> frames = new Array<>();
             frames.add(getKeyFrames(stills,0,0,2));
             frames.add(getKeyFrames(stills,0,2,2));
-            animals.put(name,frames);
+            playerSkins.put(name,frames);
         }
     }
 

@@ -11,9 +11,9 @@ public interface SavesController {
 
    void markChallengeAsCompleted(String challengeId);
    void unlockSkin(String skinId);
-   void acquireGems(int amount);
-   void discardGems(int amount);
-   void setGemsCount(int amount);
+   void acquireMedals(int amount);
+   void discardMedals(int amount);
+   void setMedalsCount(int amount);
    void setSkin(String skinName);
 
 }
