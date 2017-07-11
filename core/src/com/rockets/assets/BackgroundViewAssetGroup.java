@@ -35,6 +35,9 @@ public class BackgroundViewAssetGroup{
     public NinePatchDrawable getCoinDisplayBgGold() {
         return getSpecial(1,1);
     }
+    public NinePatchDrawable getSkinDisplayBG() {
+        return getReg(0,1);
+    }
 
     private NinePatchDrawable getReg(int type,int state){
         return new NinePatchDrawable(reg[type][state]);

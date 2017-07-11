@@ -12,4 +12,5 @@ public class AnimConst {
     public static final float MEDIUM = 0.12f;
     public static final float SHORT = 0.1f;
     public static final float FAST = 0.05f;
+    public static final float SLOW_ANIM = 0.2f;
 }

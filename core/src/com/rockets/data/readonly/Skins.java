@@ -3,6 +3,7 @@ package com.rockets.data.readonly;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.rockets.common.IApp;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -51,6 +52,10 @@ public class Skins {
     }
     public SkinModel getById(String skinId) {
         return skins.get(skinId);
+    }
+
+    public SkinModel getCurrentSkin(IApp iApp) {
+        return getById(iApp.saves().read().getCurrentSkinId());
     }
 
     public class SkinNotFoundException extends Throwable {

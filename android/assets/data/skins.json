@@ -14,28 +14,28 @@
         "price": 5
     },
     {
-        "index": 3,
+        "index": 2,
         "id": "purple_jellyfish",
         "name": "Jimmy",
         "type": "unlock",
         "price": 15
     },
     {
-        "index": 1,
+        "index": 3,
         "id": "pink_squid",
         "name": "Emily",
         "type": "unlock",
         "price": 30
     },
     {
-        "index": 1,
+        "index": 4,
         "id": "green_octopus",
         "name": "Kevin",
         "type": "unlock",
         "price": 50
     },
     {
-        "index": 1,
+        "index": 5,
         "id": "gold_octopus",
         "name": "King Octopus",
         "type": "unlock",
@@ -43,14 +43,14 @@
     },
 
     {
-        "index": 7,
+        "index": 6,
         "id": "chicken",
         "name": "Chicken",
         "type": "unlock",
         "price": 0
     },
     {
-        "index": 8,
+        "index": 7,
         "id": "egg",
         "name": "Benedict",
         "type": "iap",

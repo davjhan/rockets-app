@@ -51,6 +51,7 @@ public class Saves {
         saveFile.unlockedSkins = new ArrayList<>();
         saveFile.unlockedSkins.add("default");
         saveFile.selectedSkin = "default";
+        saveFile.medals = 40;
     }
 
     public void resetSaves() {
@@ -74,6 +75,7 @@ public class Saves {
     public interface SavesReader {
         int getMedalsCount();
         String getCurrentSkinId();
+        boolean isSkinUnlocked(String skinId);
     }
 
     private SavesReader savesReader = new SavesReader() {
@@ -85,6 +87,11 @@ public class Saves {
         @Override
         public String getCurrentSkinId() {
             return save.selectedSkin;
+        }
+
+        @Override
+        public boolean isSkinUnlocked(String skinId) {
+            return save.unlockedSkins.contains(skinId);
         }
     };
     private SavesController savesController = new SavesController() {

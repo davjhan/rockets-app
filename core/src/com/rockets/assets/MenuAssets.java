@@ -18,6 +18,7 @@ import com.rockets.utils.TextureColorer;
 public class MenuAssets extends AssetGroup{
     public NinePatch[]  btnGeneral;
     public NinePatch[]  btnPrimary;
+    public NinePatch[]  btnDisabled;
     public TextureRegion[] bgTilesHome;
     public TextureRegion textfieldCursor;
     public NinePatch hudbg;
@@ -40,6 +41,7 @@ public class MenuAssets extends AssetGroup{
         NinePatch[][] buttons = cutNinesGroup2d(atlas,"buttons",18,12,4);
         btnGeneral = sliceNines(buttons,0,2);
         btnPrimary = sliceNines(buttons,1,2);
+        btnDisabled = sliceNines(buttons,2,2);
         this.levelButtons = cut(atlas,"levelButtons",38,52);
 
         TextureRegion[][] bgTiles = cut(atlas,"bgTiles",30,30);

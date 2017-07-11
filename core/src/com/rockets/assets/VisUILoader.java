@@ -80,6 +80,7 @@ public class VisUILoader {
         def.fontColor = Colors.get(Colr.TEXT_MID);
         def.unpressedOffsetY = 1;
         def.checkedOffsetY = 1;
+        def.disabled = new NinePatchDrawable(menuAssets.btnDisabled[0]);
         VisUI.getSkin().add("default", def);
 
         VisTextButton.VisTextButtonStyle primary =
@@ -92,6 +93,7 @@ public class VisUILoader {
         primary.fontColor = Colors.get(Colr.TEXT_NAVY);
         primary.unpressedOffsetY = 1;
         primary.checkedOffsetY = 1;
+        primary.disabled = new NinePatchDrawable(menuAssets.btnDisabled[0]);
         VisUI.getSkin().add(PRIMARY, primary);
 
         VisTextButton.VisTextButtonStyle primaryLarge = new VisTextButton.VisTextButtonStyle(primary);

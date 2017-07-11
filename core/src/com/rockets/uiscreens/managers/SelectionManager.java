@@ -25,6 +25,8 @@ public class SelectionManager<T> implements Disposable {
 
     public void addSelectable(Selectable selectable,T t) {
         selectables.put(selectable,t);
+        selectable.setSelected(false);
+        selectable.refresh();
     }
 
     public void removeSelectable(Selectable selectable) {
@@ -33,7 +35,6 @@ public class SelectionManager<T> implements Disposable {
 
     public void select(Selectable selectable) {
         if (selectables.keySet().contains(selectable)) {
-
             if (selectable.equals(selected) && canUnselect) {
                 selected.setSelected(false);
                 selected = null;

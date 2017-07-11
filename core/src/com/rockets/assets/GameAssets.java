@@ -20,8 +20,8 @@ import java.util.Map;
  * author: david
  * Copyright (c) 2016 David Han
  **/
-public class GameAssets extends AssetGroup{
-    public Map<String,Array<Array<TextureRegion>>> playerSkins;
+public class GameAssets extends AssetGroup {
+    public Array<Array<Array<TextureRegion>>> playerSkins;
     public TextureRegion[] coin;
     public TextureRegion[] coinLarge;
     public TextureRegion upArrow;
@@ -35,28 +35,26 @@ public class GameAssets extends AssetGroup{
     public Texture whiteTexture;
     public Texture normalTexture;
 
-    private Map<Texture,Texture> whiteTexturesCache = new HashMap<>();
+    private Map<Texture, Texture> whiteTexturesCache = new HashMap<>();
     public TextureRegion bg;
 
-    public GameAssets(AssetManager manager){
+    public GameAssets(AssetManager manager) {
         final TextureAtlas atlas = manager.get(GameLoader.getAtlasFileName());
-        coin = cutLinear(atlas,"coin",Display.UNIT,Display.UNIT);
-        coinLarge = cutLinear(atlas,"coinLarge",58,58);
-        specialObjects = cutLinear(atlas,"specialObjects",50,50);
-        namePlate = cutNinesGroup(atlas,"nameplate",12,8,3)[0];
-        clockFrame = cutNinesGroup(atlas,"clockframe",30,16,4)[0];
-        upArrow = cutSingle(atlas,"upArrow");
-        bg = cutSingle(atlas,"bg");
+        coin = cutLinear(atlas, "coin", Display.UNIT, Display.UNIT);
+        coinLarge = cutLinear(atlas, "coinLarge", 58, 58);
+        specialObjects = cutLinear(atlas, "specialObjects", 50, 50);
+        namePlate = cutNinesGroup(atlas, "nameplate", 12, 8, 3)[0];
+        clockFrame = cutNinesGroup(atlas, "clockframe", 30, 16, 4)[0];
+        upArrow = cutSingle(atlas, "upArrow");
+        bg = cutSingle(atlas, "bg");
         //crosshair = getKeyFrames(cut(atlas,"crosshair",38,38),0,1,3);
-
-
 
 
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
                 final double timeElapsed = System.currentTimeMillis();
-                for(Texture t:atlas.getTextures()){
+                for (Texture t : atlas.getTextures()) {
                     cacheWhiteTexture(t);
                 }
             }
@@ -68,35 +66,34 @@ public class GameAssets extends AssetGroup{
     }
 
 
-
     private void cacheWhiteTexture(Texture t) {
         whiteTexturesCache.put(t, TextureColorer.getWhiteGameTexture(t));
     }
 
     private void cutVfx(TextureAtlas atlas) {
-       TextureRegion[][] vfx = cut(atlas,"vfx",42,42);
-        glisten = getKeyFrames(vfx,1,0,4);
+        TextureRegion[][] vfx = cut(atlas, "vfx", 42, 42);
+        glisten = getKeyFrames(vfx, 1, 0, 4);
     }
 
     private void cutPlayerSkins(TextureAtlas atlas) {
-        playerSkins = new HashMap<>();
-        String[] names = new String[]{"playerSkins"};
-        for(String name:names){
-            TextureRegion[][] stills = cut(atlas,name, 50,50);
-            Array<Array<TextureRegion>> frames = new Array<>();
-            frames.add(getKeyFrames(stills,0,0,2));
-            frames.add(getKeyFrames(stills,0,2,2));
-            playerSkins.put(name,frames);
+        TextureRegion[][] stills = cut(atlas, "playerSkins", 50, 50);
+        Array<Array<Array<TextureRegion>>> frames = new Array<>();
+        for(int i = 0; i < stills.length; i++){
+            Array<Array<TextureRegion>>playerSkin = new Array<>();
+            playerSkin.add(getKeyFrames(stills, i, 0, 2));
+            playerSkin.add(getKeyFrames(stills, i, 2, 2));
+            frames.add(playerSkin);
         }
+        playerSkins = frames;
     }
 
     private void cutParticles(TextureAtlas atlas) {
-        TextureRegion[][] sparklesPage = cut(atlas,"sparkles",16,16);
-        sparkles = getKeyFrames(sparklesPage,0,0,4);
+        TextureRegion[][] sparklesPage = cut(atlas, "sparkles", 16, 16);
+        sparkles = getKeyFrames(sparklesPage, 0, 0, 4);
     }
 
 
-    public Texture getWhiteTexture(Texture texture){
+    public Texture getWhiteTexture(Texture texture) {
         return whiteTexturesCache.get(texture);
     }
 }

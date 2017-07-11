@@ -8,7 +8,7 @@ package com.rockets.data.readonly;
  * Copyright (c) 2017 David Han
  **/
 public class SkinModel {
-    public String index;
+    public int index;
     public String id;
     public String name;
     public String type;

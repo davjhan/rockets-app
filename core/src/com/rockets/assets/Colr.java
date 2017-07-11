@@ -16,6 +16,7 @@ public class Colr {
     public static final String BG = "2a0a2c";
     public static final String HUD_DIVIDER = "993f83";
     public static final String DIM = "0C0C0C99";
+    public static final String LOCKED_SHADE = "7d7d7d";
     public static final String TEXT_YELLOW = "f3cc2b";
 
 

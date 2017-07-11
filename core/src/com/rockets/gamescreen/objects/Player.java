@@ -2,6 +2,7 @@ package com.rockets.gamescreen.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.rockets.constants.AnimConst;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
@@ -51,10 +53,13 @@ public class Player extends PhysicalEntity implements IPlayer{
     @Override
     protected void init(){
         collisionGroup = CollisionGroup.player;
+        Array<Array<TextureRegion>> skinTextures = game.gameAssets().playerSkins.get(
+                game.iApp().contentDB().skins().getCurrentSkin(game.iApp()).index
+        );
         falling = new NestedAnimatedSprite(new Animation<>(AnimConst.MEDIUM,
-                game.gameAssets().playerSkins.get("bird").get(0), Animation.PlayMode.NORMAL));
+                skinTextures.get(0), Animation.PlayMode.NORMAL));
         thrusting = new NestedAnimatedSprite(new Animation<>(AnimConst.MEDIUM,
-                game.gameAssets().playerSkins.get("bird").get(1), Animation.PlayMode.NORMAL));
+                skinTextures.get(1), Animation.PlayMode.NORMAL));
         autoResize = false;
         setSprite(falling);
         setSize(34,34);
@@ -124,7 +129,6 @@ public class Player extends PhysicalEntity implements IPlayer{
             rotationVel = MathUtils.clamp(rotationVel, -MAX_ROT_VEL, MAX_ROT_VEL);
             rotateBy(delta * rotationVel);
         }
-        Gdx.app.log("tttt Player", "vel: " +getVel());
         super.act(delta);
     }
 

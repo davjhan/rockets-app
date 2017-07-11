@@ -1,10 +1,10 @@
 package com.rockets.uiscreens;
 
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
 import com.rockets.common.BaseUIScreen;
 import com.rockets.common.IApp;
@@ -17,7 +17,9 @@ import com.rockets.graphics.views.OnClickListener;
 import com.rockets.uiscreens.managers.SelectionManager;
 import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.uiscreens.uniqueviews.SkinDisplayItem;
+import com.rockets.uiscreens.views.PagedScrollpane;
 import com.rockets.uiscreens.views.ScrollingTileBG;
+import com.rockets.uiscreens.views.Selectable;
 import com.rockets.uiscreens.views.ViewFactory;
 
 import java.util.List;
@@ -33,21 +35,20 @@ import java.util.Map;
 public class UnlocksScreen extends BaseUIScreen {
     private Table topBar;
     private Table contentTable;
-    private Table scrollPaneContent;
-    private ScrollPane scrollPane;
-    private HanButton facebookButton;
+    private PagedScrollpane<String> scrollPane;
+    private HanButton actionButton;
     private HanButton backButton;
     private HanLabel medalsCount;
-    SelectionManager<String> selectionManager;
+    private HanLabel pageIndex;
+    private List<SkinModel> allSkins;
+    private final SelectionManager<String> selectionManager = new SelectionManager<>(false);
+    private float underPageY;
 
     public UnlocksScreen(IApp game, Map<String, Object> extras) {
         super(game, extras);
-
-
-        selectionManager = new SelectionManager<>(false);
+        initData();
         initTables();
 
-        initFixed();
         initTopBar();
 
 
@@ -59,6 +60,30 @@ public class UnlocksScreen extends BaseUIScreen {
         rootTable.pack();
         String selectedId = app.saves().read().getCurrentSkinId();
         selectionManager.select(selectedId);
+
+
+        underPageY = contentTable.getY(Align.center) - 42;
+        initFixed();
+        initBehaviors();
+    }
+
+    private void initBehaviors() {
+        selectionManager.setListener(new SelectionManager.SelectionChangedListener<String>() {
+            @Override
+            public void onSelectionChanged(Selectable selectable, String data) {
+                int selectedIndex = allSkins.indexOf(app.contentDB().skins().getById(data));
+                pageIndex.setText((selectedIndex + 1) + "/" + allSkins.size());
+
+                refreshToSelection(data);
+            }
+
+
+        });
+        scrollPane.selectNoAnimate(app.saves().read().getCurrentSkinId());
+    }
+
+    private void initData() {
+        allSkins = app.contentDB().skins().getAllSkins();
     }
 
     private void initTables() {
@@ -69,7 +94,6 @@ public class UnlocksScreen extends BaseUIScreen {
         contentTable.align(Align.center);
         contentTable.add(scrollPane).grow();
         contentTable.row();
-
     }
 
     @Override
@@ -79,19 +103,29 @@ public class UnlocksScreen extends BaseUIScreen {
     }
 
     private void initSkinDisplay() {
-        HorizontalGroup skinsContainer = new HorizontalGroup();
-        scrollPane = new ScrollPane(skinsContainer);
-        scrollPane.setupOverscroll(32, 150, 200);
+        scrollPane = new PagedScrollpane<>(selectionManager);
+        scrollPane.setupOverscroll(32, 20, 200);
         scrollPane.setScrollingDisabled(false, true);
-
-        skinsContainer.space(Spacing.LARGE);
-        List<SkinModel> allSkins = app.contentDB().skins().getAllSkins();
-        for(SkinModel skinModel: allSkins){
-            SkinDisplayItem skinDisplayItem = new SkinDisplayItem(app,skinModel);
-            skinsContainer.addActor(skinDisplayItem);
-            selectionManager.addSelectable(skinDisplayItem,skinModel.id);
+        scrollPane.setPageSpacing(24);
+        scrollPane.setFlingTime(0.15f);
+        scrollPane.addPagedScrollpaneListener(new PagedScrollpane.PagedScrollpaneListener() {
+            @Override
+            public void onStateChanged(boolean isMoving) {
+                actionButton.setVisible(!isMoving);
+            }
+        });
+        for (final SkinModel skinModel : allSkins) {
+            final SkinDisplayItem skinDisplayItem = new SkinDisplayItem(app, skinModel);
+            skinDisplayItem.addListener(new OnClickListener() {
+                @Override
+                public void onClick() {
+                    scrollPane.select(skinModel.id);
+                }
+            });
+            scrollPane.addPage(skinDisplayItem, skinModel.id);
+            selectionManager.addSelectable(skinDisplayItem, skinModel.id);
         }
-        skinsContainer.pack();
+        scrollPane.pack();
     }
 
     private void initBG() {
@@ -121,7 +155,34 @@ public class UnlocksScreen extends BaseUIScreen {
         });
         backButton.pack();
         backButton.setPosition(Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topLeft);
+        initButtons();
+
+        pageIndex = HanLabel.text("10")
+                .font(Font.c1)
+                .color(Colors.get(Colr.TEXT_LIGHT))
+                .build();
+        pageIndex.setPosition(Display.SCREEN_WIDTH / 2, Spacing.XXLARGE, Align.bottom);
+        contentTable.addActor(pageIndex);
+
         stage.addActor(backButton);
+    }
+
+    private void initButtons() {
+        actionButton = HanButton.with(app)
+                .text(app.getString("select"))
+                .onClick(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                })
+                .style(HanButton.PRIMARY)
+                .build();
+        actionButton.pack();
+        actionButton.setWidth(100);
+        actionButton.setVisible(false);
+        actionButton.setPosition(Display.SCREEN_WIDTH / 2, underPageY, Align.top);
+        stage.addActor(actionButton);
     }
 
     private void initTopBar() {
@@ -137,12 +198,33 @@ public class UnlocksScreen extends BaseUIScreen {
                 .font(Font.h2)
                 .build();
 
-        topTray.add(facebookButton).spaceRight(Spacing.REG);
+
         topTray.add(medalsCount);
 
         topBar.add(titleLabel).pad(Spacing.REG).spaceBottom(Spacing.REG);
         topBar.row();
         topBar.add(topTray).spaceBottom(Spacing.REG);
+    }
+
+    private void refreshToSelection(String data) {
+        boolean isUnlocked = app.saves().read().isSkinUnlocked(data);
+        SkinModel selectedModel = app.contentDB().skins().getById(data);
+        actionButton.setVisible(true);
+        actionButton.setDisabled(false);
+        if (isUnlocked) {
+            actionButton.setText(app.getString("select"));
+        } else {
+            if (selectedModel.type.equals(SkinModel.Type.IAP)) {
+                actionButton.setText("BUY NOW");
+            } else if (selectedModel.type.equals(SkinModel.Type.UNLOCK)) {
+                if (app.saves().read().getMedalsCount() >= selectedModel.price) {
+                    actionButton.setText("Unlock!");
+                } else {
+                    actionButton.setText("INSUFFICIENT");
+                    actionButton.setDisabled(true);
+                }
+            }
+        }
     }
 
     @Override
