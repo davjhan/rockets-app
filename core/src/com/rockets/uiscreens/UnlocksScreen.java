@@ -3,6 +3,7 @@ package com.rockets.uiscreens;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.assets.Colr;
 import com.rockets.assets.Font;
@@ -15,8 +16,8 @@ import com.rockets.graphics.views.HanButton;
 import com.rockets.graphics.views.HanLabel;
 import com.rockets.graphics.views.OnClickListener;
 import com.rockets.uiscreens.managers.SelectionManager;
-import com.rockets.uiscreens.modals.SettingsModal;
 import com.rockets.uiscreens.uniqueviews.SkinDisplayItem;
+import com.rockets.uiscreens.views.DiamondsDisplay;
 import com.rockets.uiscreens.views.PagedScrollpane;
 import com.rockets.uiscreens.views.ScrollingTileBG;
 import com.rockets.uiscreens.views.Selectable;
@@ -34,37 +35,71 @@ import java.util.Map;
  **/
 public class UnlocksScreen extends BaseUIScreen {
     private Table topBar;
-    private Table contentTable;
+    private WidgetGroup floatingContent;
     private PagedScrollpane<String> scrollPane;
     private HanButton actionButton;
     private HanButton backButton;
-    private HanLabel medalsCount;
+    private DiamondsDisplay diamondsDisplay;
     private HanLabel pageIndex;
     private List<SkinModel> allSkins;
     private final SelectionManager<String> selectionManager = new SelectionManager<>(false);
+
+    private float topBarPad = Spacing.REG;
     private float underPageY;
 
     public UnlocksScreen(IApp game, Map<String, Object> extras) {
         super(game, extras);
         initData();
         initTables();
-
-        initTopBar();
-
-
         initBG();
 
-        rootTable.add(topBar).growX();
+        initTopBar();
+        initScrollpane();
+
+
+        rootTable.add(topBar).growX().fillY();
         rootTable.row();
-        rootTable.add(contentTable).grow();
+        rootTable.add(scrollPane).grow();
         rootTable.pack();
+        rootTable.addActor(floatingContent);
         String selectedId = app.saves().read().getCurrentSkinId();
         selectionManager.select(selectedId);
 
 
-        underPageY = contentTable.getY(Align.center) - 42;
+
+        underPageY = scrollPane.getY(Align.center) - 56;
+
         initFixed();
         initBehaviors();
+    }
+
+    private void initHelp() {
+        HanLabel helpTextTop = HanLabel.text(app.getString("help_skins_overview"))
+                .font(Font.h1)
+                .color(Colr.TEXT_NAVY)
+                .wrap(true)
+                .align(Align.center)
+                .build();
+
+        HanLabel helpTextBottom = HanLabel.text(app.getString("help_skins_cosmetic"))
+                .font(Font.c1)
+                .color(Colr.TEXT_NAVY)
+                .wrap(true)
+                .align(Align.center)
+                .build();
+
+        Table helpTable = new Table();
+        helpTable.background(app.menuAssets().bgs.getWhiteNametag());
+        helpTable.pad(Spacing.DOUBLE_REG);
+        helpTable.add(helpTextTop).grow().spaceBottom(Spacing.REG);
+        helpTable.row();
+        helpTable.add(helpTextBottom).grow();
+        helpTable.pack();
+
+        helpTable.setWidth(Display.CONTENT_WIDTH-(Spacing.REG*2));
+        helpTable.setHeight(helpTable.getPrefHeight());
+        helpTable.setPosition(Display.SCREEN_WIDTH_HALF,topBar.getY(),Align.top);
+        floatingContent.addActor(helpTable);
     }
 
     private void initBehaviors() {
@@ -88,12 +123,7 @@ public class UnlocksScreen extends BaseUIScreen {
 
     private void initTables() {
         topBar = new Table();
-        contentTable = new Table();
-
-        initSkinDisplay();
-        contentTable.align(Align.center);
-        contentTable.add(scrollPane).grow();
-        contentTable.row();
+        floatingContent = new Table();
     }
 
     @Override
@@ -102,7 +132,7 @@ public class UnlocksScreen extends BaseUIScreen {
         selectionManager.refresh();
     }
 
-    private void initSkinDisplay() {
+    private void initScrollpane() {
         scrollPane = new PagedScrollpane<>(selectionManager);
         scrollPane.setupOverscroll(32, 20, 200);
         scrollPane.setScrollingDisabled(false, true);
@@ -135,36 +165,14 @@ public class UnlocksScreen extends BaseUIScreen {
     }
 
     private void initFixed() {
-        HanButton settingsButton = ViewFactory.getSettingsButtonSmall(app, new OnClickListener() {
-
-            @Override
-            public void onClick() {
-                app.showModal(new SettingsModal(app, null));
-            }
-        });
-        settingsButton.pack();
-        settingsButton.setPosition(Display.SCREEN_WIDTH - Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topRight);
-        stage.addActor(settingsButton);
-
-
-        backButton = ViewFactory.getBackButton(app, new OnClickListener() {
-            @Override
-            public void onClick() {
-                app.screenManager().restoreScreen(HomeScreen.class);
-            }
-        });
-        backButton.pack();
-        backButton.setPosition(Spacing.SMALL, Display.SCREEN_HEIGHT - Spacing.SMALL, Align.topLeft);
         initButtons();
-
+        initHelp();
         pageIndex = HanLabel.text("10")
                 .font(Font.c1)
                 .color(Colors.get(Colr.TEXT_LIGHT))
                 .build();
         pageIndex.setPosition(Display.SCREEN_WIDTH / 2, Spacing.XXLARGE, Align.bottom);
-        contentTable.addActor(pageIndex);
-
-        stage.addActor(backButton);
+        floatingContent.addActor(pageIndex);
     }
 
     private void initButtons() {
@@ -181,29 +189,31 @@ public class UnlocksScreen extends BaseUIScreen {
         actionButton.pack();
         actionButton.setWidth(100);
         actionButton.setVisible(false);
-        actionButton.setPosition(Display.SCREEN_WIDTH / 2, underPageY, Align.top);
-        stage.addActor(actionButton);
+        actionButton.setPosition(Display.SCREEN_WIDTH_HALF, underPageY, Align.top);
+        floatingContent.addActor(actionButton);
     }
 
     private void initTopBar() {
+        diamondsDisplay = new DiamondsDisplay(app);
+        diamondsDisplay.setPosition(Display.SCREEN_WIDTH - topBarPad, Display.SCREEN_HEIGHT - topBarPad, Align.topRight);
+        stage.addActor(diamondsDisplay);
 
+        backButton = ViewFactory.getBackButton(app, new OnClickListener() {
+            @Override
+            public void onClick() {
+                app.screenManager().restoreScreen(HomeScreen.class);
+            }
+        });
+        backButton.pack();
+        backButton.setPosition(topBarPad, Display.SCREEN_HEIGHT - topBarPad, Align.topLeft);
+        stage.addActor(backButton);
 
         Label titleLabel = HanLabel.text("UNLOCKS")
                 .font(Font.grand2)
                 .build();
-
-        Table topTray = new Table();
-
-        medalsCount = HanLabel.text("10")
-                .font(Font.h2)
-                .build();
-
-
-        topTray.add(medalsCount);
-
         topBar.add(titleLabel).pad(Spacing.REG).spaceBottom(Spacing.REG);
-        topBar.row();
-        topBar.add(topTray).spaceBottom(Spacing.REG);
+
+
     }
 
     private void refreshToSelection(String data) {
@@ -230,5 +240,6 @@ public class UnlocksScreen extends BaseUIScreen {
     @Override
     public void dispose() {
         super.dispose();
+        diamondsDisplay.dispose();
     }
 }

@@ -132,7 +132,7 @@ gamebutton
   index: -1
 hearts
   rotate: false
-  xy: 966, 563
+  xy: 382, 377
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
@@ -165,6 +165,27 @@ levelbar
   orig: 72, 12
   offset: 0, 0
   index: -1
+medals
+  rotate: false
+  xy: 308, 2
+  size: 24, 12
+  orig: 24, 12
+  offset: 0, 0
+  index: -1
+medalsLarge
+  rotate: false
+  xy: 966, 556
+  size: 48, 24
+  orig: 48, 24
+  offset: 0, 0
+  index: -1
+medalsSmall
+  rotate: false
+  xy: 334, 2
+  size: 24, 12
+  orig: 24, 12
+  offset: 0, 0
+  index: -1
 menuicons
   rotate: false
   xy: 402, 474
@@ -174,14 +195,14 @@ menuicons
   index: -1
 nameplate
   rotate: false
-  xy: 1010, 572
+  xy: 998, 1014
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
   index: -1
 nametag
   rotate: false
-  xy: 1010, 572
+  xy: 998, 1014
   size: 12, 8
   orig: 12, 8
   offset: 0, 0
@@ -195,7 +216,7 @@ playerSkins
   index: -1
 scrollbar
   rotate: false
-  xy: 998, 1014
+  xy: 304, 186
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -272,7 +293,7 @@ wall
   index: -1
 youtag
   rotate: false
-  xy: 308, 2
+  xy: 360, 2
   size: 14, 12
   orig: 14, 12
   offset: 0, 0

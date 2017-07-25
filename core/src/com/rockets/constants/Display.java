@@ -11,9 +11,9 @@ public class Display {
     public static  float CONTENT_WIDTH = 270;
     public static  float CONTENT_HEIGHT = 480;
     public static  float SCREEN_WIDTH = 270;
-    public static  float HALF_WIDTH = 135;
+    public static  float SCREEN_WIDTH_HALF = 135;
     public static  float SCREEN_HEIGHT = 480;
-    public static  float HALF_HEIGHT = 240;
+    public static  float SCREEN_HEIGHT_HALF = 240;
     public static  float CONTENT_BOTPAD;
     public static  float CONTENT_LEFTPAD;
 

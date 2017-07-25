@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.Display;
 import com.rockets.gamescreen.IGame;
-import com.rockets.gamescreen.particles.AnimatedParticle;
+import com.rockets.gamescreen.particles.base.AnimatedParticle;
 import com.rockets.gamescreen.physics.Collidable;
 import com.rockets.gamescreen.physics.CollisionGroup;
 import com.rockets.gamescreen.world.GameEntity;

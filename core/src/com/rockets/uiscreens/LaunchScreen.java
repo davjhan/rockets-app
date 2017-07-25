@@ -66,8 +66,8 @@ public class LaunchScreen extends BaseUIScreen{
             Display.SCREEN_HEIGHT = Display.CONTENT_HEIGHT;
             Display.SCREEN_WIDTH = Display.CONTENT_HEIGHT*ratio;
         }
-        Display.HALF_WIDTH = Display.SCREEN_WIDTH/2;
-        Display.HALF_HEIGHT = Display.SCREEN_HEIGHT/2;
+        Display.SCREEN_WIDTH_HALF = Display.SCREEN_WIDTH/2;
+        Display.SCREEN_HEIGHT_HALF = Display.SCREEN_HEIGHT/2;
         Display.CONTENT_LEFTPAD = (Display.SCREEN_WIDTH - Display.CONTENT_WIDTH)/2;
         Display.CONTENT_BOTPAD = (Display.SCREEN_HEIGHT - Display.CONTENT_HEIGHT)/2;
 

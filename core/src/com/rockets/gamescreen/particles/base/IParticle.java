@@ -1,4 +1,4 @@
-package com.rockets.gamescreen.particles;
+package com.rockets.gamescreen.particles.base;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;

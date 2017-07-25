@@ -1,4 +1,4 @@
-package com.rockets.gamescreen.particles;
+package com.rockets.gamescreen.particles.base;
 
 import java.util.ArrayList;
 import java.util.List;

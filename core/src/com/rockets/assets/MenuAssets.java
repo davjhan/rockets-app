@@ -22,6 +22,8 @@ public class MenuAssets extends AssetGroup{
     public TextureRegion[] bgTilesHome;
     public TextureRegion textfieldCursor;
     public NinePatch hudbg;
+    public TextureRegion diamondsSmall;
+    public TextureRegion medalsLarge;
     public TextureRegion[] completion;
     public TextureRegion[] icons;
     public TextureRegion[] connectionStrength;
@@ -50,6 +52,8 @@ public class MenuAssets extends AssetGroup{
         connectionStrength = cutLinear(atlas,"connectionstrength",7,7);
         completion = cutLinear(atlas,"completion",24,24);
         bgTilesHome = sliceRegions(bgTiles,0,2);
+        diamondsSmall = cutLinear(atlas,"medalsSmall",12,12)[0];
+        medalsLarge = cutLinear(atlas,"medalsLarge",24,24)[0];
 
         gameButton = cutNinesGroup(atlas,"gamebutton",48,48,16,22,14);
         scrollbar = cutNinesGroup(atlas,"scrollbar",4,8,2);
@@ -67,7 +71,7 @@ public class MenuAssets extends AssetGroup{
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                TextureRegion darkIcons = TextureColorer.tintTexture(atlas.findRegion("icons"), Color.valueOf(Colr.TEXT_MID));
+                TextureRegion darkIcons = TextureColorer.tintTexture(atlas.findRegion("icons"), Color.valueOf(Colr.TEXT_NAVY));
                 icons = flatten(darkIcons.split(12,12));
             }
         });

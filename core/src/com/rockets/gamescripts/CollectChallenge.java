@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.rockets.constants.Display;
+import com.rockets.data.ChallengeCompleteReceipt;
 import com.rockets.gamescreen.GameScreen;
 import com.rockets.gamescreen.modals.ChallengeCompleteModal;
 import com.rockets.gamescreen.objects.Coin;
@@ -78,9 +79,10 @@ public abstract class CollectChallenge extends BaseChallenge {
 
     protected void onGoalReached() {
         setState(STATE_END);
-        dir.app().backend().challenges().completeChallenge(challengeModel.id);
+        final ChallengeCompleteReceipt receipt =
+                dir.app().backend().challenges().completeChallenge(challengeModel.id);
         ChallengeCompleteModal challengeCompleteModal = new ChallengeCompleteModal(
-                dir.game(), challengeModel, new ChallengeCompleteModal.ChallengeCompleteModalListener() {
+                dir.game(), receipt, new ChallengeCompleteModal.ChallengeCompleteModalListener() {
             @Override
             public void goHome() {
                 dir.gameWorld().goHome();
@@ -97,7 +99,7 @@ public abstract class CollectChallenge extends BaseChallenge {
             public void nextChallenge() {
                 dir.app().screenManager().clearAndPushScreen(
                         GameScreen.class, GameScreen.getChallengeExtras(
-                                dir.app().contentDB().challenges().getNextChallengeId(challengeModel.id)
+                                receipt.getNextChallengeId()
                         )
                 );
             }

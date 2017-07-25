@@ -22,8 +22,14 @@ public class Backend {
 
     private ChallengeController challengeController = new ChallengeController() {
         @Override
-        public void completeChallenge(String challengeId) {
+        public ChallengeCompleteReceipt completeChallenge(String challengeId) {
+            boolean isFirstTime = didComplete(challengeId);
             app.saves().control().markChallengeAsCompleted(challengeId);
+            return new ChallengeCompleteReceipt(
+                    app.contentDB().challenges().getById(challengeId),
+                    app.contentDB().challenges().getNextChallengeId(challengeId),
+                    isFirstTime
+            );
         }
 
         @Override

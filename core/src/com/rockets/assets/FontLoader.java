@@ -83,7 +83,7 @@ public class FontLoader {
     private static FreetypeFontLoader.FreeTypeFontLoaderParameter makeGrand(
             FreetypeFontLoader.FreeTypeFontLoaderParameter params, float scale) {
         params.fontParameters.borderWidth = 1/scale;
-        params.fontParameters.color = Color.valueOf(Colr.TEXT_MID);
+        params.fontParameters.color = Color.WHITE;
         params.fontParameters.borderColor = Color.valueOf(Colr.TEXT_NAVY);
         params.fontParameters.shadowOffsetY = 1;
         params.fontParameters.shadowColor = Color.valueOf("178ce1");

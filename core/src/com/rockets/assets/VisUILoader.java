@@ -77,7 +77,7 @@ public class VisUILoader {
                         new NinePatchDrawable(menuAssets.btnGeneral[0]),
                         VisUI.getSkin().getFont(Font.h1)
                 );
-        def.fontColor = Colors.get(Colr.TEXT_MID);
+        def.fontColor = Colors.get(Colr.TEXT_NAVY);
         def.unpressedOffsetY = 1;
         def.checkedOffsetY = 1;
         def.disabled = new NinePatchDrawable(menuAssets.btnDisabled[0]);
@@ -109,6 +109,7 @@ public class VisUILoader {
         manager.get(Font.outlined2, BitmapFont.class).getData().setScale(1.5f);
         manager.get(Font.grand2, BitmapFont.class).getData().setScale(1.5f);
         manager.get(Font.grand3, BitmapFont.class).getData().setScale(2f);
+        manager.get(Font.h1, BitmapFont.class).getData().setLineHeight(12);
         for (Field field : Font.class.getFields()) {
             field.setAccessible(true);
             try {

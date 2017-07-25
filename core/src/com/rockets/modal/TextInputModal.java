@@ -85,7 +85,7 @@ public class TextInputModal extends Modal{
     }
 
     protected void setRootPosition() {
-        root.setPosition(Display.HALF_WIDTH,Display.SCREEN_HEIGHT - Spacing.LARGE, Align.top);
+        root.setPosition(Display.SCREEN_WIDTH_HALF,Display.SCREEN_HEIGHT - Spacing.LARGE, Align.top);
     }
 
 }
