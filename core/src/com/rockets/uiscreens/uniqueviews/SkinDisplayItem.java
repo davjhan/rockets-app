@@ -54,7 +54,7 @@ public class SkinDisplayItem extends Table implements Disposable, Selectable {
         setTransform(true);
         addListener(new SquishyButtonListener());
 
-        add(displayImage).pad(16).padTop(24).padBottom(24).grow();
+        add(displayImage).pad(8).padTop(16).padBottom(16).grow();
         pack();
         if (!app.saves().read().isSkinUnlocked(skinModel.id)) {
 

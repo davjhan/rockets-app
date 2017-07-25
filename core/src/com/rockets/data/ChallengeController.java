@@ -8,6 +8,6 @@ package com.rockets.data;
  * Copyright (c) 2017 David Han
  **/
 public interface ChallengeController {
-    void completeChallenge(String challengeId);
+    ChallengeCompleteReceipt completeChallenge(String challengeId);
     boolean didComplete(String challengeId);
 }

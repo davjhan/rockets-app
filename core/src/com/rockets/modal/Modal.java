@@ -1,6 +1,5 @@
 package com.rockets.modal;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Interpolation;
@@ -173,7 +172,7 @@ public abstract class Modal extends WidgetGroup implements Disposable {
     }
 
     protected void setRootPosition() {
-        root.setPosition(Display.HALF_WIDTH,Display.HALF_HEIGHT, Align.center);
+        root.setPosition(Display.SCREEN_WIDTH_HALF,Display.SCREEN_HEIGHT_HALF, Align.center);
     }
 
     @Override

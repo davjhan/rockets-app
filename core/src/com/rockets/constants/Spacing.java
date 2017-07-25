@@ -16,7 +16,7 @@ public class Spacing {
 
 
     public static final float SMALL_PLUS = 6;
-    /** 12 */
+    /** 8 */
     public static final int REG = 8;
 
 
@@ -27,4 +27,5 @@ public class Spacing {
     /** 32 */
     public static final int XXLARGE = 32;
 
+    public static final int DOUBLE_REG = 16;
 }

@@ -1,5 +1,6 @@
 package com.rockets.graphics.views;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -74,6 +75,7 @@ public class HanLabel extends VisLabel {
         private Color color;
         private boolean forceAllCaps = true;
         int alignment = Align.center;
+        float pad = -1;
         private boolean wrap = false;
 
         public LabelBuilder(String text) {
@@ -109,6 +111,16 @@ public class HanLabel extends VisLabel {
             this.alignment = alignment;
             return this;
         }
+
+        public LabelBuilder wrap(boolean wrap) {
+            this.wrap = wrap;
+            return this;
+        }
+
+        public LabelBuilder pad(int pad) {
+            this.pad = pad;
+            return this;
+        }
         public HanLabel build() {
             LabelStyle style = new LabelStyle();
             if(font == null) {
@@ -122,27 +134,31 @@ public class HanLabel extends VisLabel {
                 style.fontColor = Colors.get(colorName);
             }
             if (this.bg != null) {
-                if(fontName.equals(Font.h1)){
-                    bg.setLeftWidth(12);
-                    bg.setRightWidth(12);
-                }else {
-                    bg.setLeftWidth(12);
-                    bg.setRightWidth(12);
+                if(pad  == -1) {
+                    if (fontName.equals(Font.h1)) {
+                        bg.setLeftWidth(12);
+                        bg.setRightWidth(12);
+                    } else {
+                        bg.setLeftWidth(12);
+                        bg.setRightWidth(12);
+                    }
+                }else{
+                    bg.setLeftWidth(pad);
+                    bg.setRightWidth(pad);
+                    bg.setTopHeight(pad);
+                    bg.setBottomHeight(pad);
                 }
                 style.background = bg;
             }
             HanLabel label = new HanLabel(text, style);
             label.setAlignment(alignment);
             label.setWrap(wrap);
+
             label.isForceAllCaps = true;
             return label;
         }
 
 
-        public LabelBuilder wrap(boolean wrap) {
-            this.wrap = wrap;
-            return this;
-        }
     }
 
 }

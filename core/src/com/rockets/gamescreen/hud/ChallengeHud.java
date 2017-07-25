@@ -47,7 +47,7 @@ public class ChallengeHud extends Hud {
 
     @Override
     protected void initInstructions() {
-        instructions.setPosition(Display.HALF_WIDTH, 80, Align.center);
+        instructions.setPosition(Display.SCREEN_WIDTH_HALF, 80, Align.center);
         instructions.setTouchable(Touchable.disabled);
         addActor(instructions);
         instructionsLabel = HanLabel.text("tap to thrust")

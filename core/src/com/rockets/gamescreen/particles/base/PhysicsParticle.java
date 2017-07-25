@@ -1,4 +1,4 @@
-package com.rockets.gamescreen.particles;
+package com.rockets.gamescreen.particles.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;

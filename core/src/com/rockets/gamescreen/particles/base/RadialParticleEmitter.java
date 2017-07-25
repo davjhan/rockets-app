@@ -1,4 +1,4 @@
-package com.rockets.gamescreen.particles;
+package com.rockets.gamescreen.particles.base;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
